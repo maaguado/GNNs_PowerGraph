@@ -150,8 +150,8 @@ class PowerGrid(InMemoryDataset):
             if self.datatype.lower() == 'multiclass':
                 #do argmax
                 ydata = torch.tensor(np.argmax(of_mc[i][0]), dtype=torch.float, device=device).view(1, -1)
-            if self.datatype.lower() == 'edge_prediction':
-                ydata = f_totw
+            if self.datatype.lower() == 'full_prediction':
+                ydata = torch.tensor(f_tot, dtype=torch.float, device=device).view(1, -1)
             
             
             # Fill Data object, 1 Data object -> 1 graph
