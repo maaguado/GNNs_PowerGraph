@@ -214,6 +214,7 @@ class GNN_basic(GNNBase):
         self.readout = model_params["readout"]
         self.readout_layer = GNNPool(self.readout)
         #self.default_num_nodes = model_params["default_num_nodes"]
+        
         self.get_layers()
         self.graph_regression = graph_regression
 
