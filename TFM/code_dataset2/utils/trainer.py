@@ -49,9 +49,9 @@ def train_test_val_split(dataset, **kwargs):
     test_dataset = dataset[val_index:]
 
     dataloaders = {}
-    dataloaders['train'] = pygt_loader.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    dataloaders['val'] = pygt_loader.DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
-    dataloaders['test'] = pygt_loader.DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    dataloaders['train'] = pygt_loader.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,drop_last=True)
+    dataloaders['val'] = pygt_loader.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
+    dataloaders['test'] = pygt_loader.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
     
     for split, dataloader in dataloaders.items():
         print(f"DataLoader for {split} set:")

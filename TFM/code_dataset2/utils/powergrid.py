@@ -72,7 +72,11 @@ class PowerGridDatasetLoader(object):
     
         self.edge_attr.append(edge_attr_temp)
 
-
+    def reconstruir_voltages(self, n):
+        info_nodos = []
+        for key, value in self.voltages.items():
+            info_nodos.append(value[n].tolist())
+        return info_nodos
 
     def _update_voltages(self):
         n_each = len(self.voltages_temp[list(self.voltages_temp.keys())[0]])
@@ -105,14 +109,18 @@ class PowerGridDatasetLoader(object):
         return self.voltages_temp, self.edge_index_temp
     
 
+  
     def _get_targets_and_features(self):
         #We want to get the targets and features, which will be: for each situation, we will predict the voltages of the nodes in the last 40 timestamps
         if not self.processed:
             self.process()
               
         n_situations = len(next(iter(self.voltages.values()))) 
+        print("Number of situations: ", n_situations)
         n_keys = len(self.transformation_dict)
+
         n_timestamps = len(next(iter(self.voltages.values()))[0])
+        print("Number of timestamps: ", n_timestamps)
 
         voltages_def = np.zeros((n_situations, n_keys, n_timestamps))
 
@@ -120,7 +128,6 @@ class PowerGridDatasetLoader(object):
             for situation, array in enumerate(arrays_list):
                 voltages_def[situation, key, :] = array
         
-        n_situations=200
         
         #self.features = [voltages_def[i, :, :-self._target] for i in range(n_situations)]
         #self.targets = [voltages_def[i, : , -self._target:] for i in range(n_situations)]
