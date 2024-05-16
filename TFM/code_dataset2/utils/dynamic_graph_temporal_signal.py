@@ -20,9 +20,11 @@ class DynamicGraphTemporalSignalLen(signal.DynamicGraphTemporalSignal):
         edge_weights: Edge_Weights,
         features: Node_Features,
         targets: Targets,
+        name: str,
         **kwargs: Additional_Features
     ):
         super().__init__(edge_indices, edge_weights, features, targets, **kwargs)
+        self.name = name
 
     def __len__(self):
         return len(self.features)
@@ -34,6 +36,7 @@ class DynamicGraphTemporalSignalLen(signal.DynamicGraphTemporalSignal):
                 self.edge_weights[time_index],
                 self.features[time_index],
                 self.targets[time_index],
+                self.name,
                 **{key: getattr(self, key)[time_index] for key in self.additional_feature_keys}
             )
         else:
