@@ -128,7 +128,7 @@ class PowerGridDatasetLoader(object):
             for situation, array in enumerate(arrays_list):
                 voltages_def[situation, key, :] = array
         
-        
+        n_situations = self._limit
         #self.features = [voltages_def[i, :, :-self._target] for i in range(n_situations)]
         #self.targets = [voltages_def[i, : , -self._target:] for i in range(n_situations)]
         #(n_situations, n_edges, n_timestamps, n_features) 
@@ -175,12 +175,14 @@ class PowerGridDatasetLoader(object):
 
     
     
-    def get_dataset(self, target= 50, intro=200, step=50):
+    def get_dataset(self, target= 50, intro=200, step=50, limit=None):
         self._target = target
         self._intro = intro
         self._step = step
+        
         if not self.processed:
             self.process()
+        self._limit = len(next(iter(self.voltages.values()))) if limit is None else limit
         self._get_targets_and_features()
         dataset = DynamicGraphTemporalSignalLen(self.edges, self.edge_weights, self.features, self.targets, "PowerGridDataset")
         return dataset
