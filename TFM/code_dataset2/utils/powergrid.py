@@ -134,16 +134,28 @@ class PowerGridDatasetLoader(object):
         #(n_situations, n_edges, n_timestamps, n_features) 
         #self.edge_weights = [self.edge_attr[i][:,:-self._target,:].reshape(len(self.edge_index[0]), 2,n_timestamps-self._target) for i in range(n_situations)]
         
-        self.features = [voltages_def[i, :, j:j+self._intro] for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
-        self.targets = [voltages_def[i, : ,j+self._intro:j+self._intro+self._target] for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
-        self.edge_weights = [self.edge_attr[i][:,j:j+self._intro,:].reshape(len(self.edge_index[0]), 2,self._intro) for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
+        if (self._one_situation):
+            self.features = [voltages_def[i, :, :-self._target] for i in range(n_situations)]
+            self.targets = [voltages_def[i, : , -self._target:] for i in range(n_situations)]
+        #(n_situations, n_edges, n_timestamps, n_features) 
+            self.edge_weights = [self.edge_attr[i][:,:-self._target,:].reshape(n_timestamps-self._target, len(self.edge_index[0]), 2) for i in range(n_situations)]
+            repeated_index = [self.edge_index[j] for j in range(n_situations) for i in range(n_timestamps-self._target)]
 
-        div = int(len(self.features)/n_situations)
+            repeated_index = np.array(repeated_index).reshape((n_situations, n_timestamps-self._target, len(self.edge_index[0]),2  ))
+            self.edges = [repeated_index[i, :, :, :] for i in range(n_situations)]
+            
+        else:
+            self.features = [voltages_def[i, :, j:j+self._intro] for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
+            self.targets = [voltages_def[i, : ,j+self._intro:j+self._intro+self._target] for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
+            self.edge_weights = [self.edge_attr[i][:,j:j+self._intro,:].reshape(self._intro,len(self.edge_index[0]), 2) for i in range(n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
 
-        repeated_index = [self.edge_index[j] for j in range(n_situations) for k in range(div) for i in range(self._intro)]
+            div = int(len(self.features)/n_situations )
 
-        repeated_index = np.array(repeated_index).reshape((n_situations*div, len(self.edge_index[0]),2,  self._intro))
-        self.edges = [repeated_index[i, :, :, :] for i in range(n_situations*div)]
+
+            repeated_index = [self.edge_index[j] for j in range(n_situations) for k in range(div) for i in range(self._intro)]
+
+            repeated_index = np.array(repeated_index).reshape((n_situations*div,  self._intro, len(self.edge_index[0]),2))
+            self.edges = [repeated_index[i, :, :, :] for i in range(n_situations*div)]
 
         
 
@@ -175,11 +187,11 @@ class PowerGridDatasetLoader(object):
 
     
     
-    def get_dataset(self, target= 50, intro=200, step=50, limit=None):
+    def get_dataset(self, target= 50, intro=200, step=50, limit=None, one_ts_per_situation=False):
         self._target = target
         self._intro = intro
         self._step = step
-        
+        self._one_situation = one_ts_per_situation
         if not self.processed:
             self.process()
         self._limit = len(next(iter(self.voltages.values()))) if limit is None else limit
