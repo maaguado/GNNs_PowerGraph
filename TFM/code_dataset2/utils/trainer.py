@@ -20,6 +20,7 @@ def train_test_val_split(dataset, **kwargs):
     test_ratio = kwargs.get('test_ratio', 0.1)
     random_seed = kwargs.get('random_seed', 0)
     batch_size = kwargs.get('batch_size', 64)
+    keep_same = kwargs.get('keep_same', False)
 
     torch.manual_seed(random_seed)
     
@@ -27,22 +28,26 @@ def train_test_val_split(dataset, **kwargs):
     train_size = int(train_ratio * total_series)
     val_size = int(val_ratio * total_series)
 
+    if (keep_same):
     # Calcular el índice de la serie temporal más cercana al índice que corresponde al ratio de entrenamiento
-    train_index = round(train_ratio * total_series)
+        train_index = round(train_ratio * total_series)
 
 
-    # Ajustar el índice de entrenamiento si es necesario para asegurar que se mantienen separadas las simulaciones
-    if train_index % 15 > 7:
-        train_index += 15 - (train_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
+        # Ajustar el índice de entrenamiento si es necesario para asegurar que se mantienen separadas las simulaciones
+        if train_index % 15 > 7:
+            train_index += 15 - (train_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
+        else:
+            train_index -= train_index % 15  # Si está más cerca del inicio de una simulación, retrocedemos al inicio de la simulación anterior
+
+        # Calcular los índices de validación y test - comprobamos si es múltiplo de 15 y ajustamos si es necesario
+        val_index = train_index + val_size
+        if val_index % 15 > 7:
+            val_index += 15 - (val_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
+        else:
+            val_index -= val_index % 15
     else:
-        train_index -= train_index % 15  # Si está más cerca del inicio de una simulación, retrocedemos al inicio de la simulación anterior
-
-    # Calcular los índices de validación y test - comprobamos si es múltiplo de 15 y ajustamos si es necesario
-    val_index = train_index + val_size
-    if val_index % 15 > 7:
-        val_index += 15 - (val_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
-    else:
-        val_index -= val_index % 15
+        train_index = train_size
+        val_index = train_size + val_size
     
     train_dataset = dataset[:train_index]
     val_dataset = dataset[train_index:val_index]
