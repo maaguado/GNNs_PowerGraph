@@ -216,7 +216,7 @@ class PowerGridDatasetLoader(object):
         if (self.problem.split("_")[0]=='regression'):
             # If considering only one timestamp per situation
             if (self._one_situation):
-
+                self.div = 1
                 situations_each = indices
                 # Assign features as voltages up to the target timestamp
                 self.features = [voltages_def[i, :, :-self._target] for i in range(self.start, self.start+n_situations)]
@@ -236,14 +236,15 @@ class PowerGridDatasetLoader(object):
                 self.targets = [voltages_def[i, : ,j+self._intro:j+self._intro+self._target] for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
                 # Assign edge weights as edge attributes over the introduction period
                 self.edge_weights = [edge_attr[i][:,j:j+self._intro,:].reshape(self._intro,len(edge_index[0]), 2) for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
-                div = int(len(self.features)/(n_situations ))
-                repeated_index = [edge_index[j] for j in range(self.start, self.start+n_situations) for k in range(div) for i in range(self._intro)]
-                repeated_index = np.array(repeated_index).reshape(((n_situations)*div,  self._intro, len(self.edge_index[0]),2))
-                self.edges = [repeated_index[i, :, :, :] for i in range((n_situations)*div)]
+                self.div = int(len(self.features)/(n_situations ))
+                repeated_index = [edge_index[j] for j in range(self.start, self.start+n_situations) for k in range(self.div) for i in range(self._intro)]
+                repeated_index = np.array(repeated_index).reshape(((n_situations)*self.div,  self._intro, len(self.edge_index[0]),2))
+                self.edges = [repeated_index[i, :, :, :] for i in range((n_situations)*self.div)]
         
         # If the problem type is classification
         elif (self.problem.split("_")[0]=='classification'):
             self._preprocess_targets()
+            self.div = 1
             processed_targets = self.processed_targets[indices, :]
             situations_each = range(n_situations)
             # Assign features as voltages for each situation
