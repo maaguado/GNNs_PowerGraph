@@ -199,49 +199,64 @@ class PowerGridDatasetLoader(object):
             for situation, array in enumerate(arrays_list):
                 voltages_def[situation, key, :] = array
         
+
+
+        indices = np.where(np.array(self.types)==self._type)[0] if self._type is not None else range(n_situations)
+
+        print("Number of situations of the selected type: ", len(indices))
+
+
+        voltages_def = voltages_def[indices, :, :]
+        edge_attr = [self.edge_attr[i] for i in indices]
+        edge_index = [self.edge_index[i] for i in indices]
         # Set the number of situations to the limit or total number of situations if no limit is specified
-        n_situations = min(self._limit, n_situations-self.start) if self._limit is not None else n_situations-self.start
+        n_situations = min(self._limit, len(indices)-self.start) if self._limit is not None else len(indices)-self.start
         
         # If the problem type is regression
         if (self.problem.split("_")[0]=='regression'):
             # If considering only one timestamp per situation
             if (self._one_situation):
+
+                situations_each = indices
                 # Assign features as voltages up to the target timestamp
                 self.features = [voltages_def[i, :, :-self._target] for i in range(self.start, self.start+n_situations)]
                 # Assign targets as voltages from the target timestamp onwards
                 self.targets = [voltages_def[i, : , -self._target:] for i in range(self.start, self.start+ n_situations)]
                 # Assign edge weights as edge attributes excluding the target timestamp
-                self.edge_weights = [self.edge_attr[i][:,:-self._target,:].reshape(n_timestamps-self._target, len(self.edge_index[0]), 2) for i in range(self.start,self.start+ n_situations)]
+                self.edge_weights = [edge_attr[i][:,:-self._target,:].reshape(n_timestamps-self._target, len(edge_index[0]), 2) for i in range(self.start,self.start+ n_situations)]
                 # Repeat the edge index for each situation
-                repeated_index = [self.edge_index[j] for j in range(self.start, self.start+n_situations) for i in range(n_timestamps-self._target)]
-                repeated_index = np.array(repeated_index).reshape((n_situations, n_timestamps-self._target, len(self.edge_index[0]),2  ))
+                repeated_index = [edge_index[j] for j in range(self.start, self.start+n_situations) for i in range(n_timestamps-self._target)]
+                repeated_index = np.array(repeated_index).reshape((n_situations, n_timestamps-self._target, len(edge_index[0]),2  ))
                 self.edges = [repeated_index[i, :, :, :] for i in range(self.start, self.start+n_situations)]
             else:
+                situations_each = [indices[i] for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
                 # Assign features as voltages over a sliding window
                 self.features = [voltages_def[i, :, j:j+self._intro] for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
                 # Assign targets as voltages over the next target timestamps
                 self.targets = [voltages_def[i, : ,j+self._intro:j+self._intro+self._target] for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
                 # Assign edge weights as edge attributes over the introduction period
-                self.edge_weights = [self.edge_attr[i][:,j:j+self._intro,:].reshape(self._intro,len(self.edge_index[0]), 2) for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
+                self.edge_weights = [edge_attr[i][:,j:j+self._intro,:].reshape(self._intro,len(edge_index[0]), 2) for i in range(self.start, self.start+n_situations) for j in range(0,n_timestamps-self._target-self._intro, self._step)]
                 div = int(len(self.features)/(n_situations ))
-                repeated_index = [self.edge_index[j] for j in range(self.start, self.start+n_situations) for k in range(div) for i in range(self._intro)]
+                repeated_index = [edge_index[j] for j in range(self.start, self.start+n_situations) for k in range(div) for i in range(self._intro)]
                 repeated_index = np.array(repeated_index).reshape(((n_situations)*div,  self._intro, len(self.edge_index[0]),2))
                 self.edges = [repeated_index[i, :, :, :] for i in range((n_situations)*div)]
         
         # If the problem type is classification
         elif (self.problem.split("_")[0]=='classification'):
             self._preprocess_targets()
+            processed_targets = self.processed_targets[indices, :]
+            situations_each = range(n_situations)
             # Assign features as voltages for each situation
             self.features = [voltages_def[i, :, :] for i in range(n_situations)]
             # Assign targets as bus types or bus numbers depending on the problem type
-            self.targets = [self.processed_targets[i,:]  for i in range(n_situations)]
+            self.targets = [processed_targets[i,:]  for i in range(n_situations)]
             # Assign edge weights as edge attributes for each situation
-            self.edge_weights = [self.edge_attr[i][:,:,:].reshape(n_timestamps, len(self.edge_index[0]), 2) for i in range(n_situations)]
+            self.edge_weights = [edge_attr[i][:,:,:].reshape(n_timestamps, len(self.edge_index[0]), 2) for i in range(n_situations)]
             # Repeat the edge index for each situation
-            repeated_index = [self.edge_index[j] for j in range(n_situations) for i in range(n_timestamps)]
+            repeated_index = [edge_index[j] for j in range(n_situations) for i in range(n_timestamps)]
             repeated_index = np.array(repeated_index).reshape((n_situations, n_timestamps, len(self.edge_index[0]),2  ))
             self.edges = [repeated_index[i, :, :, :] for i in range(n_situations)]
-
+        return situations_each
 
 
     def process(self):
@@ -283,7 +298,7 @@ class PowerGridDatasetLoader(object):
         self.processed = True
         return self.voltages, self.edge_index, self.edge_attr
 
-    def get_dataset(self, target=50, intro=200, step=50, limit=None, one_ts_per_situation=False, start=0):
+    def get_dataset(self, target=50, intro=200, step=50, limit=None, one_ts_per_situation=False, start=0, type=None):
         """
         Get the processed dataset.
 
@@ -300,11 +315,12 @@ class PowerGridDatasetLoader(object):
         self._target = target
         self._intro = intro
         self._step = step
+        self._type = type
         self._one_situation = one_ts_per_situation
         self.start = start
         if not self.processed:
             self.process()
         self._limit = len(next(iter(self.voltages.values()))) if limit is None else limit
-        self._get_targets_and_features()
+        situations_each = self._get_targets_and_features()
         dataset = DynamicGraphTemporalSignalLen(self.edges, self.edge_weights, self.features, self.targets, "PowerGridDataset")
-        return dataset
+        return dataset, situations_each
