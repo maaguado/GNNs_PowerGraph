@@ -11,16 +11,15 @@ import shutil
 import numpy as np
 
 
-def train_test_val_split(dataset, **kwargs):
+def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64, keep_same=False, use_batch=False):
     
     
-    # Extraer los parámetros del diccionario kwargs
-    train_ratio = kwargs.get('train_ratio', 0.8)
-    val_ratio = kwargs.get('val_ratio', 0.1)
-    test_ratio = kwargs.get('test_ratio', 0.1)
-    random_seed = kwargs.get('random_seed', 0)
-    batch_size = kwargs.get('batch_size', 64)
-    keep_same = kwargs.get('keep_same', False)
+    train_ratio = data_split_ratio[0]
+    val_ratio = data_split_ratio[1]
+    test_ratio = data_split_ratio[2]
+    if train_ratio + val_ratio + test_ratio != 1:
+        raise ValueError("The sum of the ratios must be 1")
+    
 
     torch.manual_seed(random_seed)
     
@@ -58,17 +57,20 @@ def train_test_val_split(dataset, **kwargs):
     print(f"Train dataset: {len(train_dataset)}")
     print(f"Validation dataset: {len(val_dataset)}")
     print(f"Test dataset: {len(test_dataset)}")
-    dataloaders = {}
-    dataloaders['train'] = pygt_loader.DataLoader(train_dataset, batch_size=batch_size, shuffle=False,drop_last=True)
-    dataloaders['val'] = pygt_loader.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
-    dataloaders['test'] = pygt_loader.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
-    
-    print("\n==================== DATALOADER INFO ===================\n")
-    for split, dataloader in dataloaders.items():
-        print(f"DataLoader for {split} set:")
-        print(f"Number of batches: {len(dataloader)}")
+    if(use_batch):
+        dataloaders = {}
+        dataloaders['train'] = pygt_loader.DataLoader(train_dataset, batch_size=batch_size, shuffle=False,drop_last=True)
+        dataloaders['val'] = pygt_loader.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
+        dataloaders['test'] = pygt_loader.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
         
-    return dataloaders
+        print("\n==================== DATALOADER INFO ===================\n")
+        for split, dataloader in dataloaders.items():
+            print(f"DataLoader for {split} set:")
+            print(f"Number of batches: {len(dataloader)}")
+            
+        return dataloaders
+    else:
+        return {'train':train_dataset, 'val':val_dataset, 'test':test_dataset}
 
 
 

@@ -14,7 +14,7 @@ def format_plot(ax):
     ax.spines['bottom'].set_color('dimgrey')
 
     ax.xaxis.label.set_color('dimgrey')
-    ax.tick_params(axis='both', colors='dimgrey', size=12, pad=1)
+    ax.tick_params(axis='both', colors='dimgrey', size=20, pad=1)
 
 
 
