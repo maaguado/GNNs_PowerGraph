@@ -73,16 +73,20 @@ class DyGrEncoder(torch.nn.Module):
             * **C** *(PyTorch Float Tensor)* - Cell state matrix for all nodes.
         """
         H_tilde = self.conv_layer(X, edge_index, edge_weight)
-        H_tilde = H_tilde[None, :, :]
+        H_tilde = H_tilde.unsqueeze(0)  # Add batch dimension
+
         if H is None and C is None:
             H_tilde, (H, C) = self.recurrent_layer(H_tilde)
         elif H is not None and C is not None:
-            H = H[None, :, :]
-            C = C[None, :, :]
+            if self.lstm_num_layers == 1:
+                H = H.unsqueeze(0)
+                C = C.unsqueeze(0)
             H_tilde, (H, C) = self.recurrent_layer(H_tilde, (H, C))
         else:
             raise ValueError("Invalid hidden state and cell matrices.")
-        H_tilde = H_tilde.squeeze()
-        H = H.squeeze()
-        C = C.squeeze()
+
+        H_tilde = H_tilde.squeeze(0)  # Remove batch dimension
+        H = H.squeeze(0)
+        C = C.squeeze(0)
+
         return H_tilde, H, C
