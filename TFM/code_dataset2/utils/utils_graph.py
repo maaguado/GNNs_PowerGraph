@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import matplotlib.cm as cm
-cmap = plt.cm.get_cmap('RdBu_r')
 
 
 def format_plot(ax):
@@ -194,4 +193,75 @@ def plot_specific_problem(problem, loader):
     # Ajustes finales
     plt.suptitle('Voltajes de nodos en {} (max {} simulaciones)'.format(problem, n_check), fontsize=20)
     plt.tight_layout()
+    plt.show()
+
+
+
+
+def reconstruir_predictions(predictions,real, n_target, situacion, n_div, n_nodes=23):
+    
+    temp = np.array(predictions).reshape(-1, n_nodes, n_target)
+    temp2 =np.array(real).reshape(-1, n_nodes, n_target)
+    if n_div != None:
+        id_situacion = situacion*n_div 
+        return n_div, np.concatenate([np.array(temp[id_situacion+i]) for i in range(n_div)], axis=1), np.concatenate([np.array(temp2[id_situacion+i]) for i in range(n_div)], axis=1)
+    m = temp.shape[0]
+    return m, np.concatenate([np.array(temp[situacion+i]) for i in range(m)], axis=1), np.concatenate([np.array(temp2[situacion+i]) for i in range(m)], axis=1)
+
+
+
+def plot_training_and_eval_losses(train_losses, eval_losses, num_epochs, format_plot):
+    epochs = range(1, num_epochs + 1)
+
+
+    plt.figure(figsize=(12, 5), dpi=200)
+    ax = plt.gca()
+
+    sns.lineplot(x=epochs, y=train_losses, label='Training Loss')
+    sns.lineplot(x=epochs, y=eval_losses, label='Evaluation Loss', color="royalblue")
+    ax.set_xlabel('Epoch')
+    ax.set_ylabel('Loss')
+    ax.set_title('Loss by Epoch')
+    ax.legend()
+    format_plot(ax) 
+    plt.tight_layout()
+    plt.show()
+
+
+    
+def plot_predictions(predictions, real, n_target, n_situation, n_div, problem):
+    # Reconstruct predictions and true values
+    m, preds, y_true = reconstruir_predictions(predictions, real, n_target, n_situation, n_div=n_div)
+    
+    n_plots = 23
+    n_cols = 4
+    n_rows = (n_plots + n_cols - 1) // n_cols  # Calculating number of rows
+
+    fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 10), dpi=200)
+    handles = []
+    labels = []
+    for i in range(n_plots):
+        row = i // n_cols  # Calculate the row index
+        col = i % n_cols   # Calculate the column index
+        ax = axs[row, col]
+
+        sns.lineplot(y=y_true[i], x=range(n_target * m), ax=ax, label='Real', legend=False, color="royalblue")
+        sns.lineplot(y=preds[i], x=range(n_target * m), ax=ax, label='Predicciones', legend=False)
+        if not handles:
+            handles, labels = ax.get_legend_handles_labels()
+        ax.set_title(f'Nodo {i+1}')
+        format_plot(ax)
+    
+    # Add legend to the last plot
+    #axs[n_rows - 1, n_cols - 2].legend(loc='upper right', bbox_to_anchor=(1.5, 0.95), frameon=True)
+    fig.legend(handles, ['Real', 'Predicciones'], bbox_to_anchor=(0.95, 0.08),loc = 'lower right', fontsize=15)
+
+    # Remove any unused subplots
+    if n_plots < (n_rows * n_cols):
+        for i in range(n_plots, (n_rows * n_cols)):
+            fig.delaxes(axs.flatten()[i])
+
+    # Adjust layout and add super title
+    plt.suptitle(f'Predicciones y valores reales en {problem}, caso {n_situation}', fontsize=20)
+    plt.tight_layout(pad=2)
     plt.show()

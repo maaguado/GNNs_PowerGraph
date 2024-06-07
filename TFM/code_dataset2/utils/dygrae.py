@@ -90,3 +90,6 @@ class DyGrEncoder(torch.nn.Module):
         C = C.squeeze(0)
 
         return H_tilde, H, C
+
+
+
