@@ -1,9 +1,9 @@
 dataset/
-TFM/code_dataset2/datos/
+TFM/datos/
 .DS_Store
 TFM/code/.DS_Store
 TFM/code/dataset/.DS_Store
-TFM/code_dataset2/utils/__pycache__/
-TFM/code/.DS_Store
-TFM/code/dataset/.DS_Store
-TFM/code_dataset2/experimentos_split/results/
+TFM/utils/__pycache__/
+TFM/.DS_Store
+TFM/basurilla/code/dataset/.DS_Store
+TFM/experimentos_split/results/
