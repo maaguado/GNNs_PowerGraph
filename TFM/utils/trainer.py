@@ -9,6 +9,7 @@ from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import shutil
 import numpy as np
+import pandas as pd
 
 
 def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64, keep_same=False, use_batch=False):
@@ -76,23 +77,63 @@ def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64
 
 
 class TrainerModel(object):
-    def __init__(self, model, dataset,device, save_dir, **params):
-        dataloader_params =params.get("dataloader_params")
+    def __init__(self, model, dataset,device, save_dir, dataloader_params):
         self.model = model
         self.dataset = dataset 
-        self.loader = train_test_val_split(dataset, **dataloader_params)
+        self.loader = train_test_val_split(dataset, batch_size=dataloader_params["batch_size"],
+                                                   data_split_ratio=dataloader_params["data_split_ratio"],
+                                                   random_seed=dataloader_params["seed"],
+                                                   keep_same=dataloader_params["keep_same"],
+                                                   use_batch=dataloader_params["use_batch"])
         self.device = device
         self.optimizer = None
         self.name = model.name
-        self.save_dir = save_dir
+        self.h = None
+        self.c = None
+        self.save_path = save_dir
+        self.resultados_final = {"Modelo": self.name, 
+                            "Params": None, 
+                           "Fichero_resultados_experimento": None, 
+                            "Loss_tst": 0,
+                            "R2_tst": 0,
+                            "Loss_nodes": 0,
+                            "R2_eval": 0,
+                            "Loss_eval": 0,
+                            "Loss_final": 0}
 
     def __loss__(self, logits, labels):
         return F.mse_loss(logits, labels)
     
 
-    def train(self,train_params):
-        num_epochs = train_params["num_epochs"]
-        num_early_stop = train_params["num_early_stop"]
+    def _train_loop_snap(self):
+        counter = 0
+        accumulated_loss = 0.0
+        losses = []
+        for snapshot in self.loader["train"]:
+            snapshot = snapshot.to(self.device)
+            loss = self._train_snap(snapshot)
+
+            loss.backward()
+            accumulated_loss += loss.item()
+            counter += 1
+
+            if counter % self.steps == 0:
+                self.optimizer.step()
+                self.optimizer.zero_grad()
+                losses.append(accumulated_loss / self.steps)
+                accumulated_loss = 0.0
+        if counter % self.steps != 0:
+            self.optimizer.step()
+            self.optimizer.zero_grad()
+            losses.append(accumulated_loss / (counter % self.steps))
+        return losses
+
+
+    def train(self, num_epochs, num_early_stop, batch, steps=50):
+ 
+        self.steps = steps
+        self.batch = batch
+        self.num_epochs = num_epochs
         self.optimizer = Adam(self.model.parameters())
         lr_schedule = ReduceLROnPlateau(
                 self.optimizer, mode='min', factor=0.1, patience=2, min_lr=0.001
@@ -101,20 +142,36 @@ class TrainerModel(object):
         best_eval_r2score = -100.0
         best_eval_loss = 0.0
         early_stop_counter = 0
+        eval_losses, r2scores = [], []
+        losses = []
         for epoch in range(num_epochs):
             is_best = False
             self.model.train()
-            losses = []
-            for batch in self.loader["train"]:
-                batch = batch.to(self.device)
-                loss = self._train_batch(batch, batch.y)
-                losses.append(loss)
-            train_loss = torch.FloatTensor(losses).mean().item()
+            losses_epoch = []
+            if batch:
+                for batch in self.loader["train"]:
+                    batch = batch.to(self.device)
+                    loss = self._train_batch(batch)
+                    losses_epoch.append(loss)
+            else:
+                losses_epoch = self._train_loop_snap()
+            train_loss = torch.FloatTensor(losses_epoch).mean().item()
+            losses.append(train_loss)
+
+            ############### EVALUATION ################
+
             with torch.no_grad():
                 eval_loss, eval_r2score = self.eval()
-            print(
-                    f"Epoch:{epoch}, Training_loss:{train_loss:.4f}, Eval_loss:{eval_loss:.4f}, Eval_r2:{eval_r2score:.4f}, lr:{self.optimizer.param_groups[0]['lr']}"
-                )
+                eval_losses.append(eval_loss)
+                r2scores.append(eval_r2score)
+
+            print(f"Epoch {epoch + 1}/{num_epochs} | "
+            f"Train Loss: {train_loss:.4f} | "
+            f"Eval Loss: {eval_loss:.4f} | "
+            f"Eval R2: {eval_r2score:.4f} | ")
+            
+            ############### EARLY STOPPING ################
+
             if num_early_stop > 0:
                     if eval_loss <= best_eval_loss:
                         best_eval_loss = eval_loss
@@ -123,109 +180,194 @@ class TrainerModel(object):
                         early_stop_counter += 1
                     if epoch > num_epochs / 2 and early_stop_counter > num_early_stop:
                         break
-
             if lr_schedule:
                 lr_schedule.step(eval_loss)
+        self.resultados_final['loss_final'] = losses[-1]
+        self.resultados_final['r2_eval_final'] = r2scores[-1]
+        self.resultados_final['loss_eval_final'] = eval_losses[-1]
+        return losses, eval_losses, r2scores
 
-            if best_eval_r2score < eval_r2score:
-                is_best = True
-                best_eval_r2score = eval_r2score
-            recording = {"epoch": epoch, "is_best": str(is_best)}
-            if self.save:
-                self.save_model(is_best, recording=recording)
 
     def eval(self):
         self.model.to(self.device)
         self.model.eval()
         
-        losses, r2scores = [], []
-        for batch in self.loader["eval"]:
-            batch = batch.to(self.device)
-            loss, batch_preds = self._eval_batch(batch, batch.y)
-            r2scores.append(r2_score(batch.y.cpu(), batch_preds.cpu()))
-            losses.append(loss)
-        eval_loss = torch.tensor(losses).mean().item()
-        eval_r2score = np.mean(r2scores)
-        print(
-            f"eval loss: {eval_loss:.6f}, eval r2score {eval_r2score:.6f}"
-        )
+        losses_eval, r2scores = [], []
+
+        if self.batch:
+            for batch in self.loader["eval"]:
+                batch = batch.to(self.device)
+                loss, r2_score = self._eval_batch(batch, test = False)
+                r2scores.append(r2_score)
+                losses_eval.append(loss)
+        else:
+            self.h = None
+            self.c = None
+            for snapshot in self.loader["eval"]:
+                snapshot = snapshot.to(self.device)
+                loss, r2_score = self._eval_snap(snapshot, test=False)
+                r2scores.append(r2_score)
+                losses_eval.append(loss)
+
+    
+        eval_loss = torch.FloatTensor(losses_eval).mean().item()
+        eval_r2score = torch.FloatTensor(r2scores).mean().item()
         return eval_loss, eval_r2score
     
 
 
-    def test(self):
-        state_dict = torch.load(
-            os.path.join(self.save_dir, f"{self.name}_latest.pth")
-        )["net"]
+    def test(self, load_model = False):
 
-        self.model.load_state_dict(state_dict)
-        self.model = self.model.to(self.device)
+        if load_model:
+            state_dict = torch.load(os.path.join(self.save_path, self.name + ".pt"))
+
+            self.model.load_state_dict(state_dict)
+            self.model = self.model.to(self.device)
+
         self.model.eval()
-        losses, r2scores, preds = [], [], []
-        for batch in self.loader["test"]:
-            batch = batch.to(self.device)
-            loss, batch_preds = self._eval_batch(batch, batch.y)
-            preds.append(batch_preds)
-            r2scores.append(r2_score(batch.y.detach().cpu(), batch_preds.detach().cpu()))
-            losses.append(loss)
+        losses, r2scores, preds, loss_nodes = [], [], [], []
+        if self.batch:
+            for batch in self.loader["test"]:
+                batch = batch.to(self.device)
+                loss, r2, batch_preds, batch_real, loss_per_node = self._eval_batch(batch, test=True)
+                preds.append(batch_preds)
+                r2scores.append(r2)
+                losses.append(loss)
+                loss_nodes.append(loss_per_node)
+                real.append(batch_real)
+            else:
+                for snapshot in self.loader["test"]:
+                    snapshot = snapshot.to(self.device)
+                    loss, r2, snapshot_preds, real, loss_per_node = self._eval_snap(snapshot)
+                    preds.append(snapshot_preds)
+                    r2scores.append(r2)
+                    losses.append(loss)
+                    loss_nodes.append(loss_per_node)
+                    real.append(real)
+
         test_loss = torch.tensor(losses).mean().item()
         test_r2score = np.mean(r2scores)
-        preds = torch.cat(preds, dim=-1)
+
         print(
             f"test loss: {test_loss:.6f}, test r2score {test_r2score:.6f}"
         )
-        scores = {
-        "test_loss": test_loss,
-        "test r2score": test_r2score,
-        }
-        self.save_scores(scores)
-        return test_loss, test_r2score, preds
+
     
-    
-    
-    def _train_batch(self, data, labels):
-        logits = self.model(data.x, data.edge_index, data.batch)
-        loss = self.__loss__(logits, labels)
-        loss.backward()
+        self.resultados_final['Loss_tst'] = np.mean(test_loss)
+        self.resultados_final['R2_tst'] = np.mean(test_r2score)
+        self.resultados_final['Loss_nodes'] = np.mean(loss_nodes, axis=0)
         
-        self.optimizer.zero_grad()
+        return test_r2score, test_loss, loss_nodes, preds, real
+    
+    
+    
+    def _train_batch(self, batch):
+        x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features).to(self.device)
+        y = batch.y.to(self.device)
+
+        if self.name in ['LSTM']:
+            y_hat = self.model(x)
+        if self.name == "AGCRN":
+            y_hat, h = self.model(x, self.h)
+            self.h = h
+        loss = self.__loss__(y_hat.view(-1, self.model.n_target), y)
+        loss.backward()
         self.optimizer.step()
+        self.optimizer.zero_grad()
         return loss.item()
 
 
 
-    def _eval_batch(self, data, labels):
-        self.model.eval()
-        logits = self.model(data.x, data.edge_index, data.batch)
-        loss = self.__loss__(logits, labels)
-        loss = loss.item()
-        preds = logits
-        return loss, preds
+    def _train_snap(self, snapshot):
+        if self.name in ['LSTM']:
+            x = snapshot.x.view( self.model.n_nodes, self.model.n_features)[None,:,:].to(self.device)
+            y = snapshot.y[None,:,:].to(self.device)
+            y_hat = self.model(x)
+            
+        
+        if self.name == "DryGrEncoder":
+            x = snapshot.x.to(self.device)
+            edge_index = snapshot.edge_index.permute(2, 1, 0).to(self.device) 
+            edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device) 
+            y = snapshot.y.to(self.device) 
+            y_hat, self.h, self.c = self.model(x, edge_index[:,:,0],edge_attr, self.h, self.c)
+        loss = self.__loss__(y_hat, y)
+        return loss
+
+
+    def _eval_batch(self, batch, test = True):
+        x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
+        if self.name in ['LSTM']:
+            y_hat = self.model(x)
+        if self.name == "AGCRN":
+            y_hat, h = self.model(x, self.h)
+            self.h = h
+        
+        labels = batch.y
+        logits = y_hat.view(-1, self.model.n_target)
+           
+        if test:
+            r2 = r2_score(labels.cpu(), logits.cpu())
+            loss = self.__loss__(logits, labels).item()
+            loss_per_node = F.mse_loss(logits,labels , reduction='none')
+            loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            preds = y_hat.view(len(batch), self.model.n_nodes, self.model.n_target)
+            real = batch.y.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
+        
+        
+
+
+    def _eval_snap(self, snapshot, test=True):
+        if self.name in ['LSTM']:
+            x = snapshot.x.view(self.model.n_nodes, self.model.n_features)[None,:,:].to(self.device)
+            y = snapshot.y[None,:,:].to(self.device)
+            y_hat = self.model(x)
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.squeeze(0).detach().cpu(), y_hat.squeeze(0).detach().cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+
+        if self.name == "DryGrEncoder":
+            x = snapshot.x.to(self.device)  
+            edge_index = snapshot.edge_index.permute(2, 1, 0).to(self.device)  # [2, num_edges, num_time_steps]-> [2, 30, 100]
+            edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device)  # [num_edges, num_time_steps, num_edge_features] -> [30, 100, 2]
+            y = snapshot.y.to(self.device)
+            y_hat, self.h, self.c = self.model(x, edge_index[:,:,0],edge_attr, self.h, self.c)
+            loss = F.mse_loss(y_hat, y).item()
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
+        
+        if test:
+            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target)
+            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
+
+
+
+    def save_model(self):
+        print("\n==================== GUARDANDO RESULTADOS ===================\n")
+ 
+        path_modelo = os.path.join(self.save_path, self.name + ".pt")
+        path_general_problem = os.path.join(self.save_path, "results.csv")
+        torch.save(self.model.state_dict(), path_modelo)
+
+
+        if os.path.exists(path_general_problem):
+            df = pd.read_csv(path_general_problem)
+        else:
+            # Crear un DataFrame vacío con las columnas del diccionario
+            df = pd.DataFrame(columns=self.resultados_final.keys())
+
+        new_data_df = pd.DataFrame([self.resultados_final])
+
+        df = pd.concat([df, new_data_df], ignore_index=True)
+        print(df)
+        df.to_csv(path_general_problem, index=False)
+
+        print("\n==================== RESULTADOS GUARDADOS ===================\n")
     
-
-    def save_scores(self, scores):
-        with open(os.path.join(self.save_dir, f"{self.name}_scores.json"), "w") as f:
-            json.dump(scores, f)
-
-
-    def load_model(self):
-        state_dict = torch.load(
-            os.path.join(self.save_dir, f"{self.name}_best.pth")
-        )["net"]
-        self.model.load_state_dict(state_dict)
-        self.model.to(self.device)
-
-    def save_model(self, is_best=False, recording=None):
-        self.model.to("cpu")
-        state = {"net": self.model.state_dict()}
-        for key, value in recording.items():
-            state[key] = value
-        latest_pth_name = f"{self.name}_latest.pth"
-        best_pth_name = f"{self.name}_best.pth"
-        ckpt_path = os.path.join(self.save_dir, latest_pth_name)
-        torch.save(state, ckpt_path)
-        if is_best:
-            print("saving best...")
-            shutil.copy(ckpt_path, os.path.join(self.save_dir, best_pth_name))
-        self.model.to(self.device)
-       
