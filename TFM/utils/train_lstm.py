@@ -4,26 +4,7 @@ import torch.optim as optim
 from sklearn.metrics import r2_score
 import torch.nn.functional as F
 import numpy as np
-
-class LSTMModel(nn.Module):
-    def __init__(self, name, node_features, node_count, n_target, hidden_size =50, num_layers=1):
-        self.name  =name
-        self.n_nodes = node_count
-        self.n_target = n_target
-        self.n_features = node_features
-        self.num_layers = num_layers
-        self.hidden_size = hidden_size
-        super(LSTMModel, self).__init__()
-        self.lstm = nn.LSTM(self.n_features, hidden_size, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_size, self.n_target)
-    
-    def forward(self, x):
-
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        out, _ = self.lstm(x, (h0, c0))
-        out = self.fc(out)
-        return out
+from utils.models import LSTMModel
 
 
 def train_lstm_model(dataset_gt, params_model, dataloader, num_epochs, lr, problem, save_model = False, path_save = "./results", batch=True, steps = 30):

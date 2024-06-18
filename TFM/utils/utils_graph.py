@@ -288,23 +288,27 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
 
     # Reconstruct predictions and true values
     m, preds, y_true = reconstruir_predictions(predictions, real, n_target, n_situation, n_div=n_div, multiple=True)
-    
-    n_plots = 23
-    n_cols = 4
+    cmap = plt.get_cmap("coolwarm_r")
+    num_models = len(preds)
+    values_colors = np.linspace(0, 1, num_models)
+    colors = [cmap(value) for value in values_colors ]
+    n_plots = 8
+    n_cols = 2
     n_rows = (n_plots + n_cols - 1) // n_cols  # Calculating number of rows
 
     fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 10), dpi=200)
     handles = []
     labels = []
+    
     for i in range(n_plots):
         row = i // n_cols  # Calculate the row index
         col = i % n_cols   # Calculate the column index
         ax = axs[row, col]
 
-        sns.lineplot(y=y_true[i], x=range(n_target * m), ax=ax, label='Real', legend=False, color="royalblue")
+        
         for k in range(len(preds)):
-            sns.lineplot(y=preds[k][i], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False)
-
+            sns.lineplot(y=preds[k][i], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False, color=colors[k])
+        sns.lineplot(y=y_true[i], x=range(n_target * m), ax=ax, label='Real', legend=False, color="dimgrey", linewidth=2)
         if not handles:
             handles, labels = ax.get_legend_handles_labels()
         ax.set_title(f'Nodo {i+1}')
@@ -312,7 +316,7 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
     
     # Add legend to the last plot
     #axs[n_rows - 1, n_cols - 2].legend(loc='upper right', bbox_to_anchor=(1.5, 0.95), frameon=True)
-    fig.legend(handles, ['Real', 'Predicciones'], bbox_to_anchor=(0.95, 0.08),loc = 'lower right', fontsize=15)
+    fig.legend(handles, labels, loc = 'lower right', fontsize=15)
 
     # Remove any unused subplots
     if n_plots < (n_rows * n_cols):

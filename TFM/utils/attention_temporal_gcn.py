@@ -1,6 +1,6 @@
 import torch
 from utils.temporal_gcn import TGCN, TGCN2
-from torch_geometric.nn import GCNConv
+
 
 
 class A3TGCN(torch.nn.Module):
@@ -44,7 +44,7 @@ class A3TGCN(torch.nn.Module):
             cached=self.cached,
             add_self_loops=self.add_self_loops,
         )
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
         self._attention = torch.nn.Parameter(torch.empty(self.periods, device=device))
         torch.nn.init.uniform_(self._attention)
 
@@ -73,7 +73,7 @@ class A3TGCN(torch.nn.Module):
         probs = torch.nn.functional.softmax(self._attention, dim=0)
         for period in range(self.periods):
             H_accum = H_accum + probs[period] * self._base_tgcn(
-                X[:, :, period], edge_index[:,:,:,period], edge_weight[:,:, period], H
+                X[:, :, period], edge_index, edge_weight[:,period,:], H
             )
         return H_accum
 
@@ -101,7 +101,6 @@ class A3TGCN2(torch.nn.Module):
         batch_size:int, 
         improved: bool = False,
         cached: bool = False,
-        node_dim : int = -2,
         add_self_loops: bool = True):
         super(A3TGCN2, self).__init__()
 
@@ -112,7 +111,6 @@ class A3TGCN2(torch.nn.Module):
         self.cached = cached
         self.add_self_loops = add_self_loops
         self.batch_size = batch_size
-        self.node_dim = node_dim
         self._setup_layers()
 
     def _setup_layers(self):
@@ -122,8 +120,7 @@ class A3TGCN2(torch.nn.Module):
             batch_size=self.batch_size,
             improved=self.improved,
             cached=self.cached, 
-            add_self_loops=self.add_self_loops,
-            node_dim = self.node_dim)
+            add_self_loops=self.add_self_loops)
 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self._attention = torch.nn.Parameter(torch.empty(self.periods, device=device))
@@ -154,6 +151,6 @@ class A3TGCN2(torch.nn.Module):
         probs = torch.nn.functional.softmax(self._attention, dim=0)
         for period in range(self.periods):
 
-            H_accum = H_accum + probs[period] * self._base_tgcn( X[:, :, period], edge_index[period,:,:,:], edge_weight[period,:,:], H) #([32, 207, 32]
+            H_accum = H_accum + probs[period] * self._base_tgcn( X[:, :, :, period], edge_index, edge_weight, H) #([32, 207, 32]
 
         return H_accum

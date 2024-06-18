@@ -7,7 +7,7 @@ from torch_geometric.typing import Adj, OptTensor
 from torch_sparse import SparseTensor
 from torch_geometric.nn.inits import glorot
 from torch_geometric.nn.conv import MessagePassing
-from torch_geometric.nn.conv.gcn_conv import gcn_norm
+from utils.gcn_conv_dyn import gcn_norm
 
 from torch_geometric.nn import TopKPooling
 
@@ -103,16 +103,18 @@ class GCNConv_Fixed_W(MessagePassing):
         if edge_weight is None:
             return x_j
         else:
-            # Asegurarse de que edge_weight tiene las dimensiones correctas para la multiplicación
-            # Queremos multiplicar `edge_weight` con `x_j` en la dimensión de `num_time_steps`
-            # edge_weight debe tener la forma [num_edges, num_time_steps]
-            # Podemos reducir num_edge_features en edge_weight utilizando .squeeze(-1) si es 1, o .mean(dim=-1) si no es 1.
-            if edge_weight.size(-1) == 1:
-                edge_weight = edge_weight.squeeze(-1)
+            if edge_weight.dim()==3:
+                # Asegurarse de que edge_weight tiene las dimensiones correctas para la multiplicación
+                # Queremos multiplicar `edge_weight` con `x_j` en la dimensión de `num_time_steps`
+                # edge_weight debe tener la forma [num_edges, num_time_steps]
+                # Podemos reducir num_edge_features en edge_weight utilizando .squeeze(-1) si es 1, o .mean(dim=-1) si no es 1.
+                if edge_weight.size(-1) == 1:
+                    edge_weight = edge_weight.squeeze(-1).mean(dim=-1)
+                else:
+                    edge_weight = edge_weight.mean(dim=-1).mean(dim=-1)
             else:
                 edge_weight = edge_weight.mean(dim=-1)
-            return edge_weight * x_j
-
+            return edge_weight.view(-1,1) * x_j
 
 
 class EvolveGCNO(torch.nn.Module):
@@ -194,11 +196,9 @@ class EvolveGCNO(torch.nn.Module):
         """
         
         if self.weight is None:
-            print("entering")
             self.weight = self.initial_weight.data
         W = self.weight[None, :, :]
         _, W = self.recurrent_layer(W, W)
-        print("W shape:", W.shape)
 
         X = self.conv_layer(W.squeeze(dim=0), X, edge_index, edge_weight)
     

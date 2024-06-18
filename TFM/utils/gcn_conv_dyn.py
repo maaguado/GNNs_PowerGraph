@@ -87,21 +87,29 @@ def gcn_norm(edge_index, edge_weight=None, num_nodes=None, improved=False,
     assert flow in ['source_to_target', 'target_to_source']
     num_nodes = maybe_num_nodes(edge_index, num_nodes)
 
+
     if add_self_loops:
         edge_index, edge_weight = add_remaining_self_loops(
             edge_index, edge_weight, fill_value, num_nodes)
-
+    
     if edge_weight is None:
         edge_weight = torch.ones((edge_index.size(1), ), dtype=dtype,
                                  device=edge_index.device)
 
+    #print("edge_weight", edge_weight)
     row, col = edge_index[0], edge_index[1]
     idx = col if flow == 'source_to_target' else row
     deg = scatter(edge_weight, idx, dim=0, dim_size=num_nodes, reduce='sum')
-    deg_inv_sqrt = deg.pow_(-0.5)
+    
+    abs_deg = deg.abs()
+    deg_inv_sqrt = abs_deg.pow(-0.5)
+    # Restaurar el signo original
     deg_inv_sqrt.masked_fill_(deg_inv_sqrt == float('inf'), 0)
+    deg_inv_sqrt = deg_inv_sqrt * deg.sign()
+    
+    #print("Deg_inv_sqrt", deg_inv_sqrt)
     edge_weight = deg_inv_sqrt[row] * edge_weight * deg_inv_sqrt[col]
-
+    #print("Edge_weight_despues", edge_weight)
     return edge_index, edge_weight
 
 
@@ -227,8 +235,6 @@ class GCNConv(MessagePassing):
                     edge_index = cache
 
         x = self.lin(x)
-        #print("x size", x.size())
-        # propagate_type: (x: Tensor, edge_weight: OptTensor)
         out = self.propagate(edge_index, x=x, edge_weight=edge_weight,
                              size=None)
 
@@ -241,14 +247,17 @@ class GCNConv(MessagePassing):
         if edge_weight is None:
             return x_j
         else:
-            # Asegurarse de que edge_weight tiene las dimensiones correctas para la multiplicación
-            # Queremos multiplicar `edge_weight` con `x_j` en la dimensión de `num_time_steps`
-            # edge_weight debe tener la forma [num_edges, num_time_steps]
-            # Podemos reducir num_edge_features en edge_weight utilizando .squeeze(-1) si es 1, o .mean(dim=-1) si no es 1.
-            if edge_weight.size(-1) == 1:
-                edge_weight = edge_weight.squeeze(-1).mean(dim=-1)
+            if edge_weight.dim()==3:
+                # Asegurarse de que edge_weight tiene las dimensiones correctas para la multiplicación
+                # Queremos multiplicar `edge_weight` con `x_j` en la dimensión de `num_time_steps`
+                # edge_weight debe tener la forma [num_edges, num_time_steps]
+                # Podemos reducir num_edge_features en edge_weight utilizando .squeeze(-1) si es 1, o .mean(dim=-1) si no es 1.
+                if edge_weight.size(-1) == 1:
+                    edge_weight = edge_weight.squeeze(-1).mean(dim=-1)
+                else:
+                    edge_weight = edge_weight.mean(dim=-1).mean(dim=-1)
             else:
-                edge_weight = edge_weight.mean(dim=-1).mean(dim=-1)
+                edge_weight = edge_weight.mean(dim=-1)
             return edge_weight.view(-1,1) * x_j
 
     def message_and_aggregate(self, adj_t: SparseTensor, x: Tensor) -> Tensor:
