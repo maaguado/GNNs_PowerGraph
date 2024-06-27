@@ -121,13 +121,15 @@ class TrainerModel(object):
         else:
             self.steps = len(self.loader["train"]) if self.batch else -1
 
+
         self.num_epochs = num_epochs
         self.optimizer = Adam(self.model.parameters())
         lr_schedule = ReduceLROnPlateau(
-                self.optimizer, mode='min', factor=0.1, patience=2, min_lr=0.001
+                self.optimizer, mode='min', factor=0.1, patience=5, min_lr=0.001
         )
+    
         self.model.to(self.device)
-        best_eval_r2score = -100.0
+        print("AQuissss")
         best_eval_loss = 0.0
         early_stop_counter = 0
         eval_losses, r2scores = [], []
@@ -147,21 +149,23 @@ class TrainerModel(object):
                 eval_losses.append(eval_loss)
                 r2scores.append(eval_r2score)
 
+            lr = self.optimizer.param_groups[0]['lr']
             print(f"Epoch {epoch + 1}/{num_epochs} | "
             f"Train Loss: {train_loss:.4f} | "
             f"Eval Loss: {eval_loss:.4f} | "
-            f"Eval R2: {eval_r2score:.4f} | ")
+            f"Eval R2: {eval_r2score:.4f} | "
+            f"LR: {lr:.4f} | ")
             
             ############### EARLY STOPPING ################
 
             if num_early_stop > 0:
-                    if eval_loss <= best_eval_loss:
-                        best_eval_loss = eval_loss
-                        early_stop_counter = 0
-                    else:
-                        early_stop_counter += 1
-                    if epoch > num_epochs / 2 and early_stop_counter > num_early_stop:
-                        break
+                if eval_loss <= best_eval_loss:
+                    best_eval_loss = eval_loss
+                    early_stop_counter = 0
+                else:
+                    early_stop_counter += 1
+                if epoch > num_epochs / 2 and early_stop_counter > num_early_stop:
+                    break
             if lr_schedule:
                 lr_schedule.step(eval_loss)
         self.resultados_final['Loss_final'] = losses[-1]
@@ -621,3 +625,62 @@ class TrainerEvolveGCN(TrainerMPNNLSTM):
     def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
         super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
     
+
+class TrainerSTConv(TrainerMPNNLSTM):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+
+    def _train_snap(self, snapshot):
+        x = snapshot.x.permute(1, 0)[None,:,:].unsqueeze(-1).to(self.device) 
+        edge_index = snapshot.edge_index.permute(2, 1, 0).to(self.device) 
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device) 
+        y = snapshot.y.to(self.device) 
+        y_hat= self.model(x, edge_index[:,:,0],edge_attr)
+        loss = self.__loss__(y_hat, y)
+        return loss
+    
+    def _eval_snap(self, snapshot, test=True):
+        x = snapshot.x.permute(1, 0)[None,:,:].unsqueeze(-1).to(self.device) 
+        edge_index = snapshot.edge_index.permute(2, 1, 0).to(self.device)  # [2, num_edges, num_time_steps]-> [2, 30, 100]
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device)  # [num_edges, num_time_steps, num_edge_features] -> [30, 100, 2]
+        y = snapshot.y.to(self.device)
+        y_hat = self.model(x, edge_index[:,:,0],edge_attr)
+        loss = F.mse_loss(y_hat, y).item()
+        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
+        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+        if test:
+            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
+        
+
+class TrainerMSTGCN(TrainerMPNNLSTM):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+
+    def _train_snap(self, snapshot):
+        x = snapshot.x[None, None,:,:].permute(0,2,1,3).to(self.device)
+        edge_index = snapshot.edge_index[0,:,:].permute(1,0).to(self.device)
+        y = snapshot.y.to(self.device)
+        y_hat= self.model(x, edge_index).squeeze(0)
+        loss = self.__loss__(y_hat, y)
+        return loss
+    
+    def _eval_snap(self, snapshot, test=True):
+        x = snapshot.x[None, None,:,:].permute(0,2,1,3).to(self.device)
+        edge_index = snapshot.edge_index[0,:,:].permute(1,0).to(self.device)
+        y = snapshot.y.to(self.device)
+        y_hat = self.model(x, edge_index).squeeze(0)
+        loss = F.mse_loss(y_hat, y).item()
+        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
+        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+        if test:
+            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
