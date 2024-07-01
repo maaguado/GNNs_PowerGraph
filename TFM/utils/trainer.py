@@ -129,7 +129,6 @@ class TrainerModel(object):
         )
     
         self.model.to(self.device)
-        print("AQuissss")
         best_eval_loss = 0.0
         early_stop_counter = 0
         eval_losses, r2scores = [], []

@@ -6,4 +6,4 @@ TFM/code/dataset/.DS_Store
 TFM/utils/__pycache__/
 TFM/.DS_Store
 TFM/basurilla/code/dataset/.DS_Store
-TFM/experimentos_split/results/
+TFM/experimentos_split/results/*/*.pt
