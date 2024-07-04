@@ -683,3 +683,40 @@ class TrainerMSTGCN(TrainerMPNNLSTM):
             return loss, r2, preds, real, loss_per_node
         else:
             return loss, r2
+        
+
+from torch_geometric.utils import to_scipy_sparse_matrix
+
+
+
+class TrainerMTGNN(TrainerMPNNLSTM):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+
+    def _train_snap(self, snapshot):
+        x = snapshot.x[None,None,:,:].to(self.device)
+        ei = snapshot.edge_index[0,:,:].permute(1,0).to(self.device)
+        ea = snapshot.edge_attr[0,:,:].mean(1).to(self.device)
+        matrix = to_scipy_sparse_matrix(ei, ea)
+        y = snapshot.y.to(self.device)
+        y_hat= self.model(x, matrix)
+        loss = self.__loss__(y_hat, y)
+        return loss
+    
+    def _eval_snap(self, snapshot, test=True):
+        x = snapshot.x[None,None,:,:].to(self.device)
+        ei = snapshot.edge_index[0,:,:].permute(1,0).to(self.device)
+        ea = snapshot.edge_attr[0,:,:].mean(1).to(self.device)
+        matrix = to_scipy_sparse_matrix(ei, ea)
+        y = snapshot.y.to(self.device)
+        y_hat = self.model(x, matrix)
+        loss = F.mse_loss(y_hat, y).item()
+        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
+        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+        if test:
+            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
