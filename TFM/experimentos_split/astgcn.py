@@ -113,7 +113,7 @@ path = os.getcwd()
 sys.path.insert(1, "/".join(path.split("/")[0:-1]))
 
 
-folder_path = "/home/TFM/code_dataset2/datos/Natural Oscillation"
+folder_path = "/usr/src/app/GNNs_PowerGraph/TFM/datos"
 results_save_path = "./results"
 name_model = "ASTGCN"
 loader = powergrid.PowerGridDatasetLoader(folder_path, problem="regression")
