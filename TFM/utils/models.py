@@ -70,21 +70,28 @@ class MPNNLSTMModel(torch.nn.Module):
 
 
 class LSTMModel(nn.Module):
-    def __init__(self, name, node_features, node_count, n_target, hidden_size =50, num_layers=1):
-        self.name  =name
+    def __init__(self, name, node_features, node_count, n_target, hidden_size=50, num_layers=1, is_classification=False):
+        super(LSTMModel, self).__init__()
+        self.name = name
         self.n_nodes = node_count
         self.n_target = n_target
         self.n_features = node_features
         self.num_layers = num_layers
         self.hidden_size = hidden_size
-        super(LSTMModel, self).__init__()
+        self.is_classification = is_classification  
+        
         self.lstm = nn.LSTM(self.n_features, hidden_size, num_layers, batch_first=True)
-        self.fc = nn.Linear(hidden_size, self.n_target)
-    
-    def forward(self, x):
+        self.fc = nn.Linear(hidden_size, n_target) 
 
+    def forward(self, x):
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
         out, _ = self.lstm(x, (h0, c0))
-        out = self.fc(out)
+        
+        if self.is_classification:
+            out = out[:, -1, :]
+            out = self.fc(out)
+            out = torch.softmax(out, dim=1) 
+        else:
+            out = self.fc(out) 
         return out

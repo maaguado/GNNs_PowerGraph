@@ -18,3 +18,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir jupyter
 
 EXPOSE 9000
+
+CMD ["/bin/bash"]

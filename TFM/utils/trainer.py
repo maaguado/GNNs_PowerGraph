@@ -1,7 +1,7 @@
 
 import os
 import json
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, accuracy_score, precision_score, recall_score, f1_score
 from utils import pygt_loader
 import torch
 import torch.nn.functional as F
@@ -79,30 +79,35 @@ def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64
 
 
 class TrainerModel(object):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+    def __init__(self, model, dataset, device, save_dir, dataloader_params, verbose=True, is_classification=False):
         self.model = model
-        self.dataset = dataset 
+        self.dataset = dataset
         self.loader = train_test_val_split(dataset, batch_size=dataloader_params["batch_size"],
-                                                   data_split_ratio=dataloader_params["data_split_ratio"],
-                                                   random_seed=dataloader_params["seed"],
-                                                   keep_same=dataloader_params["keep_same"],
-                                                   use_batch=dataloader_params["use_batch"], verbose=verbose)
+                                           data_split_ratio=dataloader_params["data_split_ratio"],
+                                           random_seed=dataloader_params["seed"],
+                                           keep_same=dataloader_params["keep_same"],
+                                           use_batch=dataloader_params["use_batch"], verbose=verbose)
         self.device = device
+        self.is_classification = is_classification
         self.optimizer = None
         self.name = model.name
-
         self.save_path = save_dir
-        self.resultados_final = {"Modelo": self.name, 
-                            "Params": None, 
-                           "Fichero_resultados_experimento": None, 
-                            "Loss_tst": 0,
-                            "R2_tst": 0,
-                            "Loss_nodes": 0,
-                            "R2_eval": 0,
-                            "Loss_eval": 0,
-                            "Loss_final": 0}
+        self.resultados_final = {"Modelo": self.name,
+                                 "Params": None,
+                                 "Fichero_resultados_experimento": None,
+                                 "Loss_tst": 0,
+                                 "Loss_eval": 0,
+                                 "Loss_final": 0}
+
+        if self.is_classification:
+            self.resultados_final.update({"Accuracy_eval": 0, "Precision_eval": 0, "Recall_eval": 0, "F1_eval": 0, "Accuracy_tst": 0, "Precision_tst": 0, "Recall_tst": 0, "F1_tst": 0})
+        else:
+            self.resultados_final.update({"R2_tst": 0, "R2_eval": 0, "Loss_nodes": 0})
+
 
     def __loss__(self, logits, labels):
+        if self.is_classification:
+            return F.cross_entropy(logits, labels)
         return F.mse_loss(logits, labels)
     
 
@@ -131,7 +136,12 @@ class TrainerModel(object):
         self.model.to(self.device)
         best_eval_loss = 0.0
         early_stop_counter = 0
-        eval_losses, r2scores = [], []
+
+        eval_losses = []
+        if self.is_classification:
+            accs, precisions, recalls, f1s = [], [], [], []
+        else:
+            r2scores = []
         losses = []
         print("\n==================== TRAIN INFO ===================\n")
         for epoch in range(num_epochs):
@@ -144,16 +154,27 @@ class TrainerModel(object):
             ############### EVALUATION ################
 
             with torch.no_grad():
-                eval_loss, eval_r2score = self.eval()
-                eval_losses.append(eval_loss)
-                r2scores.append(eval_r2score)
+                if self.is_classification:
+                    eval_loss, acc, precision, recall, f1 = self.eval()
+                    eval_losses.append(eval_loss)
+                    accs.append(acc)
+                    precisions.append(precision)
+                    recalls.append(recall)
+                    f1s.append(f1)
+                else:
+                    eval_loss, eval_r2score = self.eval()
+                    eval_losses.append(eval_loss)
+                    r2scores.append(eval_r2score)
 
             lr = self.optimizer.param_groups[0]['lr']
-            print(f"Epoch {epoch + 1}/{num_epochs} | "
-            f"Train Loss: {train_loss:.4f} | "
-            f"Eval Loss: {eval_loss:.4f} | "
-            f"Eval R2: {eval_r2score:.4f} | "
-            f"LR: {lr:.4f} | ")
+            result_str = f"Epoch {epoch + 1}/{num_epochs} | Train Loss: {train_loss:.4f} | Eval Loss: {eval_loss:.4f} | "
+
+            if self.is_classification:
+                result_str += (f"Accuracy: {acc:.4f} | Precision: {precision:.4f} | Recall: {recall:.4f} | "
+                            f"F1-Score: {f1:.4f} | LR: {lr:.4f} | ")
+            else:
+                result_str += f"Eval R2: {eval_r2score:.4f} | LR: {lr:.4f} | "
+            print(result_str)
             
             ############### EARLY STOPPING ################
 
@@ -168,19 +189,35 @@ class TrainerModel(object):
             if lr_schedule:
                 lr_schedule.step(eval_loss)
         self.resultados_final['Loss_final'] = losses[-1]
-        self.resultados_final['R2_eval'] = r2scores[-1]
+        
         self.resultados_final['Loss_eval'] = eval_losses[-1]
-        return losses, eval_losses, r2scores
+        if self.is_classification:
+            self.resultados_final["Accuracy_eval"] = accs[-1]
+            self.resultados_final["Precision_eval"] = precisions[-1]
+            self.resultados_final["Recall_eval"] = recalls[-1]
+            self.resultados_final["F1_eval"] = f1s[-1]
+            return losses, eval_losses, accs, precisions, recalls
+        else:
+            self.resultados_final['R2_eval'] = r2scores[-1]
+            return losses, eval_losses, r2scores
 
 
     def eval(self):
         self.model.to(self.device)
         self.model.eval()
-        
-        losses_eval, r2scores = self._eval_loop(test=False)
-        eval_loss = torch.FloatTensor(losses_eval).mean().item()
-        eval_r2score = torch.FloatTensor(r2scores).mean().item()
-        return eval_loss, eval_r2score
+        if self.is_classification:
+            losses_eval, accs, precisions, recalls, f1s = self._eval_loop(test=False)
+            eval_loss = torch.FloatTensor(losses_eval).mean().item()
+            eval_acc = torch.FloatTensor(accs).mean().item()
+            eval_precision = torch.FloatTensor(precisions).mean().item()
+            eval_recall = torch.FloatTensor(recalls).mean().item()
+            eval_f1 = torch.FloatTensor(f1s).mean().item()
+            return eval_loss, eval_acc, eval_precision, eval_recall, eval_f1
+        else:
+            losses_eval, r2scores = self._eval_loop(test=False)
+            eval_loss = torch.FloatTensor(losses_eval).mean().item()
+            eval_r2score = torch.FloatTensor(r2scores).mean().item()
+            return eval_loss, eval_r2score
     
 
 
@@ -195,21 +232,38 @@ class TrainerModel(object):
         print("\n==================== TEST INFO ===================\n")
 
         self.model.eval()
-        losses, r2scores,loss_nodes, preds, real,  = self._eval_loop(test = True)
+        if self.is_classification:
+            losses, accs, precisions, recalls, f1s, preds, real = self._eval_loop(test=True)
+            test_acc = np.mean(accs)
+            test_precision = np.mean(precisions)
+            test_recall = np.mean(recalls)
+            test_f1 = np.mean(f1s)
+            self.resultados_final["Accuracy_tst"] = np.mean(test_acc)
+            self.resultados_final["Precision_tst"] = np.mean(test_precision)
+            self.resultados_final["Recall_tst"] = np.mean(test_recall)
+            self.resultados_final["F1_tst"] = np.mean(test_f1)
+        else:
+            losses, r2scores, loss_nodes, preds, real = self._eval_loop(test=True)
+            test_r2score = np.mean(r2scores)
+            self.resultados_final['R2_tst'] = np.mean(test_r2score)
+            self.resultados_final['Loss_nodes'] = np.mean(loss_nodes, axis=0)
+
         print("preds: ", preds[0].shape)
         test_loss = torch.tensor(losses).mean().item()
-        test_r2score = np.mean(r2scores)
+        self.resultados_final['Loss_tst'] = test_loss
 
-        print(
-            f"test loss: {test_loss:.6f}, test r2score {test_r2score:.6f}"
-        )
+        if self.is_classification:
+            print(f"test loss: {test_loss:.6f}, "
+                f"test accuracy: {test_acc:.4f}, "
+                f"test precision: {test_precision:.4f}, "
+                f"test recall: {test_recall:.4f}, "
+                f"test F1-score: {test_f1:.4f}")
+        else:
+            print(f"test loss: {test_loss:.6f}, test R2 score: {test_r2score:.6f}")
 
-        self.resultados_final['Loss_tst'] = np.mean(test_loss)
-        self.resultados_final['R2_tst'] = np.mean(test_r2score)
-        self.resultados_final['Loss_nodes'] = np.mean(loss_nodes, axis=0)
-        
-        return test_r2score, test_loss, loss_nodes, preds, real
-    
+        return (test_acc, test_precision, test_recall, test_f1, test_loss, preds, real) if self.is_classification else (test_r2score, test_loss, loss_nodes, preds, real)
+
+            
     def save_model(self, path_save_experiment=None, params=None):
 
         self.resultados_final['Params'] = params
@@ -238,14 +292,14 @@ class TrainerModel(object):
 
 
 class TrainerLSTMModel(TrainerModel):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params,batch=True, verbose=True):
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
-
+    def __init__(self, model, dataset, device, save_dir, dataloader_params, batch=True, verbose=True, is_classification=False):
+        super().__init__(model, dataset, device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
+        self.is_classification = is_classification
         self.batch = batch
-        if (dataloader_params['use_batch'] and not batch):
+        if dataloader_params['use_batch'] and not batch:
             print("WARNING: The model is not batched but the dataloader is batched. Changing to batched model.")
             self.batch = True
-        if (not dataloader_params['use_batch'] and batch):
+        if not dataloader_params['use_batch'] and batch:
             print("WARNING: The model is batched but the dataloader is not batched. Changing to not batched model.")
             self.batch = False
         
@@ -280,26 +334,42 @@ class TrainerLSTMModel(TrainerModel):
 
 
     def _eval_loop(self, test):
-        losses_eval, r2scores = [], []
-        preds, real, loss_per_node = [], [], []
+        losses_eval, preds, real = [], [], []
+        if self.is_classification:
+            accs, precisions, recalls, f1s = [], [], [], []
+        else:
+            r2scores, loss_per_node = [], []
         evaluation_set = "test" if test else "val"
         for item in self.loader[evaluation_set]:
             item = item.to(self.device)
             if test:
-                loss, r2_score, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
-
+                if self.is_classification:
+                    loss, acc, precision, recall, f1, preds_prelim, real_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
+                    accs.append(acc)
+                    precisions.append(precision)
+                    recalls.append(recall)
+                    f1s.append(f1)
+                else:
+                    loss, r2_score, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
+                    r2scores.append(r2_score)
+                    loss_per_node.append(loss_per_node_prelim)
                 preds.append(preds_prelim)
                 real.append(real_prelim)
-                loss_per_node.append(loss_per_node_prelim)
-                r2scores.append(r2_score)
                 losses_eval.append(loss)
             else:   
-                loss, r2_score = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
-                r2scores.append(r2_score)
+                if self.is_classification:
+                    loss, acc, precision, recall, f1 = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
+                    accs.append(acc)
+                    precisions.append(precision)
+                    recalls.append(recall)
+                    f1s.append(f1)
+                else:
+                    loss, r2_score = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
+                    r2scores.append(r2_score)
                 losses_eval.append(loss)
         if test:
-            return losses_eval, r2scores, loss_per_node, preds, real
-        return losses_eval, r2scores
+            return (losses_eval, r2scores, loss_per_node, preds, real) if not self.is_classification else (losses_eval, accs, precisions, recalls, f1s, preds, real)
+        return (losses_eval, r2scores) if not self.is_classification else (losses_eval, accs, precisions, recalls, f1s)
     
 
 
@@ -315,8 +385,8 @@ class TrainerLSTMModel(TrainerModel):
 
     def _train_snap(self, snapshot):
         x = snapshot.x.view( self.model.n_nodes, self.model.n_features)[None,:,:].to(self.device)
-        y = snapshot.y[None,:,:].to(self.device)
-        y_hat = self.model(x)
+        y = snapshot.y[None,:,:].to(self.device) if not self.is_classification else snapshot.y.to(self.device)
+        y_hat = self.model(x).squeeze(0)
         loss = self.__loss__(y_hat, y)
         return loss
 
@@ -338,25 +408,63 @@ class TrainerLSTMModel(TrainerModel):
         else:
             return loss, r2
         
-    
-    def _eval_snap(self, snapshot, test):
-        
-        x = snapshot.x.view(self.model.n_nodes, self.model.n_features)[None,:,:].to(self.device)
-        y = snapshot.y[None,:,:].to(self.device)
-        y_hat = self.model(x)
-        loss = self.__loss__(y_hat, y)
-        loss = F.mse_loss(y_hat, y).item()
-        r2 = r2_score(y.squeeze(0).detach().cpu(), y_hat.squeeze(0).detach().cpu())
-        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
-        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
-        
-        if test:
-            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
-        else:
-            return loss, r2
 
+    def _eval_batch(self, batch, test):
+        x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features).to(self.device)
+        y = batch.y.to(self.device)
+        y_hat = self.model(x)
+        
+        if self.is_classification:
+            logits = y_hat.view(-1, self.model.n_output)
+            loss = self.__loss__(logits, y).item()
+            preds = logits.argmax(dim=0).cpu().detach().numpy()
+            real = y.cpu().detach().numpy()
+            accuracy = accuracy_score(real, preds)
+            precision = precision_score(real, preds, average='macro')
+            recall = recall_score(real, preds, average='macro')
+            f1 = f1_score(real, preds, average='macro')
+            return (loss, accuracy, precision, recall, f1, preds, real) if test else (loss, accuracy, precision, recall, f1)
+        else:
+            logits = y_hat.view(-1, self.model.n_output)
+            loss = self.__loss__(logits, y).item()
+            r2 = r2_score(y.cpu(), logits.cpu())
+            if test:
+                loss_per_node = F.mse_loss(logits,batch.y , reduction='none')
+                loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+                preds = y_hat.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = batch.y.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
+            
+    def _eval_snap(self, snapshot, test):
+        x = snapshot.x.view(self.model.n_nodes, self.model.n_features)[None,:,:].to(self.device)
+        y = snapshot.y.to(self.device)
+        y_hat = self.model(x)
+        
+        if self.is_classification:
+            logits = y_hat.squeeze(0)
+            loss = self.__loss__(logits, y).item()
+            preds = logits.argmax(dim=0).cpu().detach()
+            real = y.squeeze(0).argmax(dim=0).cpu().detach()
+            print(preds)
+            accuracy = accuracy_score(real, preds)
+            precision = precision_score(real, preds, average='macro')
+            recall = recall_score(real, preds, average='macro')
+            f1 = f1_score(real, preds, average='macro')
+            return (loss, accuracy, precision, recall, f1, preds, real) if test else (loss, accuracy, precision, recall, f1)
+        else:
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.cpu(), y_hat.cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_output).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            if test:
+                preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
+    
 
 class TrainerDryGrEncoder(TrainerModel):
     def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
