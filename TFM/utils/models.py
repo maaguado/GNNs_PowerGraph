@@ -6,12 +6,13 @@ from utils.mpnn_lstm_dyn import MPNNLSTM
 import torch.nn as nn
 
 class AGCRNModel(torch.nn.Module):
-    def __init__(self, n_features, n_nodes, embedding_dim, name, n_target, k=2):
+    def __init__(self, n_features, n_nodes, embedding_dim, name, n_target, k=2, is_classification=False):
         self.name  =name
         self.n_nodes = n_nodes
         self.n_target = n_target
         self.n_features = n_features
         self.embedding_dim =embedding_dim
+        self.is_classification = is_classification
         self.k = k
         super(AGCRNModel, self).__init__()
 
@@ -28,6 +29,14 @@ class AGCRNModel(torch.nn.Module):
         h_0 = self.recurrent(x, e, h)
         y = F.relu(h_0)
         y = self.linear(y)
+        if self.is_classification:
+            y = torch.mean(y, dim=0) 
+            y = self.linear(y)
+            y = torch.softmax(y, dim=0) 
+            return y, h_0
+        else:
+            # En caso de regresión, se procesa cada nodo por separado
+            y = self.linear(y)
         return y, h_0
 
 

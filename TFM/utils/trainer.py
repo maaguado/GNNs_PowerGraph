@@ -535,54 +535,29 @@ class TrainerDryGrEncoder(TrainerModel):
             return loss, r2
 
 
-class TrainerAGCRN(TrainerModel):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+class TrainerAGCRN(TrainerLSTMModel):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
         if (not dataloader_params['use_batch']):
             print("WARNING: The model is batched but the dataloader is not batched. Changing to batched dataset.")
             dataloader_params['use_batch'] = True
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+        super().__init__(model, dataset,device, save_dir, dataloader_params, batch=True, verbose=verbose, is_classification=is_classification)
         self.h = None
         self.e = torch.empty(self.model.n_nodes, self.model.embedding_dim).to(self.device)
         torch.nn.init.xavier_uniform_(self.e)
 
 
-    def _train_loop(self):
-        self.h = None
-        losses_epoch = []
-        for batch in self.loader["train"]:
-            batch = batch.to(self.device)
-            loss = self._train_batch(batch)
-            losses_epoch.append(loss)
-        return losses_epoch
 
 
     def _eval_loop(self, test):
         self.h = None
-        losses_eval, r2scores = [], []
-        preds, real, loss_per_node = [], [], []
-        evaluation_set = "test" if test else "val"
-        for item in self.loader[evaluation_set]:
-            item = item.to(self.device)
-            if test:
-                loss, r2_score, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_batch(item, test = test) 
-                preds.append(preds_prelim)
-                real.append(real_prelim)
-                loss_per_node.append(loss_per_node_prelim)
-            else:   
-                loss, r2_score = self._eval_batch(item, test = test)
-            r2scores.append(r2_score)
-            losses_eval.append(loss)
-
-        if test:
-            return losses_eval, r2scores, loss_per_node, preds, real
-        return losses_eval, r2scores
+        return super()._eval_loop(test)
     
 
 
     def _train_batch(self, batch):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat, self.h = self.model(x, self.e, self.h)
-        loss = F.mse_loss(y_hat.view(-1, self.model.n_target), batch.y)
+        loss = self.__loss__(y_hat.view(-1, self.model.n_target), batch.y)
         loss.backward()
         loss = loss.detach()
         self.h = self.h.detach()
@@ -595,19 +570,25 @@ class TrainerAGCRN(TrainerModel):
     def _eval_batch(self, batch, test):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat,self.h = self.model(x, self.e, self.h)
-        loss = F.mse_loss(y_hat.view(-1, self.model.n_target), batch.y).item()
-        labels = batch.y
+        loss = self.__loss__(y_hat.view(-1, self.model.n_target), batch.y).item()
+
+        y = batch.y.view(-1, self.model.n_target)
         logits = y_hat.view(-1, self.model.n_target)
-        r2 = r2_score(labels.cpu().detach(), logits.cpu().detach())
-        loss = self.__loss__(logits, labels).item()
-        if test:
-            loss_per_node = F.mse_loss(logits,labels , reduction='none')
-            loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
-            preds = y_hat.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = batch.y.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
+        if self.is_classification:
+            loss = self.__loss__(logits, y).item()
+            preds = logits.argmax(dim=1).cpu().detach().numpy()
+            real = y.argmax(dim=1).cpu().detach().numpy()
+            return (loss,preds, real)
         else:
-            return loss, r2
+            r2 = r2_score(y.cpu(), logits.cpu())
+            if test:
+                loss_per_node = F.mse_loss(logits,batch.y , reduction='none')
+                loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+                preds = y_hat.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = batch.y.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
 
 
 
