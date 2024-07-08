@@ -1,6 +1,0 @@
-datetime, 2019/1/3 3:50
-bus1, 3005
-bus2, 3008
-type, branch_fault
-start, 0.2542
-end, -1

@@ -1,6 +1,0 @@
-datetime, 2019/1/4 8:00
-bus1, 3011
-bus2, -1
-type, gen_trip
-start, 0.0625
-end, -1
