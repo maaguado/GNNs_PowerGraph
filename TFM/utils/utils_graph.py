@@ -333,7 +333,7 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
 
 def plot_clasificacion(preds, real, target_names, name_model = None):
     
-
+    sns.set_palette("coolwarm_r")
     cm = confusion_matrix(real, preds)
     precisions = precision_score(real, preds, average=None)
 

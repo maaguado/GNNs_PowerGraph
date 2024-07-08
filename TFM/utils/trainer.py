@@ -557,7 +557,8 @@ class TrainerAGCRN(TrainerLSTMModel):
     def _train_batch(self, batch):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat, self.h = self.model(x, self.e, self.h)
-        loss = self.__loss__(y_hat.view(-1, self.model.n_target), batch.y)
+        y = batch.y.view(len(batch), self.model.n_target)
+        loss = self.__loss__(y_hat.view(-1, self.model.n_target), y)
         loss.backward()
         loss = loss.detach()
         self.h = self.h.detach()
@@ -570,10 +571,9 @@ class TrainerAGCRN(TrainerLSTMModel):
     def _eval_batch(self, batch, test):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat,self.h = self.model(x, self.e, self.h)
-        loss = self.__loss__(y_hat.view(-1, self.model.n_target), batch.y).item()
-
-        y = batch.y.view(-1, self.model.n_target)
+        y = batch.y.view(len(batch), self.model.n_target)
         logits = y_hat.view(-1, self.model.n_target)
+        loss = self.__loss__(logits, y)
         if self.is_classification:
             loss = self.__loss__(logits, y).item()
             preds = logits.argmax(dim=1).cpu().detach().numpy()

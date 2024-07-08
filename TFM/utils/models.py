@@ -6,11 +6,12 @@ from utils.mpnn_lstm_dyn import MPNNLSTM
 import torch.nn as nn
 
 class AGCRNModel(torch.nn.Module):
-    def __init__(self, n_features, n_nodes, embedding_dim, name, n_target, k=2, is_classification=False):
+    def __init__(self, n_features, n_nodes, embedding_dim, hidden_size, name, n_target, k=2, is_classification=False):
         self.name  =name
         self.n_nodes = n_nodes
         self.n_target = n_target
         self.n_features = n_features
+        self.hidden_size = hidden_size
         self.embedding_dim =embedding_dim
         self.is_classification = is_classification
         self.k = k
@@ -18,21 +19,20 @@ class AGCRNModel(torch.nn.Module):
 
         self.recurrent = AGCRN(number_of_nodes = n_nodes,
                               in_channels = n_features,
-                              out_channels = n_nodes,
+                              out_channels = hidden_size,
                               K = self.k,
                               embedding_dimensions = embedding_dim)
-        self.linear = torch.nn.Linear(n_nodes,n_target)
+        self.linear = torch.nn.Linear(hidden_size,n_target)
 
 
 
     def forward(self, x, e, h):
         h_0 = self.recurrent(x, e, h)
         y = F.relu(h_0)
-        y = self.linear(y)
         if self.is_classification:
-            y = torch.mean(y, dim=0) 
+            y = torch.mean(y, dim=1) 
             y = self.linear(y)
-            y = torch.softmax(y, dim=0) 
+            y = torch.softmax(y, dim=1) 
             return y, h_0
         else:
             # En caso de regresión, se procesa cada nodo por separado
@@ -109,7 +109,7 @@ class LSTMModel(nn.Module):
         out, _ = self.lstm(x, (h0, c0))
         
         if self.is_classification:
-            out = out[:, -1, :]
+            out = torch.mean(out, dim=1)
             out = self.fc(out)
             out = torch.softmax(out, dim=1) 
         else:
