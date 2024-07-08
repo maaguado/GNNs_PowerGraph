@@ -1,0 +1,6 @@
+datetime, 2019/1/2 6:00
+bus1, 3005
+bus2, 3008
+type, branch_trip
+start, 0.4083
+end, -1

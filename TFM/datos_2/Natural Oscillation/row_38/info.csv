@@ -1,0 +1,6 @@
+datetime, 2019/1/1 6:20
+bus1, 101
+bus2, -1
+type, bus_trip
+start, 0.1917
+end, 2.8708

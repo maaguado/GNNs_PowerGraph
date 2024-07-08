@@ -1,0 +1,6 @@
+datetime, 2019/1/4 3:30
+bus1, 101
+bus2, -1
+type, gen_trip
+start, 0.5875
+end, -1

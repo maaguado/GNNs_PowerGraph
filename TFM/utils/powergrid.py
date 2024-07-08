@@ -84,11 +84,13 @@ class PowerGridDatasetLoader(object):
         if (self.problem.split("_")[1]=='type'):
             encoder = OneHotEncoder(sparse_output=False)
             self.processed_targets = encoder.fit_transform(np.array(self.types).reshape(-1, 1))
+            self.target_names  = [f'class {int(cat)}' for cat in encoder.categories_[0]]
 
         elif (self.problem.split("_")[1]=='bus'):
             self.buses = [self.transformation_dict[i] for i in self.buses]
             encoder = OneHotEncoder(sparse_output=False)
             self.processed_targets = encoder.fit_transform(np.array(self.buses).reshape(-1, 1))
+            self.target_names  = [f'class {int(cat)}' for cat in encoder.categories_[0]]
 
     def _transform_temp(self):
         """Transform temporary data."""
@@ -241,19 +243,14 @@ class PowerGridDatasetLoader(object):
                 repeated_index = np.array(repeated_index).reshape(((n_situations)*self.div,  self._intro, len(self.edge_index[0]),2))
                 self.edges = [repeated_index[i, :, :, :] for i in range((n_situations)*self.div)]
         
-        # If the problem type is classification
         elif (self.problem.split("_")[0]=='classification'):
             self._preprocess_targets()
             self.div = 1
             processed_targets = self.processed_targets[indices, :]
             situations_each = range(n_situations)
-            # Assign features as voltages for each situation
             self.features = [voltages_def[i, :, :] for i in range(n_situations)]
-            # Assign targets as bus types or bus numbers depending on the problem type
             self.targets = [processed_targets[i,:]  for i in range(n_situations)]
-            # Assign edge weights as edge attributes for each situation
             self.edge_weights = [edge_attr[i][:,:,:].reshape(n_timestamps, len(self.edge_index[0]), 2) for i in range(n_situations)]
-            # Repeat the edge index for each situation
             repeated_index = [edge_index[j] for j in range(n_situations) for i in range(n_timestamps)]
             repeated_index = np.array(repeated_index).reshape((n_situations, n_timestamps, len(self.edge_index[0]),2  ))
             self.edges = [repeated_index[i, :, :, :] for i in range(n_situations)]

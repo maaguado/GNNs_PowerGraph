@@ -1,7 +1,7 @@
 
 import os
 import json
-from sklearn.metrics import r2_score, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import r2_score, accuracy_score, precision_score, recall_score, f1_score, classification_report
 from utils import pygt_loader
 import torch
 import torch.nn.functional as F
@@ -126,7 +126,6 @@ class TrainerModel(object):
         else:
             self.steps = len(self.loader["train"]) if self.batch else -1
 
-
         self.num_epochs = num_epochs
         self.optimizer = Adam(self.model.parameters())
         lr_schedule = ReduceLROnPlateau(
@@ -206,13 +205,9 @@ class TrainerModel(object):
         self.model.to(self.device)
         self.model.eval()
         if self.is_classification:
-            losses_eval, accs, precisions, recalls, f1s = self._eval_loop(test=False)
+            losses_eval, acc, precision, recall, f1 = self._eval_loop(test=False)
             eval_loss = torch.FloatTensor(losses_eval).mean().item()
-            eval_acc = torch.FloatTensor(accs).mean().item()
-            eval_precision = torch.FloatTensor(precisions).mean().item()
-            eval_recall = torch.FloatTensor(recalls).mean().item()
-            eval_f1 = torch.FloatTensor(f1s).mean().item()
-            return eval_loss, eval_acc, eval_precision, eval_recall, eval_f1
+            return eval_loss, acc, precision, recall, f1
         else:
             losses_eval, r2scores = self._eval_loop(test=False)
             eval_loss = torch.FloatTensor(losses_eval).mean().item()
@@ -233,15 +228,13 @@ class TrainerModel(object):
 
         self.model.eval()
         if self.is_classification:
-            losses, accs, precisions, recalls, f1s, preds, real = self._eval_loop(test=True)
-            test_acc = np.mean(accs)
-            test_precision = np.mean(precisions)
-            test_recall = np.mean(recalls)
-            test_f1 = np.mean(f1s)
-            self.resultados_final["Accuracy_tst"] = np.mean(test_acc)
-            self.resultados_final["Precision_tst"] = np.mean(test_precision)
-            self.resultados_final["Recall_tst"] = np.mean(test_recall)
-            self.resultados_final["F1_tst"] = np.mean(test_f1)
+            losses, acc, precision, recall, f1, preds, real = self._eval_loop(test=True)
+        
+            self.resultados_final["Accuracy_tst"] = acc
+            self.resultados_final["Precision_tst"] = precision
+            self.resultados_final["Recall_tst"] = recall
+            self.resultados_final["F1_tst"] = f1
+            print(classification_report(real, preds)) 
         else:
             losses, r2scores, loss_nodes, preds, real = self._eval_loop(test=True)
             test_r2score = np.mean(r2scores)
@@ -254,14 +247,14 @@ class TrainerModel(object):
 
         if self.is_classification:
             print(f"test loss: {test_loss:.6f}, "
-                f"test accuracy: {test_acc:.4f}, "
-                f"test precision: {test_precision:.4f}, "
-                f"test recall: {test_recall:.4f}, "
-                f"test F1-score: {test_f1:.4f}")
+                f"test accuracy: {acc:.4f}, "
+                f"test precision: {precision:.4f}, "
+                f"test recall: {recall:.4f}, "
+                f"test F1-score: {f1:.4f}")
         else:
             print(f"test loss: {test_loss:.6f}, test R2 score: {test_r2score:.6f}")
 
-        return (test_acc, test_precision, test_recall, test_f1, test_loss, preds, real) if self.is_classification else (test_r2score, test_loss, loss_nodes, preds, real)
+        return (acc,precision,recall,f1, test_loss, preds, real) if self.is_classification else (test_r2score, test_loss, loss_nodes, preds, real)
 
             
     def save_model(self, path_save_experiment=None, params=None):
@@ -344,11 +337,7 @@ class TrainerLSTMModel(TrainerModel):
             item = item.to(self.device)
             if test:
                 if self.is_classification:
-                    loss, acc, precision, recall, f1, preds_prelim, real_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
-                    accs.append(acc)
-                    precisions.append(precision)
-                    recalls.append(recall)
-                    f1s.append(f1)
+                    loss, preds_prelim, real_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
                 else:
                     loss, r2_score, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
                     r2scores.append(r2_score)
@@ -357,19 +346,24 @@ class TrainerLSTMModel(TrainerModel):
                 real.append(real_prelim)
                 losses_eval.append(loss)
             else:   
+                
                 if self.is_classification:
-                    loss, acc, precision, recall, f1 = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
-                    accs.append(acc)
-                    precisions.append(precision)
-                    recalls.append(recall)
-                    f1s.append(f1)
+                   loss, preds_prelim, real_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
                 else:
                     loss, r2_score = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
                     r2scores.append(r2_score)
+                preds.append(preds_prelim)
+                real.append(real_prelim)
                 losses_eval.append(loss)
-        if test:
-            return (losses_eval, r2scores, loss_per_node, preds, real) if not self.is_classification else (losses_eval, accs, precisions, recalls, f1s, preds, real)
-        return (losses_eval, r2scores) if not self.is_classification else (losses_eval, accs, precisions, recalls, f1s)
+
+        if self.is_classification:
+            acc = accuracy_score(real, preds)
+            precision = precision_score(real, preds, average='macro', zero_division=0)
+            recall = recall_score(real, preds, average='macro', zero_division=0)
+            f1 = f1_score(real, preds, average='macro', zero_division=0)
+            return (losses_eval, acc, precision, recall, f1, preds, real) if test else (losses_eval, acc, precision, recall, f1)
+        else:
+            return (losses_eval, r2scores, loss_per_node, preds, real) if test else (losses_eval, r2scores)
     
 
 
@@ -390,23 +384,6 @@ class TrainerLSTMModel(TrainerModel):
         loss = self.__loss__(y_hat, y)
         return loss
 
-
-    def _eval_batch(self, batch, test):
-        x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
-        y_hat = self.model(x)
-        labels = batch.y
-        logits = y_hat.view(-1, self.model.n_target)
-        r2 = r2_score(labels.detach().cpu(), logits.detach().cpu())
-        loss = self.__loss__(logits, labels).item()
-        if test:
-            
-            loss_per_node = F.mse_loss(logits,labels , reduction='none')
-            loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
-            preds = y_hat.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = batch.y.view(len(batch), self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
-        else:
-            return loss, r2
         
 
     def _eval_batch(self, batch, test):
@@ -419,11 +396,7 @@ class TrainerLSTMModel(TrainerModel):
             loss = self.__loss__(logits, y).item()
             preds = logits.argmax(dim=0).cpu().detach().numpy()
             real = y.cpu().detach().numpy()
-            accuracy = accuracy_score(real, preds)
-            precision = precision_score(real, preds, average='macro')
-            recall = recall_score(real, preds, average='macro')
-            f1 = f1_score(real, preds, average='macro')
-            return (loss, accuracy, precision, recall, f1, preds, real) if test else (loss, accuracy, precision, recall, f1)
+            return (loss,preds, real) if test else (loss)
         else:
             logits = y_hat.view(-1, self.model.n_output)
             loss = self.__loss__(logits, y).item()
@@ -447,12 +420,7 @@ class TrainerLSTMModel(TrainerModel):
             loss = self.__loss__(logits, y).item()
             preds = logits.argmax(dim=0).cpu().detach()
             real = y.squeeze(0).argmax(dim=0).cpu().detach()
-            print(preds)
-            accuracy = accuracy_score(real, preds)
-            precision = precision_score(real, preds, average='macro')
-            recall = recall_score(real, preds, average='macro')
-            f1 = f1_score(real, preds, average='macro')
-            return (loss, accuracy, precision, recall, f1, preds, real) if test else (loss, accuracy, precision, recall, f1)
+            return loss, preds, real
         else:
             loss = F.mse_loss(y_hat, y).item()
             r2 = r2_score(y.cpu(), y_hat.cpu())

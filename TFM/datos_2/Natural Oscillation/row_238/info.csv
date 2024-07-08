@@ -1,0 +1,6 @@
+datetime, 2019/1/2 15:40
+bus1, 3005
+bus2, 3006
+type, branch_fault
+start, 0.5542
+end, 2.9208
