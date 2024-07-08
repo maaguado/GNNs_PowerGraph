@@ -122,7 +122,7 @@ folder_path = "/usr/src/app/GNNs_PowerGraph/TFM/datos"
 results_save_path = "./results"
 name_model = "ASTGCN"
 loader = powergrid.PowerGridDatasetLoader(folder_path, problem="regression")
-_,_,_ =loader.process()
+_,_,_ =loader.process(verbose=False)
 limit = 300
 
 dataloader_params2 = {

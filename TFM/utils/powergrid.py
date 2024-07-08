@@ -257,7 +257,7 @@ class PowerGridDatasetLoader(object):
         return situations_each
 
 
-    def process(self):
+    def process(self, verbose=True):
         """
         Process the dataset.
 
@@ -268,10 +268,13 @@ class PowerGridDatasetLoader(object):
         Returns:
             Tuple: Tuple containing voltage data, edge indices, and edge attributes.
         """
+        print("Processing dataset...")
         for root, dirs, files in os.walk(self._natural_folder):
             for folder in dirs:
                 folder_name = os.path.join(root, folder)
-                print("Processing: ", folder)
+                
+                if verbose:
+                    print("Processing: ", folder)
 
                 if (not os.path.exists(os.path.join(folder_name, 'info.csv'))):
                     print("Skipping ", folder)
