@@ -4,6 +4,11 @@ import seaborn as sns
 sns.set_palette("coolwarm_r")
 import numpy as np
 import os, sys
+import os, sys
+
+path = os.getcwd()
+
+sys.path.insert(1, "/".join(path.split("/")[0:-1]))
 try:
     from tqdm import tqdm
 except ImportError:
