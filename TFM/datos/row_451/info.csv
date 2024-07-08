@@ -1,0 +1,6 @@
+datetime, 2019/1/4 3:10
+bus1, 154
+bus2, -1
+type, bus_fault
+start, 0.2583
+end, -1

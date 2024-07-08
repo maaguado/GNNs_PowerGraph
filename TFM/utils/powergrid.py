@@ -84,13 +84,13 @@ class PowerGridDatasetLoader(object):
         if (self.problem.split("_")[1]=='type'):
             encoder = OneHotEncoder(sparse_output=False)
             self.processed_targets = encoder.fit_transform(np.array(self.types).reshape(-1, 1))
-            self.target_names  = [f'class {int(cat)}' for cat in encoder.categories_[0]]
+            self.target_names  = encoder.categories_[0]
 
         elif (self.problem.split("_")[1]=='bus'):
             self.buses = [self.transformation_dict[i] for i in self.buses]
             encoder = OneHotEncoder(sparse_output=False)
             self.processed_targets = encoder.fit_transform(np.array(self.buses).reshape(-1, 1))
-            self.target_names  = [f'class {int(cat)}' for cat in encoder.categories_[0]]
+            self.target_names  = encoder.categories_[0]
 
     def _transform_temp(self):
         """Transform temporary data."""
