@@ -4,24 +4,24 @@ import seaborn as sns
 sns.set_palette("coolwarm_r")
 import numpy as np
 import os, sys
-import os, sys
+import itertools
 
-path = os.getcwd()
 
-sys.path.insert(1, "/".join(path.split("/")[0:-1]))
+sys.path.insert(1, "/usr/src/app/GNNs_PowerGraph/TFM")
 try:
     from tqdm import tqdm
 except ImportError:
     def tqdm(iterable):
         return iterable
 
+
 from utils import powergrid
+
+
 import torch
 import torch.nn.functional as F
 from utils.astgcn import ASTGCN
-
 from utils.trainer import TrainerMSTGCN
-import itertools
 
 
 def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device = torch.device("cpu")):
