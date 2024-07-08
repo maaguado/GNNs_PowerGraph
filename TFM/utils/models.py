@@ -51,22 +51,33 @@ class DyGrEncoderModel(torch.nn.Module):
 
 
 class MPNNLSTMModel(torch.nn.Module):
-    def __init__(self, name, node_features, node_count, n_target, hidden_size, window=1, dropout=0.5):
-        self.name  =name
+    def __init__(self, name, node_features, node_count, n_target, hidden_size, window=1, dropout=0.5, is_classification=False):
+        super(MPNNLSTMModel, self).__init__()
+        self.name = name
         self.n_nodes = node_count
         self.n_target = n_target
         self.n_features = node_features
         self.hidden_size = hidden_size
         self.window = window
-        super(MPNNLSTMModel, self).__init__()
+        self.is_classification = is_classification
         self.recurrent = MPNNLSTM(self.n_features, self.hidden_size, self.n_nodes, self.window, dropout)
-        self.linear = torch.nn.Linear(2*self.hidden_size+self.n_features+self.window-1, self.n_target)
+        
+        self.linear = torch.nn.Linear(2 * self.hidden_size + self.n_features + self.window - 1, self.n_target)
 
     def forward(self, x, edge_index, edge_weight):
         h = self.recurrent(x, edge_index, edge_weight)
         h = F.relu(h)
-        h = self.linear(h)
-        return h
+        
+        if self.is_classification:
+            h_avg = torch.mean(h, dim=0) 
+            h_out = self.linear(h_avg)
+            
+            h_out = torch.softmax(h_out, dim=0) 
+            return h_out
+        else:
+            # En caso de regresión, se procesa cada nodo por separado
+            h_out = self.linear(h)
+            return h_out
 
 
 class LSTMModel(nn.Module):

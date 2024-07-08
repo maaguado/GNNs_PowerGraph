@@ -6,6 +6,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.cm as cm
 
+from sklearn.metrics import confusion_matrix, precision_score
 
 def format_plot(ax):
     sns.despine(ax=ax, top=True, right=True, left=False, bottom=False)
@@ -326,4 +327,33 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
     # Adjust layout and add super title
     plt.suptitle(f'Predicciones y valores reales en {problem}, caso {n_situation}', fontsize=20)
     plt.tight_layout(pad=2)
+    plt.show()
+
+
+
+def plot_clasificacion(preds, real, target_names, name_model = None):
+    
+
+    cm = confusion_matrix(real, preds)
+    precisions = precision_score(real, preds, average=None)
+
+    class_labels = np.unique(np.concatenate((real, preds)))
+    fig, ax = plt.subplots(1, 2, figsize=(20, 7))
+
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax[0], xticklabels=target_names, yticklabels=target_names)
+    ax[0].set_title('Matriz de Confusión')
+    ax[0].set_xlabel('Predicciones')
+    ax[0].set_ylabel('Valores Reales')
+    format_plot(ax[0])
+    # Precisión por Clase
+    ax[1].bar(target_names, precisions, color='skyblue')
+    ax[1].set_xlabel('Clases')
+    ax[1].set_ylabel('Precisión')
+    ax[1].set_title('Precisión por Clase')
+    ax[1].set_ylim([0, 1])
+    ax[1].set_xticks(range(len(target_names)))
+    ax[1].set_xticklabels(target_names, rotation=45)  # Asegurando que los nombres estén rotados si son largos
+    format_plot(ax[1])
+    plt.suptitle("Resultados de la clasificación: {}".format(name_model), fontsize=20)
+    plt.tight_layout(pad=2.0, w_pad=2.0, h_pad=2.0)
     plt.show()

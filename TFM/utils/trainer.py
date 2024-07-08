@@ -195,7 +195,7 @@ class TrainerModel(object):
             self.resultados_final["Precision_eval"] = precisions[-1]
             self.resultados_final["Recall_eval"] = recalls[-1]
             self.resultados_final["F1_eval"] = f1s[-1]
-            return losses, eval_losses, accs, precisions, recalls
+            return losses, eval_losses, accs, precisions, recalls, f1s
         else:
             self.resultados_final['R2_eval'] = r2scores[-1]
             return losses, eval_losses, r2scores
@@ -357,8 +357,8 @@ class TrainerLSTMModel(TrainerModel):
                 losses_eval.append(loss)
 
         if self.is_classification:
-            real = np.concatenate(real).flatten()
-            preds = np.concatenate(preds).flatten()
+            real = np.concatenate(real).flatten() if self.batch else real
+            preds = np.concatenate(preds).flatten()if self.batch else preds
             acc = accuracy_score(real, preds)
             precision = precision_score(real, preds, average='macro', zero_division=0)
             recall = recall_score(real, preds, average='macro', zero_division=0)
@@ -613,11 +613,11 @@ class TrainerAGCRN(TrainerModel):
 
 
 class TrainerMPNNLSTM(TrainerModel):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
         if (dataloader_params['use_batch']):
             print("WARNING: The model is not batched but the dataloader is batched. Changing to not batched dataset.")
             dataloader_params['use_batch'] = False
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
         
 
     def _train_loop(self):
@@ -645,29 +645,47 @@ class TrainerMPNNLSTM(TrainerModel):
 
 
     def _eval_loop(self, test):
-        losses_eval, r2scores = [], []
-        preds, real, loss_per_node = [], [], []
+        losses_eval, preds, real = [], [], []
+        if self.is_classification:
+            accs, precisions, recalls, f1s = [], [], [], []
+        else:
+            r2scores, loss_per_node = [], []
         evaluation_set = "test" if test else "val"
-     
+
+
         for item in self.loader[evaluation_set]:
             item = item.to(self.device)
             if test:
-                loss, r2_prelim, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_snap(item, test = test)
+                if self.is_classification:
+                    loss, preds_prelim, real_prelim = self._eval_snap(item, test = test)
+                else:
+                    loss, r2_score, preds_prelim, real_prelim, loss_per_node_prelim = self._eval_snap(item, test = test)
+                    r2scores.append(r2_score)
+                    loss_per_node.append(loss_per_node_prelim)
                 preds.append(preds_prelim)
                 real.append(real_prelim)
-                loss_per_node.append(loss_per_node_prelim)
+                losses_eval.append(loss)
             else:   
-                loss, r2_prelim = self._eval_snap(item, test = test)
-            r2scores.append(r2_prelim)
-            losses_eval.append(loss)
-
-        if test:
-            return losses_eval, r2scores, loss_per_node, preds, real
-        return losses_eval, r2scores
+                if self.is_classification:
+                    loss, preds_prelim, real_prelim = self._eval_snap(item, test = test)
+                else:
+                    loss, r2_score = self._eval_snap(item, test = test)
+                    r2scores.append(r2_score)
+                preds.append(preds_prelim)
+                real.append(real_prelim)
+                losses_eval.append(loss)
+            
+        if self.is_classification:
+            acc = accuracy_score(real, preds)
+            precision = precision_score(real, preds, average='macro', zero_division=0)
+            recall = recall_score(real, preds, average='macro', zero_division=0)
+            f1 = f1_score(real, preds, average='macro', zero_division=0)
+            return (losses_eval, acc, precision, recall, f1, preds, real) if test else (losses_eval, acc, precision, recall, f1)
+        else:
+            return (losses_eval, r2scores, loss_per_node, preds, real) if test else (losses_eval, r2scores)
     
 
 
-    
 
     def _train_snap(self, snapshot):
         x = snapshot.x.to(self.device) 
@@ -686,16 +704,22 @@ class TrainerMPNNLSTM(TrainerModel):
         edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device)  # [num_edges, num_time_steps, num_edge_features] -> [30, 100, 2]
         y = snapshot.y.to(self.device)
         y_hat = self.model(x, edge_index[:,:,0],edge_attr)
-        loss = F.mse_loss(y_hat, y).item()
-        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
-        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
-        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
-        if test:
-            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
+        if self.is_classification:
+            loss = self.__loss__(y_hat, y).item()
+            preds = y_hat.argmax(dim=0).cpu().detach()
+            real = y.squeeze(0).argmax(dim=0).cpu().detach()
+            return loss, preds, real
         else:
-            return loss, r2
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.cpu(), y_hat.cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_output).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            if test:
+                preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
         
 
 class TrainerA3TGCN(TrainerMPNNLSTM):
