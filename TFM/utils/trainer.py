@@ -346,14 +346,13 @@ class TrainerLSTMModel(TrainerModel):
                 real.append(real_prelim)
                 losses_eval.append(loss)
             else:   
-                
                 if self.is_classification:
                     loss, preds_prelim, real_prelim = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
+                    preds.append(preds_prelim)
+                    real.append(real_prelim)
                 else:
                     loss, r2_score = self._eval_batch(item, test = test) if self.batch else self._eval_snap(item, test = test)
                     r2scores.append(r2_score)
-                preds.append(preds_prelim)
-                real.append(real_prelim)
                 losses_eval.append(loss)
 
         if self.is_classification:
