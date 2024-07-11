@@ -837,3 +837,36 @@ class TrainerMTGNN(TrainerMPNNLSTM):
             return loss, r2, preds, real, loss_per_node
         else:
             return loss, r2
+        
+
+class TrainerDCRNN(TrainerMPNNLSTM):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+
+    def _train_snap(self, snapshot):
+        x = snapshot.x.to(self.device)  # Mover a GPU
+        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
+        y = snapshot.y.to(self.device)
+
+        y_hat= self.model(x, edge_index,edge_attr)
+        loss = self.__loss__(y_hat, y)
+        return loss
+    
+    def _eval_snap(self, snapshot, test=True):
+        x = snapshot.x.to(self.device)  # [num_nodes, num_time_steps] -> [23, 100]
+        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
+        y = snapshot.y.to(self.device)
+        y_hat= self.model(x, edge_index,edge_attr)
+        loss = F.mse_loss(y_hat, y).item()
+        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
+        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+        if test:
+            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+            return loss, r2, preds, real, loss_per_node
+        else:
+            return loss, r2
+        

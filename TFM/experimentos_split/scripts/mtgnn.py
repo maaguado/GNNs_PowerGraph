@@ -37,9 +37,9 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
     mejores_parametros = None
     mejores_resultados = None
 
-    for config in tqdm(list(itertools.product(param_grid['gcn_depth'], param_grid['conv_channels'], param_grid['kernel_size'], param_grid['dropout'], param_grid['gcn_true'], param_grid['build_adj'], param_grid['propalpha']))):
-        gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha = config
-        print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}")
+    for config in tqdm(list(itertools.product(param_grid['gcn_depth'], param_grid['conv_channels'], param_grid['kernel_size'], param_grid['dropout'], param_grid['gcn_true'], param_grid['build_adj'], param_grid['propalpha'], param_grid['out_channels']))):
+        gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
+        print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
         
         model = RecurrentGCN(
             name="MTGNN", 
@@ -47,7 +47,8 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
             node_features=n_features, 
             n_target=n_target,
             conv_channels=conv_channels,
-            residual_channels=conv_channels,  # Asumiendo que deseas la misma cantidad de canales aquí
+            residual_channels=conv_channels, 
+            out_channels=out_channels,
             skip_channels=conv_channels // 2,  # Ejemplo de cómo definir skip channels
             end_channels=n_target,  # Para conectar con la salida
             gcn_depth=gcn_depth,
@@ -64,7 +65,8 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
             'dropout': dropout,
             'gcn_true': gcn_true,
             'build_adj': build_adj,
-            'propalpha': propalpha
+            'propalpha': propalpha,
+            'out_channels': out_channels
         })
         trainer = TrainerMTGNN(model, dataset, device, f"../results/{problem}", dataloader_params)
 
@@ -79,6 +81,7 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
             "gcn_true": gcn_true,
             "build_adj": build_adj,
             "propalpha": propalpha,
+            "out_channels": out_channels,
             "loss_final": losses[-1],
             "r2_eval_final": np.mean(r2scores[-1]),
             "loss_eval_final": np.mean(eval_losses[-1]),
@@ -100,7 +103,8 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
                 "dropout": dropout,
                 "gcn_true": gcn_true,
                 "build_adj": build_adj,
-                "propalpha": propalpha
+                "propalpha": propalpha,
+                "out_channels": out_channels
             }
             mejores_resultados = results_intermedio
 
@@ -189,7 +193,8 @@ dataloader_params2 = {
 }
 param_grid = {
     'gcn_depth': [1, 2, 3],                  
-    'conv_channels': [4, 8, 16],           
+    'conv_channels': [4, 8, 16], 
+    'out_channels': [4, 8, 16],          
     'kernel_size': [3, 5, 7],                
     'dropout': [0.0, 0.25, 0.5],              
     'gcn_true': [True, False],                

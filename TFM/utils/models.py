@@ -4,6 +4,8 @@ import torch.nn.functional as F
 from utils.dygrae import DyGrEncoder
 from utils.mpnn_lstm_dyn import MPNNLSTM
 from utils.mstgcn import MSTGCN
+from torch_geometric_temporal.nn.recurrent import DCRNN
+
 import torch.nn as nn
 
 class AGCRNModel(torch.nn.Module):
@@ -163,4 +165,23 @@ class MSTGCNModel(torch.nn.Module):
             h = torch.mean(h, dim=1)
             h = self.linear(h)
             h = torch.softmax(h, dim=1) 
+        return h
+
+
+
+class DCRNNModel(torch.nn.Module):
+    def __init__(self, name, node_features, node_count, n_target, hidden_dim):
+        self.name  =name
+        self.n_nodes = node_count
+        self.n_target = n_target
+        self.n_features = node_features
+        self.hidden_dim = hidden_dim
+        super(DCRNNModel, self).__init__()
+        self.recurrent = DCRNN(self.n_features,self.hidden_dim , 1)
+        self.linear = torch.nn.Linear(self.hidden_dim, n_target)
+
+    def forward(self, x, edge_index, edge_weight):
+        h = self.recurrent(x, edge_index, edge_weight)
+        h = F.relu(h)
+        h = self.linear(h)
         return h
