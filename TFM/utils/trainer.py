@@ -791,7 +791,7 @@ class TrainerMSTGCN(TrainerMPNNLSTM):
             return loss, preds, real
         else:
             loss = F.mse_loss(y_hat, y).item()
-            r2 = r2_score(y.cpu(), y_hat.cpu())
+            r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
             loss_per_node = F.mse_loss(y_hat, y, reduction='none')
             loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
             if test:

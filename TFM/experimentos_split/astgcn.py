@@ -5,7 +5,7 @@ sns.set_palette("coolwarm_r")
 import numpy as np
 import os, sys
 import itertools
-
+import wandb
 
 sys.path.insert(1, "/usr/src/app/GNNs_PowerGraph/TFM")
 try:
@@ -27,6 +27,7 @@ from utils.trainer import TrainerMSTGCN
 def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device = torch.device("cpu")):
     resultados_list = []
 
+    wandb.init(project='astgcn_project', entity='your_username')
     n_nodes = dataset.features[0].shape[0]
     n_target = dataset.targets[0].shape[1]
     n_features = dataset[0].x.shape[1]
@@ -39,6 +40,12 @@ def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, nu
 
     for nb_block, filter_, time_strides in tqdm(list(itertools.product(param_grid['nb_block'], param_grid['filter'], param_grid['time_strides']))):
         print(f"Entrenando modelo con nb_block={nb_block}, nb_chev_filter={filter_}, nb_time_filter={filter_}, time_strides={time_strides}")        
+        wandb.config.update({
+            'nb_block': nb_block,
+            'filter_size': filter_,
+            'time_strides': time_strides
+        })
+        
         model = RecurrentGCN(name="ASTGCN", node_features=n_features, node_count=n_nodes, n_target=n_target, nb_block=nb_block, k=2, nb_chev_filter = filter_, nb_time_filter =filter_, time_strides = time_strides)
         
         trainer = TrainerMSTGCN(model, dataset, device, f"./results/{problem}", dataloader_params)
@@ -58,7 +65,7 @@ def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, nu
             "loss_test": np.mean(losses_tst),
             "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
         }
-        
+        wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
         resultados_list.append(results_intermedio)
 
         if np.mean(losses_tst) < mejor_loss_test:
@@ -75,7 +82,7 @@ def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, nu
         print("Resultados intermedios: ", results_intermedio)
 
     resultados_gt = pd.DataFrame(resultados_list)
-
+    wandb.finish()
     return mejor_trainer, mejores_parametros, mejores_resultados, resultados_gt
 
 
