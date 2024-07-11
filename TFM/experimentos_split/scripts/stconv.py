@@ -20,7 +20,7 @@ from utils import powergrid
 
 import torch
 import torch.nn.functional as F
-from utils.astgcn import STConv
+from  utils.stgcn import STConv
 from utils.trainer import TrainerSTConv
 
 import itertools
