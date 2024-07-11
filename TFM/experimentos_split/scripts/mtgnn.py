@@ -205,7 +205,7 @@ param_grid = {
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_early_stop = 10
-num_epochs = 1
+num_epochs = 50
 lr = 0.01
 hidden_size =100
 
