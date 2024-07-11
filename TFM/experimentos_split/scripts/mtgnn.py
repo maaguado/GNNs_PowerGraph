@@ -27,7 +27,7 @@ from torch_geometric_temporal.nn.attention import MTGNN
 import itertools
 def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device=torch.device("cpu")):
     resultados_list = []
-    wandb.init(project='mtgnn_'+problem, entity='maragumar01')
+    
     n_nodes = dataset.features[0].shape[0]
     n_target = dataset.targets[0].shape[1]
     n_features = dataset[0].x.shape[1]
@@ -40,7 +40,7 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
     for config in tqdm(list(itertools.product(param_grid['gcn_depth'], param_grid['conv_channels'], param_grid['kernel_size'], param_grid['dropout'], param_grid['gcn_true'], param_grid['build_adj'], param_grid['propalpha'], param_grid['out_channels']))):
         gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
         print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
-        
+        wandb.init(project='mtgnn_'+problem, entity='maragumar01')
         model = RecurrentGCN(
             name="MTGNN", 
             node_count=n_nodes, 
@@ -109,9 +109,9 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
             mejores_resultados = results_intermedio
 
         print("Resultados intermedios: ", results_intermedio)
-
+        wandb.finish()
     resultados_gt = pd.DataFrame(resultados_list)
-    wandb.finish()
+    
     return mejor_trainer, mejores_parametros, mejores_resultados, resultados_gt
 
 
@@ -205,7 +205,7 @@ param_grid = {
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_early_stop = 10
-num_epochs = 50
+num_epochs = 1
 lr = 0.01
 hidden_size =100
 

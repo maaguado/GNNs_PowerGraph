@@ -11,7 +11,7 @@ import shutil
 import numpy as np
 import pandas as pd
 from utils.train_lstm import  LSTMModel
-
+import wandb
 
 def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64, keep_same=False, use_batch=False, verbose=True):
     
@@ -167,7 +167,6 @@ class TrainerModel(object):
 
             lr = self.optimizer.param_groups[0]['lr']
             result_str = f"Epoch {epoch + 1}/{num_epochs} | Train Loss: {train_loss:.4f} | Eval Loss: {eval_loss:.4f} | "
-
             if self.is_classification:
                 result_str += (f"Accuracy: {acc:.4f} | Precision: {precision:.4f} | Recall: {recall:.4f} | "
                             f"F1-Score: {f1:.4f} | LR: {lr:.4f} | ")
