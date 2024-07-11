@@ -27,7 +27,7 @@ from utils.trainer import TrainerMSTGCN
 def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device = torch.device("cpu")):
     resultados_list = []
 
-    wandb.init(project='astgcn_project', entity='your_username')
+    wandb.init(project='astgcn_'+problem, entity='maragumar01')
     n_nodes = dataset.features[0].shape[0]
     n_target = dataset.targets[0].shape[1]
     n_features = dataset[0].x.shape[1]
