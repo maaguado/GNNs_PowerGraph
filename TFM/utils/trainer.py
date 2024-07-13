@@ -822,7 +822,7 @@ class TrainerMTGNN(TrainerMPNNLSTM):
         x = snapshot.x[None,None,:,:].to(self.device)
         ei = snapshot.edge_index[0,:,:].permute(1,0).to(self.device)
         ea = snapshot.edge_attr[0,:,:].mean(1).to(self.device)
-        matrix = to_scipy_sparse_matrix(ei, ea)
+        matrix = torch.tensor(to_scipy_sparse_matrix(ei, ea).toarray())
         y = snapshot.y.to(self.device)
         y_hat = self.model(x, matrix)
         loss = F.mse_loss(y_hat, y).item()
