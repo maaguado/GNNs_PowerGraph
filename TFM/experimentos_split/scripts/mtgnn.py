@@ -6,6 +6,8 @@ import numpy as np
 import os, sys
 import itertools
 import wandb
+import argparse
+import json
 
 sys.path.insert(1, "/usr/src/app/GNNs_PowerGraph/TFM")
 try:
@@ -172,8 +174,24 @@ class RecurrentGCN(torch.nn.Module):
         h = self.linear(h)
         return h
 
-    
-    
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '--problem',
+    '-p',
+    required=True,
+    type=str,
+    dest='problem',
+    help='Name of the problem'
+)
+args = parser.parse_args()
+problem = args.problem
+# ------------------------------------------------------------------------------#
+
+# ---------------------------------------------------------------------------- #
+#                             Read json parameters                             #
+# ---------------------------------------------------------------------------- #
+
+
 
 
 path = os.getcwd()
@@ -215,70 +233,18 @@ hidden_size =100
 
 
 ### Gen trip
-print("Ajustando modelo para gen_trip...")
-problem_gt = "gen_trip"
-dataset_gt, situations_gt = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem_gt)
+print("Ajustando modelo para {problem}...")
+dataset_gt, situations_gt = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem)
 n_div_gt = loader.div
 n_nodes =dataset_gt.features[0].shape[0]
 n_target = dataset_gt.targets[0].shape[1]
 n_features = dataset_gt[0].x.shape[1]
 
 
-trainer_gt,params_gt, resultados_final_gt, resultados_gt = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_gt, dataloader_params2, num_early_stop, num_epochs, problem=problem_gt)
+trainer_gt,params_gt, resultados_final_gt, resultados_gt = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_gt, dataloader_params2, num_early_stop, num_epochs, problem=problem)
 losses_tst, r2score_tst, loss_nodes, predictions, real = trainer_gt.test()
 
-path_save_experiment_gt = results_save_path+f"/{problem_gt}"+ f"/ajustes/{name_model}_results.csv"
+path_save_experiment_gt = results_save_path+f"/{problem}"+ f"/ajustes/{name_model}_results.csv"
 resultados_gt.to_csv(path_save_experiment_gt, index=False)
 trainer_gt.save_model(params=params_gt, path_save_experiment= path_save_experiment_gt)
 
-
-### Bus trip
-print("Ajustando modelo para bus_trip...")
-problem_bt = "bus_trip"
-dataset_bt, situations_bt = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem_bt)
-n_div_bt = loader.div
-
-trainer_bt,params_bt,resultados_final_bt, resultados_bt = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_bt, dataloader_params2, num_early_stop=num_early_stop, num_epochs=num_epochs, problem=problem_bt)
-_, _, _, predictions_bt_ajuste, real_bt_ajuste = trainer_bt.test()
-path_save_experiment_bt = results_save_path+f"/{problem_bt}"+ f"/ajustes/{name_model}_results.csv"
-resultados_bt.to_csv(path_save_experiment_bt, index=False)
-trainer_bt.save_model(path_save_experiment=path_save_experiment_bt, params=params_bt)
-
-
-# Bus fault
-print("Ajustando modelo para bus_fault...")
-problem_bf = "bus_fault"
-dataset_bf, situations_bf = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem_bf)
-n_div_bf = loader.div
-
-num_epochs = 100
-num_early_stop = 10
-trainer_bf,params_bf,resultados_final_bf, resultados_bf = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_bf, dataloader_params2, num_early_stop=num_early_stop, num_epochs=num_epochs, problem=problem_bf)
-_, _, _, predictions_bf_ajuste, real_bf_ajuste = trainer_bf.test()
-path_save_experiment_bf = results_save_path+f"/{problem_bf}"+ f"/ajustes/{name_model}_results.csv"
-resultados_bf.to_csv(path_save_experiment_bf, index=False)
-trainer_bf.save_model(path_save_experiment=path_save_experiment_bf, params=params_bf)
-
-
-# Branch fault
-print("Ajustando modelo para branch_fault...")
-problem_brf = "branch_fault"
-dataset_brf, situations_brf = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem_brf)
-n_div_brf = loader.div
-
-trainer_brf,params_brf,resultados_final_brf, resultados_brf = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_brf, dataloader_params2, num_early_stop=num_early_stop, num_epochs=num_epochs, problem=problem_brf)
-_, _, _, predictions_brf_ajuste, real_brf_ajuste = trainer_brf.test()
-path_save_experiment_brf = results_save_path+f"/{problem_brf}"+ f"/ajustes/{name_model}_results.csv"
-resultados_brf.to_csv(path_save_experiment_brf, index=False)
-trainer_brf.save_model(path_save_experiment=path_save_experiment_brf, params=params_brf)
-
-# Branch trip
-print("Ajustando modelo para branch_trip...")
-problem_brt = "branch_trip"
-dataset_brt, situations_brt = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem_brt)
-n_div_brt = loader.div
-trainer_brt,params_brt,resultados_final_brt, resultados_brt = entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset_brt, dataloader_params2, num_early_stop=num_early_stop, num_epochs=num_epochs, problem=problem_brt)
-_, _, _, predictions_brt_ajuste, real_brt_ajuste = trainer_brt.test()
-path_save_experiment_brt = results_save_path+f"/{problem_brt}"+ f"/ajustes/{name_model}_results.csv"
-resultados_brt.to_csv(path_save_experiment_brt, index=False)
-trainer_brt.save_model(path_save_experiment=path_save_experiment_brt, params=params_brt)
