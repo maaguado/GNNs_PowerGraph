@@ -214,13 +214,13 @@ dataloader_params2 = {
             "use_batch":False
 }
 param_grid = {
-    'gcn_depth': [2, 3],                  
+    'gcn_depth': [1,2, 3],                  
     'conv_channels': [4, 8, 16], 
     'out_channels': [4, 8, 16],          
     'kernel_size': [3],                
     'dropout': [0.25, 0.5],              
-    'gcn_true': [True, False],                
-    'build_adj': [True, False],              
+    'gcn_true': [True],                
+    'build_adj': [True],              
     'propalpha': [0.05, 0.1]            
 }
 
