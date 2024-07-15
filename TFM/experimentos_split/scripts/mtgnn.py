@@ -38,65 +38,43 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
     mejores_resultados = None
 
     for config in tqdm(list(itertools.product(param_grid['gcn_depth'], param_grid['conv_channels'], param_grid['kernel_size'], param_grid['dropout'], param_grid['gcn_true'], param_grid['build_adj'], param_grid['propalpha'], param_grid['out_channels']))):
-        gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
-        print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
-        wandb.init(project='mtgnn_'+problem, entity='maragumar01')
-        model = RecurrentGCN(
-            name="MTGNN", 
-            node_count=n_nodes, 
-            node_features=n_features, 
-            n_target=n_target,
-            conv_channels=conv_channels,
-            residual_channels=conv_channels, 
-            out_channels=out_channels,
-            skip_channels=conv_channels // 2,  # Ejemplo de cómo definir skip channels
-            end_channels=n_target,  # Para conectar con la salida
-            gcn_depth=gcn_depth,
-            kernel_size=kernel_size,
-            dropout=dropout,
-            gcn_true=gcn_true,
-            build_adj=build_adj,
-            propalpha=propalpha
-        )
-        wandb.config.update({
-            'gcn_depth': gcn_depth,
-            'conv_channels': conv_channels,
-            'kernel_size': kernel_size,
-            'dropout': dropout,
-            'gcn_true': gcn_true,
-            'build_adj': build_adj,
-            'propalpha': propalpha,
-            'out_channels': out_channels
-        })
-        trainer = TrainerMTGNN(model, dataset, device, f"../results/{problem}", dataloader_params)
+        try:
+            gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
+            print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
+            wandb.init(project='mtgnn_'+problem, entity='maragumar01')
+            model = RecurrentGCN(
+                name="MTGNN", 
+                node_count=n_nodes, 
+                node_features=n_features, 
+                n_target=n_target,
+                conv_channels=conv_channels,
+                residual_channels=conv_channels, 
+                out_channels=out_channels,
+                skip_channels=conv_channels // 2,  # Ejemplo de cómo definir skip channels
+                end_channels=n_target,  # Para conectar con la salida
+                gcn_depth=gcn_depth,
+                kernel_size=kernel_size,
+                dropout=dropout,
+                gcn_true=gcn_true,
+                build_adj=build_adj,
+                propalpha=propalpha
+            )
+            wandb.config.update({
+                'gcn_depth': gcn_depth,
+                'conv_channels': conv_channels,
+                'kernel_size': kernel_size,
+                'dropout': dropout,
+                'gcn_true': gcn_true,
+                'build_adj': build_adj,
+                'propalpha': propalpha,
+                'out_channels': out_channels
+            })
+            trainer = TrainerMTGNN(model, dataset, device, f"../results/{problem}", dataloader_params)
 
-        losses, eval_losses, r2scores = trainer.train(num_epochs=num_epochs, steps=200, num_early_stop=num_early_stop)
-        r2score_tst, losses_tst, loss_nodes, _, _ = trainer.test()
+            losses, eval_losses, r2scores = trainer.train(num_epochs=num_epochs, steps=200, num_early_stop=num_early_stop)
+            r2score_tst, losses_tst, loss_nodes, _, _ = trainer.test()
 
-        results_intermedio = {
-            "gcn_depth": gcn_depth,
-            "conv_channels": conv_channels,
-            "kernel_size": kernel_size,
-            "dropout": dropout,
-            "gcn_true": gcn_true,
-            "build_adj": build_adj,
-            "propalpha": propalpha,
-            "out_channels": out_channels,
-            "loss_final": losses[-1],
-            "r2_eval_final": np.mean(r2scores[-1]),
-            "loss_eval_final": np.mean(eval_losses[-1]),
-            "r2_test": np.mean(r2score_tst),
-            "loss_test": np.mean(losses_tst),
-            "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
-        }
-        
-        resultados_list.append(results_intermedio)
-        wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
-
-        if np.mean(losses_tst) < mejor_loss_test:
-            mejor_loss_test = np.mean(losses_tst)
-            mejor_trainer = trainer
-            mejores_parametros = {
+            results_intermedio = {
                 "gcn_depth": gcn_depth,
                 "conv_channels": conv_channels,
                 "kernel_size": kernel_size,
@@ -104,12 +82,38 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
                 "gcn_true": gcn_true,
                 "build_adj": build_adj,
                 "propalpha": propalpha,
-                "out_channels": out_channels
+                "out_channels": out_channels,
+                "loss_final": losses[-1],
+                "r2_eval_final": np.mean(r2scores[-1]),
+                "loss_eval_final": np.mean(eval_losses[-1]),
+                "r2_test": np.mean(r2score_tst),
+                "loss_test": np.mean(losses_tst),
+                "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
             }
-            mejores_resultados = results_intermedio
+            
+            resultados_list.append(results_intermedio)
+            wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
 
-        print("Resultados intermedios: ", results_intermedio)
-        wandb.finish()
+            if np.mean(losses_tst) < mejor_loss_test:
+                mejor_loss_test = np.mean(losses_tst)
+                mejor_trainer = trainer
+                mejores_parametros = {
+                    "gcn_depth": gcn_depth,
+                    "conv_channels": conv_channels,
+                    "kernel_size": kernel_size,
+                    "dropout": dropout,
+                    "gcn_true": gcn_true,
+                    "build_adj": build_adj,
+                    "propalpha": propalpha,
+                    "out_channels": out_channels
+                }
+                mejores_resultados = results_intermedio
+
+            print("Resultados intermedios: ", results_intermedio)
+            wandb.finish()
+        except Exception as e:
+            print(f"Error entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}, exception: {e}")
+            wandb.finish()
     resultados_gt = pd.DataFrame(resultados_list)
     
     return mejor_trainer, mejores_parametros, mejores_resultados, resultados_gt

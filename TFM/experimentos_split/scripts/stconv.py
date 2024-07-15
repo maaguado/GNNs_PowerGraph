@@ -44,45 +44,49 @@ def entrenar_y_evaluar_modelos_stconv(param_grid, dataset, dataloader_params, nu
     device =torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
     for out_channels, kernel_size, hidden_channels, normalization in tqdm(list(itertools.product(param_grid["out_channels"], param_grid['kernel_size'],param_grid['hidden_channels'], param_grid['normalization']))):
-        model_bt = RecurrentGCN(name="STConv", node_features=n_features, node_count=n_nodes, n_target=n_target, out_channels=out_channels,k=2, kernel_size=kernel_size, hidden_channels=hidden_channels, normalization=normalization)
+        try:
+            print(f"Entrenando modelo con out_channels={out_channels}, kernel_size={kernel_size}, hidden_channels={hidden_channels}, normalization={normalization}")
+            model_bt = RecurrentGCN(name="STConv", node_features=n_features, node_count=n_nodes, n_target=n_target, out_channels=out_channels,k=2, kernel_size=kernel_size, hidden_channels=hidden_channels, normalization=normalization)
 
-        wandb.init(project='stconv_'+problem, entity='maragumar01')
-        trainer_bt = TrainerSTConv(model_bt, dataset,device, f"../results/{problem}", dataloader_params)
-        wandb.config.update({
-            'out_channels': out_channels,
-            'kernel_size': kernel_size,
-            'hidden_channels': hidden_channels,
-            'normalization': normalization
-        })
+            wandb.init(project='stconv_'+problem, entity='maragumar01')
+            trainer_bt = TrainerSTConv(model_bt, dataset,device, f"../results/{problem}", dataloader_params)
+            wandb.config.update({
+                'out_channels': out_channels,
+                'kernel_size': kernel_size,
+                'hidden_channels': hidden_channels,
+                'normalization': normalization
+            })
 
 
-        losses,eval_losses, r2scores  = trainer_bt.train(num_epochs=num_epochs, steps=50, num_early_stop=num_early_stop)
-        r2score_tst,losses_tst, loss_nodes, _, _ = trainer_bt.test()
-    
-        results_intermedio = {
-            "Out channels": out_channels,
-            "Kernel size": kernel_size,
-            "Hidden channels": hidden_channels,
-            "Normalization": normalization,
-            "loss_final": losses[-1],
-            "r2_eval_final": np.mean(r2scores[-1]),
-            "loss_eval_final": np.mean(eval_losses[-1]),
-            "r2_test": np.mean(r2score_tst),
-            "loss_test": np.mean(losses_tst),
-            "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
-        }
-        # Añade los resultados a la lista
-        resultados_list.append(results_intermedio)
-        wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
+            losses,eval_losses, r2scores  = trainer_bt.train(num_epochs=num_epochs, steps=50, num_early_stop=num_early_stop)
+            r2score_tst,losses_tst, loss_nodes, _, _ = trainer_bt.test()
+        
+            results_intermedio = {
+                "Out channels": out_channels,
+                "Kernel size": kernel_size,
+                "Hidden channels": hidden_channels,
+                "Normalization": normalization,
+                "loss_final": losses[-1],
+                "r2_eval_final": np.mean(r2scores[-1]),
+                "loss_eval_final": np.mean(eval_losses[-1]),
+                "r2_test": np.mean(r2score_tst),
+                "loss_test": np.mean(losses_tst),
+                "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
+            }
+            # Añade los resultados a la lista
+            resultados_list.append(results_intermedio)
+            wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
 
-        if np.mean(losses_tst) < mejor_loss_test:
-            mejor_loss_test = np.mean(losses_tst)
-            mejor_trainer = trainer_bt
-            mejores_parametros = {"Out channels": out_channels, "Kernel size": kernel_size, "Hidden channels": hidden_channels, "Normalization": normalization}
-            mejores_resultados = results_intermedio
-        wandb.finish()
-        print("Resultados intermedios: ", results_intermedio)
-
+            if np.mean(losses_tst) < mejor_loss_test:
+                mejor_loss_test = np.mean(losses_tst)
+                mejor_trainer = trainer_bt
+                mejores_parametros = {"Out channels": out_channels, "Kernel size": kernel_size, "Hidden channels": hidden_channels, "Normalization": normalization}
+                mejores_resultados = results_intermedio
+            wandb.finish()
+            print("Resultados intermedios: ", results_intermedio)
+        except Exception as e:
+            print(f"Error entrenando modelo con out_channels={out_channels}, kernel_size={kernel_size}, hidden_channels={hidden_channels}, normalization={normalization}, excepcion: {e}")
+            wandb.finish()
     resultados_gt = pd.DataFrame(resultados_list)
     
     return mejor_trainer, mejores_parametros, mejores_resultados, resultados_gt
@@ -145,7 +149,7 @@ dataloader_params2 = {
             "use_batch":False
 }
 param_grid = {
-    "out_channels": [16, 32, 64],
+    "out_channels": [32, 64],
     "kernel_size": [3,5,7],
     "normalization": ["sym", "rw"],
     "hidden_channels": [16, 32, 64],

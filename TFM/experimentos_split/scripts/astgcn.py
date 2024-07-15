@@ -39,49 +39,53 @@ def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, nu
     
 
     for nb_block, filter_, time_strides in tqdm(list(itertools.product(param_grid['nb_block'], param_grid['filter'], param_grid['time_strides']))):
-        print(f"Entrenando modelo con nb_block={nb_block}, nb_chev_filter={filter_}, nb_time_filter={filter_}, time_strides={time_strides}")        
-        wandb.init(project='astgcn_'+problem, entity='maragumar01')
-        wandb.config.update({
-            'nb_block': nb_block,
-            'filter_size': filter_,
-            'time_strides': time_strides
-        })
+        try:  
+            print(f"Entrenando modelo con nb_block={nb_block}, nb_chev_filter={filter_}, nb_time_filter={filter_}, time_strides={time_strides}")        
+            wandb.init(project='astgcn_'+problem, entity='maragumar01')
+            wandb.config.update({
+                'nb_block': nb_block,
+                'filter_size': filter_,
+                'time_strides': time_strides
+            })
 
-        model = RecurrentGCN(name="ASTGCN", node_features=n_features, node_count=n_nodes, n_target=n_target, nb_block=nb_block, k=2, nb_chev_filter = filter_, nb_time_filter =filter_, time_strides = time_strides)
+            model = RecurrentGCN(name="ASTGCN", node_features=n_features, node_count=n_nodes, n_target=n_target, nb_block=nb_block, k=2, nb_chev_filter = filter_, nb_time_filter =filter_, time_strides = time_strides)
+            
+            trainer = TrainerMSTGCN(model, dataset, device, f"../results/{problem}", dataloader_params)
+
+            losses, eval_losses, r2scores = trainer.train(num_epochs=num_epochs, steps=200, num_early_stop=num_early_stop)
+            r2score_tst, losses_tst, loss_nodes, _, _ = trainer.test()
         
-        trainer = TrainerMSTGCN(model, dataset, device, f"../results/{problem}", dataloader_params)
-
-        losses, eval_losses, r2scores = trainer.train(num_epochs=num_epochs, steps=200, num_early_stop=num_early_stop)
-        r2score_tst, losses_tst, loss_nodes, _, _ = trainer.test()
-    
-        results_intermedio = {
-            "nb_block": nb_block,
-            "nb_chev_filter": filter_,
-            "nb_time_filter": filter_,
-            "time_strides": time_strides,
-            "loss_final": losses[-1],
-            "r2_eval_final": np.mean(r2scores[-1]),
-            "loss_eval_final": np.mean(eval_losses[-1]),
-            "r2_test": np.mean(r2score_tst),
-            "loss_test": np.mean(losses_tst),
-            "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
-        }
-        wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
-        resultados_list.append(results_intermedio)
-
-        if np.mean(losses_tst) < mejor_loss_test:
-            mejor_loss_test = np.mean(losses_tst)
-            mejor_trainer = trainer
-            mejores_parametros = {
+            results_intermedio = {
                 "nb_block": nb_block,
                 "nb_chev_filter": filter_,
                 "nb_time_filter": filter_,
-                "time_strides": time_strides
+                "time_strides": time_strides,
+                "loss_final": losses[-1],
+                "r2_eval_final": np.mean(r2scores[-1]),
+                "loss_eval_final": np.mean(eval_losses[-1]),
+                "r2_test": np.mean(r2score_tst),
+                "loss_test": np.mean(losses_tst),
+                "loss_nodes": np.mean(loss_nodes, axis=0).tolist()
             }
-            mejores_resultados = results_intermedio
+            wandb.log({"loss": losses[-1], "r2_eval": np.mean(r2scores[-1]), "loss_eval": np.mean(eval_losses[-1]), "r2_test": np.mean(r2score_tst), "loss_test": np.mean(losses_tst)})
+            resultados_list.append(results_intermedio)
 
-        print("Resultados intermedios: ", results_intermedio)
-        wandb.finish()
+            if np.mean(losses_tst) < mejor_loss_test:
+                mejor_loss_test = np.mean(losses_tst)
+                mejor_trainer = trainer
+                mejores_parametros = {
+                    "nb_block": nb_block,
+                    "nb_chev_filter": filter_,
+                    "nb_time_filter": filter_,
+                    "time_strides": time_strides
+                }
+                mejores_resultados = results_intermedio
+
+            print("Resultados intermedios: ", results_intermedio)
+            wandb.finish()
+        except Exception as e:
+            print(f"Error entrenando modelo con nb_block={nb_block}, nb_chev_filter={filter_}, nb_time_filter={filter_}, time_strides={time_strides}: {e}")
+            wandb.finish()
     resultados_gt = pd.DataFrame(resultados_list)
    
     return mejor_trainer, mejores_parametros, mejores_resultados, resultados_gt
