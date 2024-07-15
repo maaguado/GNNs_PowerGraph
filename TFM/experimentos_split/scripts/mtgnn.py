@@ -233,7 +233,7 @@ hidden_size =100
 
 
 ### Gen trip
-print("Ajustando modelo para {problem}...")
+print(f"Ajustando modelo para {problem}...")
 dataset_gt, situations_gt = loader.get_dataset( target= 20, intro=100, step=20, one_ts_per_situation=False, start = 1, type=problem)
 n_div_gt = loader.div
 n_nodes =dataset_gt.features[0].shape[0]
