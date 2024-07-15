@@ -218,10 +218,10 @@ param_grid = {
     'conv_channels': [4, 8, 16], 
     'out_channels': [4, 8, 16],          
     'kernel_size': [3],                
-    'dropout': [0.25, 0.5],              
+    'dropout': [0.25],              
     'gcn_true': [True],                
     'build_adj': [True],              
-    'propalpha': [0.05, 0.1]            
+    'propalpha': [0.15]            
 }
 
 
