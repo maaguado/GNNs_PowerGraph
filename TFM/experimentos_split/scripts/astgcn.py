@@ -24,7 +24,7 @@ from utils.astgcn import ASTGCN
 from utils.trainer import TrainerMSTGCN
 
 
-def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device = torch.device("cpu")):
+def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, num_early_stop, num_epochs, problem="", device = torch.device("cpu"), path_save_experiment=None):
     resultados_list = []
 
     
@@ -80,6 +80,7 @@ def entrenar_y_evaluar_modelos_astgcn(param_grid, dataset, dataloader_params, nu
                     "time_strides": time_strides
                 }
                 mejores_resultados = results_intermedio
+                mejor_trainer.save_model(params=mejores_parametros, path_save_experiment= path_save_experiment)
 
             print("Resultados intermedios: ", results_intermedio)
             wandb.finish()
@@ -176,11 +177,10 @@ n_nodes =dataset_gt.features[0].shape[0]
 n_target = dataset_gt.targets[0].shape[1]
 n_features = dataset_gt[0].x.shape[1]
 
-
-trainer_gt,params_gt, resultados_final_gt, resultados_gt = entrenar_y_evaluar_modelos_astgcn(param_grid, dataset_gt, dataloader_params2, num_early_stop, num_epochs, problem=problem)
+path_save_experiment_gt = results_save_path+f"/{problem}"+ f"/ajustes/{name_model}_results.csv"
+trainer_gt,params_gt, resultados_final_gt, resultados_gt = entrenar_y_evaluar_modelos_astgcn(param_grid, dataset_gt, dataloader_params2, num_early_stop, num_epochs, problem=problem, path_save_experiment=path_save_experiment_gt)
 losses_tst, r2score_tst, loss_nodes, predictions, real = trainer_gt.test()
 
-path_save_experiment_gt = results_save_path+f"/{problem}"+ f"/ajustes/{name_model}_results.csv"
 resultados_gt.to_csv(path_save_experiment_gt, index=False)
 trainer_gt.save_model(params=params_gt, path_save_experiment= path_save_experiment_gt)
 
