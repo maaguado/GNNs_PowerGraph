@@ -7,6 +7,8 @@ import os, sys
 import itertools
 import wandb
 import argparse
+import random 
+
 import json
 
 sys.path.insert(1, "/usr/src/app/GNNs_PowerGraph/TFM")
@@ -39,8 +41,19 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
     mejores_parametros = None
     mejores_resultados = None
 
-    for config in tqdm(list(itertools.product(param_grid['gcn_depth'], param_grid['conv_channels'], param_grid['kernel_size'], param_grid['dropout'], param_grid['gcn_true'], param_grid['build_adj'], param_grid['propalpha'], param_grid['out_channels']))):
-        try:
+    n_iter = 50 
+
+    for _ in tqdm(range(n_iter)):
+        gcn_depth = random.choice(param_grid['gcn_depth'])
+        conv_channels = random.choice(param_grid['conv_channels'])
+        kernel_size = random.choice(param_grid['kernel_size'])
+        dropout = random.choice(param_grid['dropout'])
+        gcn_true = random.choice(param_grid['gcn_true'])
+        build_adj = random.choice(param_grid['build_adj'])
+        propalpha = random.choice(param_grid['propalpha'])
+        out_channels = random.choice(param_grid['out_channels'])
+
+        try:        
             gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
             print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
             wandb.init(project='mtgnn_'+problem, entity='maragumar01')

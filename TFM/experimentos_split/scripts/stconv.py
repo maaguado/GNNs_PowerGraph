@@ -6,6 +6,7 @@ import numpy as np
 import os, sys
 import itertools
 import wandb
+import random
 import argparse
 
 
@@ -45,7 +46,13 @@ def entrenar_y_evaluar_modelos_stconv(param_grid, dataset, dataloader_params, nu
     
     device =torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
-    for out_channels, kernel_size, hidden_channels, normalization in tqdm(list(itertools.product(param_grid["out_channels"], param_grid['kernel_size'],param_grid['hidden_channels'], param_grid['normalization']))):
+    n_iter = 50  
+    for _ in tqdm(range(n_iter)):
+        # Selecciona aleatoriamente los parámetros
+        out_channels = random.choice(param_grid["out_channels"])
+        kernel_size = random.choice(param_grid["kernel_size"])
+        hidden_channels = random.choice(param_grid["hidden_channels"])
+        normalization = random.choice(param_grid["normalization"])
         try:
             print(f"Entrenando modelo con out_channels={out_channels}, kernel_size={kernel_size}, hidden_channels={hidden_channels}, normalization={normalization}")
             model_bt = RecurrentGCN(name="STConv", node_features=n_features, node_count=n_nodes, n_target=n_target, out_channels=out_channels,k=2, kernel_size=kernel_size, hidden_channels=hidden_channels, normalization=normalization)
