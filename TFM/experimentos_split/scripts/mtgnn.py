@@ -54,7 +54,6 @@ def entrenar_y_evaluar_modelos_mtgnn(param_grid, dataset, dataloader_params, num
         out_channels = random.choice(param_grid['out_channels'])
 
         try:        
-            gcn_depth, conv_channels, kernel_size, dropout, gcn_true, build_adj, propalpha, out_channels = config
             print(f"Entrenando modelo con gcn_depth={gcn_depth}, conv_channels={conv_channels}, kernel_size={kernel_size}, dropout={dropout}, gcn_true={gcn_true}, build_adj={build_adj}, propalpha={propalpha}, out_channels={out_channels}")
             wandb.init(project='mtgnn_'+problem, entity='maragumar01')
             model = RecurrentGCN(
