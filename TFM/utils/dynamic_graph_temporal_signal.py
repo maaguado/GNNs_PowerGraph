@@ -21,10 +21,12 @@ class DynamicGraphTemporalSignalLen(signal.DynamicGraphTemporalSignal):
         features: Node_Features,
         targets: Targets,
         name: str,
+        ndiv: int = 1,
         **kwargs: Additional_Features
     ):
         super().__init__(edge_indices, edge_weights, features, targets, **kwargs)
         self.name = name
+        self.ndiv = ndiv
 
     def __len__(self):
         return len(self.features)

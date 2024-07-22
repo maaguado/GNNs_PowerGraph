@@ -5,6 +5,9 @@ from utils.dygrae import DyGrEncoder
 from utils.mpnn_lstm_dyn import MPNNLSTM
 from utils.mstgcn import MSTGCN
 from torch_geometric_temporal.nn.recurrent import DCRNN
+from utils.evolvegcn_dynamic import EvolveGCNO
+from utils.astgcn import ASTGCN
+
 
 import torch.nn as nn
 
@@ -41,6 +44,32 @@ class AGCRNModel(torch.nn.Module):
             # En caso de regresión, se procesa cada nodo por separado
             y = self.linear(y)
         return y, h_0
+
+class EvolveGCNModel(torch.nn.Module):
+    def __init__(self, name, node_features, node_count, n_target, is_classification=False):
+        self.name  =name
+        self.n_nodes = node_count
+        self.n_target = n_target
+        self.n_features = node_features
+        self.is_classification = is_classification
+        super(EvolveGCNModel, self).__init__()
+        self.recurrent = EvolveGCNO(self.n_features)
+        self.linear = torch.nn.Linear(self.n_features, n_target)
+
+
+    def forward(self, x, edge_index, edge_weight):
+       
+        h = self.recurrent(x, edge_index, edge_weight)
+        h = F.relu(h)
+        if self.is_classification:
+            h_avg = torch.mean(h, dim=0) 
+            h_out = self.linear(h_avg)
+            h_out = torch.softmax(h_out, dim=0) 
+        else:
+            # En caso de regresión, se procesa cada nodo por separado
+            h_out = self.linear(h)
+        return h_out
+    
 
 
 class DyGrEncoderModel(torch.nn.Module):
@@ -170,18 +199,58 @@ class MSTGCNModel(torch.nn.Module):
 
 
 class DCRNNModel(torch.nn.Module):
-    def __init__(self, name, node_features, node_count, n_target, hidden_dim):
+    def __init__(self, name, node_features, node_count, n_target, hidden_dim, filter_size =1, is_classification=False):
         self.name  =name
         self.n_nodes = node_count
         self.n_target = n_target
         self.n_features = node_features
         self.hidden_dim = hidden_dim
+        self.is_classification = is_classification
+        self.filter_size = filter_size
         super(DCRNNModel, self).__init__()
-        self.recurrent = DCRNN(self.n_features,self.hidden_dim , 1)
+        self.recurrent = DCRNN(self.n_features,self.hidden_dim , self.filter_size)
         self.linear = torch.nn.Linear(self.hidden_dim, n_target)
 
     def forward(self, x, edge_index, edge_weight):
         h = self.recurrent(x, edge_index, edge_weight)
         h = F.relu(h)
-        h = self.linear(h)
+        if self.is_classification:
+            h = torch.mean(h, dim=0)
+            h = self.linear(h)
+            h = torch.softmax(h, dim=0) 
+        else:
+            h = self.linear(h) 
         return h
+    
+
+class ASTGCNModel(torch.nn.Module):
+    def __init__(self, name, node_features, node_count, n_target, nb_block, k=1, nb_chev_filter = 2, nb_time_filter =2, time_strides = 2, hidden_size = 20):
+        self.name  =name
+        self.n_nodes = node_count
+        self.n_target = n_target
+        self.n_features = node_features
+        self.nb_block = nb_block
+        self.k = k
+        self.nb_chev_filter = nb_chev_filter
+        self.nb_time_filter = nb_time_filter
+        self.time_strides = time_strides
+
+    
+        super(ASTGCNModel, self).__init__()
+        self.recurrent = ASTGCN(in_channels=1, 
+                                num_for_predict=n_target, 
+                                len_input=node_features,
+                                K=k, 
+                                nb_block=nb_block, 
+                                num_of_vertices=node_count,
+                                nb_chev_filter=nb_chev_filter,
+                                nb_time_filter=nb_time_filter, 
+                                time_strides=time_strides)
+
+
+
+    def forward(self, x, edge_index):
+        h = self.recurrent(x, edge_index)
+        h = F.relu(h)
+        return h
+

@@ -32,6 +32,8 @@ class PowerGridDatasetLoader(object):
         self._natural_folder = natural_folder
         self.voltages = {}
         self.buses = []
+        self.info_complete = []
+        self.n_processed=0
         self.types = []
         self.edge_attr = []
         self.edge_index = []
@@ -52,8 +54,10 @@ class PowerGridDatasetLoader(object):
         # Processing dataset files
         
         info = pd.read_csv(os.path.join(name_folder, 'info.csv'),index_col=0, header=None).T
+       
         self.buses.append(int(info['bus1'].values[0].strip()))
         self.types.append(info['type'].values[0].strip())
+        self.info_complete.append({'N':self.n_processed, 'situation': name_folder, 'bus1': int(info['bus1'].values[0].strip()),'bus2': int(info['bus2'].values[0].strip()), 'type': info['type'].values[0].strip()})
 
         trans_data = pd.read_csv(os.path.join(name_folder, 'trans.csv'))
         trans_data.columns = [col.strip() for col in trans_data.columns]
@@ -206,7 +210,7 @@ class PowerGridDatasetLoader(object):
         indices = np.where(np.array(self.types)==self._type)[0] if self._type is not None else range(n_situations)
 
         print("Number of situations of the selected type: ", len(indices))
-
+        self.info_problem = [self.info_complete[i] for i in indices]
 
         voltages_def = voltages_def[indices, :, :]
         edge_attr = [self.edge_attr[i] for i in indices]
@@ -279,9 +283,10 @@ class PowerGridDatasetLoader(object):
                 if (not os.path.exists(os.path.join(folder_name, 'info.csv'))):
                     print("Skipping ", folder)
                     continue
-            
+                
+                
                 self._process_one_case(folder_name)
-
+                self.n_processed +=1
                 # We check if all the nodes present in the edges have voltage info and vice versa
                 self._check_nodes()
                 
@@ -323,5 +328,5 @@ class PowerGridDatasetLoader(object):
             self.process()
         self._limit = len(next(iter(self.voltages.values()))) if limit is None else limit
         situations_each = self._get_targets_and_features()
-        dataset = DynamicGraphTemporalSignalLen(self.edges, self.edge_weights, self.features, self.targets, "PowerGridDataset")
+        dataset = DynamicGraphTemporalSignalLen(self.edges, self.edge_weights, self.features, self.targets, "PowerGridDataset", ndiv=self.div)
         return dataset, situations_each
