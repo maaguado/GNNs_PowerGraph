@@ -27,24 +27,24 @@ def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64
     total_series = len(dataset.features)
     train_size = int(train_ratio * total_series)
     val_size = int(val_ratio * total_series)
-
+    div = dataset.ndiv
+    div2 = int(div/2)
     if (keep_same):
     # Calcular el índice de la serie temporal más cercana al índice que corresponde al ratio de entrenamiento
         train_index = round(train_ratio * total_series)
 
-
         # Ajustar el índice de entrenamiento si es necesario para asegurar que se mantienen separadas las simulaciones
-        if train_index % 15 > 7:
-            train_index += 15 - (train_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
+        if train_index % div > div2:
+            train_index += div - (train_index %div)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
         else:
-            train_index -= train_index % 15  # Si está más cerca del inicio de una simulación, retrocedemos al inicio de la simulación anterior
+            train_index -= train_index % div  # Si está más cerca del inicio de una simulación, retrocedemos al inicio de la simulación anterior
 
         # Calcular los índices de validación y test - comprobamos si es múltiplo de 15 y ajustamos si es necesario
         val_index = train_index + val_size
-        if val_index % 15 > 7:
-            val_index += 15 - (val_index % 15)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
+        if val_index % div > div2:
+            val_index += div - (val_index % div)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
         else:
-            val_index -= val_index % 15
+            val_index -= val_index % div
     else:
         train_index = train_size
         val_index = train_size + val_size
@@ -118,7 +118,7 @@ class TrainerModel(object):
         pass
 
 
-    def train(self, num_epochs, steps = None, num_early_stop=0):
+    def train(self, num_epochs, steps = None, num_early_stop=0, lr=0.001):
  
         if steps is not None:
             self.steps = steps
@@ -126,7 +126,7 @@ class TrainerModel(object):
             self.steps = len(self.loader["train"]) if self.batch else -1
 
         self.num_epochs = num_epochs
-        self.optimizer = Adam(self.model.parameters())
+        self.optimizer = Adam(self.model.parameters(), lr=lr)
         lr_schedule = ReduceLROnPlateau(
                 self.optimizer, mode='min', factor=0.1, patience=5, min_lr=0.001
         )
@@ -404,7 +404,7 @@ class TrainerLSTMModel(TrainerModel):
         else:
             logits = y_hat.view(-1, self.model.n_target)
             loss = self.__loss__(logits, y).item()
-            r2 = r2_score(y.cpu(), logits.cpu())
+            r2 = r2_score(y.detach().cpu(), logits.detach().cpu())
             if test:
                 loss_per_node = F.mse_loss(logits,batch.y , reduction='none')
                 loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
@@ -426,9 +426,10 @@ class TrainerLSTMModel(TrainerModel):
             real = y.squeeze(0).argmax(dim=0).cpu().detach()
             return loss, preds, real
         else:
-            loss = F.mse_loss(y_hat, y).item()
-            r2 = r2_score(y.cpu(), y_hat.cpu())
-            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            logits = y_hat.squeeze(0)
+            loss = F.mse_loss(logits, y).item()
+            r2 = r2_score(y.detach().cpu(), logits.detach().cpu())
+            loss_per_node = F.mse_loss(logits, y, reduction='none')
             loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
             if test:
                 preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
@@ -545,7 +546,7 @@ class TrainerDryGrEncoder(TrainerModel):
             return loss, preds, real
         else:
             loss = F.mse_loss(y_hat, y).item()
-            r2 = r2_score(y.cpu(), y_hat.cpu())
+            r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
             loss_per_node = F.mse_loss(y_hat, y, reduction='none')
             loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
             if test:
@@ -578,8 +579,13 @@ class TrainerAGCRN(TrainerLSTMModel):
     def _train_batch(self, batch):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat, self.h = self.model(x, self.e, self.h)
-        y = batch.y.view(len(batch), self.model.n_target)
-        loss = self.__loss__(y_hat.view(-1, self.model.n_target), y)
+        if self.is_classification:
+            y = batch.y.view(len(batch), self.model.n_target)
+            y_hat = y_hat.view(-1, self.model.n_target)
+        else:
+            y = batch.y.view(len(batch),-1, self.model.n_target)
+            y_hat = y_hat.view(len(batch),-1, self.model.n_target)
+        loss = self.__loss__(y_hat, y)
         loss.backward()
         loss = loss.detach()
         self.h = self.h.detach()
@@ -592,16 +598,19 @@ class TrainerAGCRN(TrainerLSTMModel):
     def _eval_batch(self, batch, test):
         x = batch.x.view(len(batch), self.model.n_nodes, self.model.n_features)
         y_hat,self.h = self.model(x, self.e, self.h)
-        y = batch.y.view(len(batch), self.model.n_target)
-        logits = y_hat.view(-1, self.model.n_target)
-        loss = self.__loss__(logits, y)
+       
         if self.is_classification:
+            y = batch.y.view(len(batch),self.model.n_target)
+            logits = y_hat.view(len(batch),self.model.n_target)
             loss = self.__loss__(logits, y).item()
             preds = logits.argmax(dim=1).cpu().detach().numpy()
             real = y.argmax(dim=1).cpu().detach().numpy()
             return (loss,preds, real)
         else:
-            r2 = r2_score(y.cpu(), logits.cpu())
+            y = batch.y
+            logits = y_hat.view(-1, self.model.n_target)
+            loss = self.__loss__(logits, y)
+            r2 = r2_score(y.detach().cpu(), logits.detach().cpu())
             if test:
                 loss_per_node = F.mse_loss(logits,batch.y , reduction='none')
                 loss_per_node= loss_per_node.view(len(batch), self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
@@ -730,8 +739,8 @@ class TrainerA3TGCN(TrainerMPNNLSTM):
       
 
 class TrainerEvolveGCN(TrainerMPNNLSTM):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
     
 
 class TrainerSTConv(TrainerMPNNLSTM):
@@ -763,7 +772,46 @@ class TrainerSTConv(TrainerMPNNLSTM):
             return loss, r2, preds, real, loss_per_node
         else:
             return loss, r2
+
+
+class TrainerDCRNN(TrainerMPNNLSTM):
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
+
+    def _train_snap(self, snapshot):
+        x = snapshot.x.to(self.device)  # Mover a GPU
+        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
+        y = snapshot.y.to(self.device)
+
+        y_hat= self.model(x, edge_index,edge_attr)
+        loss = self.__loss__(y_hat, y)
+        return loss
+    
+    def _eval_snap(self, snapshot, test=True):
+        x = snapshot.x.to(self.device)  # [num_nodes, num_time_steps] -> [23, 100]
+        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
+        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
+        y = snapshot.y.to(self.device)
+        y_hat= self.model(x, edge_index,edge_attr)
+        if self.is_classification:
+            loss = self.__loss__(y_hat, y).item()
+            preds = y_hat.argmax(dim=0).cpu().detach()
+            real = y.squeeze(0).argmax(dim=0).cpu().detach()
+            return loss, preds, real
+        else:
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            if test:
+                preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
         
+
 
 class TrainerMSTGCN(TrainerMPNNLSTM):
     def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
@@ -837,34 +885,5 @@ class TrainerMTGNN(TrainerMPNNLSTM):
             return loss, r2
         
 
-class TrainerDCRNN(TrainerMPNNLSTM):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
 
-    def _train_snap(self, snapshot):
-        x = snapshot.x.to(self.device)  # Mover a GPU
-        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
-        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
-        y = snapshot.y.to(self.device)
-
-        y_hat= self.model(x, edge_index,edge_attr)
-        loss = self.__loss__(y_hat, y)
-        return loss
-    
-    def _eval_snap(self, snapshot, test=True):
-        x = snapshot.x.to(self.device)  # [num_nodes, num_time_steps] -> [23, 100]
-        edge_index = snapshot.edge_index.permute(2, 1, 0)[:,:,0].to(self.device)  
-        edge_attr = snapshot.edge_attr.permute(1, 0, 2).mean(dim=-1).mean(dim=-1).to(self.device) 
-        y = snapshot.y.to(self.device)
-        y_hat= self.model(x, edge_index,edge_attr)
-        loss = F.mse_loss(y_hat, y).item()
-        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
-        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
-        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
-        if test:
-            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
-        else:
-            return loss, r2
         
