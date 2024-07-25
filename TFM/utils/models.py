@@ -77,13 +77,15 @@ class DyGrEncoderModel(torch.nn.Module):
         self.name  =name
         self.n_nodes = node_count
         self.n_target = n_target
-        self.conv_out = conv_out if conv_out is not None else node_features
-        self.lstm_out = lstm_out if lstm_out is not None else node_features
+        self.conv_out = conv_out if conv_out != None else node_features
+        self.lstm_out = lstm_out if lstm_out != None else node_features
+        self.num_lstm = num_lstm
+        self.num_conv = num_conv
         self.n_features = node_features
         self.is_classification = is_classification
         super(DyGrEncoderModel, self).__init__()
-        self.recurrent = DyGrEncoder(conv_out_channels=self.conv_out, conv_num_layers=num_conv, conv_aggr=aggr, lstm_out_channels=self.lstm_out, lstm_num_layers=num_lstm)
-        self.linear = torch.nn.Linear(lstm_out, n_target)
+        self.recurrent = DyGrEncoder(conv_out_channels=self.conv_out, conv_num_layers=num_conv, conv_aggr=aggr, lstm_out_channels=self.lstm_out, lstm_num_layers=self.num_lstm)
+        self.linear = torch.nn.Linear(self.lstm_out, n_target)
         self.h =None
 
     def forward(self, x, edge_index, edge_weight, h_0, c_0):

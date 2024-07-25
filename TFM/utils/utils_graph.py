@@ -14,6 +14,7 @@ def format_plot(ax):
     ax.spines['bottom'].set_color('dimgrey')
 
     ax.xaxis.label.set_color('dimgrey')
+    ax.yaxis.label.set_color('dimgrey')
     ax.tick_params(axis='both', colors='dimgrey', size=20, pad=1)
 
 
@@ -289,12 +290,12 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
 
     # Reconstruct predictions and true values
     m, preds, y_true = reconstruir_predictions(predictions, real, n_target, n_situation, n_div=n_div, multiple=True)
-    cmap = plt.get_cmap("Set2")
+    cmap = plt.get_cmap("Dark2")
     num_models = len(preds)
-    values_colors = np.linspace(0, 1, 9)
+    values_colors = np.linspace(0,1 , 7)
     colors = [cmap(value) for value in values_colors ]
-    alpha_value = 0.5  
-    colors = [(r, g, b, alpha_value) for r, g, b, a in colors]   
+    alpha_value = 1 
+    colors = [(r, g, b, alpha_value) for r, g, b, a in colors][1:]
 
     info_specific =info_situation[n_situation] if info_situation != None else None
     neighbors = {0:[0,1,2,3], 1:[1,0,2,6], 2:[2,0,1,6], 3:[3,2,4,7], 4:[4,3, 5,18], 5:[5,4,20,8], 6:[6,2,12,7], 7:[7,6,3,8],
@@ -302,19 +303,14 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
                  15:[15,13,17,21], 16:[16,14,17,3], 17:[17,15,16,18], 18:[18,17, 4,19], 19:[19,17,20,22], 20:[20, 19,17, 5], 21:[21,13,14,15], 
                  22:[22, 20,19,5]}
     
-    transformation_dict = {101: 0, 102: 1, 151: 2,152: 3,153: 4,154: 5,201: 6, 202: 7, 203: 8, 204: 9, 205: 10,
-                        206: 11,
-                        211: 12,
-                        3001: 13,
-                        3002: 14,
-                        3003: 15,
-                        3004: 16,
-                        3005: 17,
-                        3006: 18,
-                        3007: 19,
-                        3008: 20,
-                        3011: 21,
-                        3018: 22}
+    transformation_dict = {
+    101: 0, 102: 1, 151: 2, 152: 3, 153: 4, 154: 5, 201: 6, 202: 7, 203: 8, 204: 9, 205: 10,
+    206: 11, 211: 12, 3001: 13, 3002: 14, 3003: 15, 3004: 16, 3005: 17, 3006: 18, 3007: 19,
+    3008: 20, 3011: 21, 3018: 22
+    }
+
+    # Crear el diccionario de transformación inversa
+    inverse_transformation_dict = {v: k for k, v in transformation_dict.items()}
     
     n_plots = 8
     n_cols = 2
@@ -343,17 +339,21 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
         ax = axs[row, col]
 
         
+        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="darkgrey", linewidth=1.5)
         for k in range(len(preds)):
-            sns.lineplot(y=preds[k][nodes[i]], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False, color=colors[k])
-        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="dimgrey", linewidth=2)
+            sns.lineplot(y=preds[k][nodes[i]], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False, color=colors[k], linewidth=1.5)
+        
+        ax.set_xlabel('Tiempo')
+        ax.set_ylabel('Voltaje')
+
         if not handles:
             handles, labels = ax.get_legend_handles_labels()
-        ax.set_title(f'Nodo {nodes[i]}')
+        ax.set_title(f'Nodo {inverse_transformation_dict[nodes[i]]}')
         format_plot(ax)
     
     # Add legend to the last plot
     #axs[n_rows - 1, n_cols - 2].legend(loc='upper right', bbox_to_anchor=(1.5, 0.95), frameon=True)
-    fig.legend(handles, labels, loc = 'lower right', fontsize=15)
+    fig.legend(handles, labels, loc = 'upper right', fontsize=15)
 
     # Remove any unused subplots
     if n_plots < (n_rows * n_cols):
