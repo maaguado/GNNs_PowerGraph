@@ -363,7 +363,9 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
     # Adjust layout and add super title
     plt.suptitle(f'Predicciones y valores reales en {problem}, caso {n_situation}', fontsize=20)
     plt.tight_layout(pad=2)
-    plt.show()
+    
+    #return fig 
+    return fig
 
 
 

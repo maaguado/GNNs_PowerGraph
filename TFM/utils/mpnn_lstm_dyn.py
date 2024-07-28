@@ -85,15 +85,11 @@ class MPNNLSTM(nn.Module):
             O.append(S[:, l, self.in_channels - 1].unsqueeze(1))
 
         S = torch.cat(O, dim=1)
-
         X = self._graph_convolution_1(X, edge_index, edge_weight)
         R.append(X)
-
         X = self._graph_convolution_2(X, edge_index, edge_weight)
         R.append(X)
-
         X = torch.cat(R, dim=1)
-
         X = X.view(-1, self.window, self.num_nodes, X.size(1))
         X = torch.transpose(X, 0, 1)
         X = X.contiguous().view(self.window, -1, X.size(3))
