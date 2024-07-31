@@ -102,6 +102,7 @@ def gcn_norm(edge_index, edge_weight=None, num_nodes=None, improved=False,
     deg = scatter(edge_weight, idx, dim=0, dim_size=num_nodes, reduce='sum')
     
     abs_deg = deg.abs()
+
     deg_inv_sqrt = abs_deg.pow(-0.5)
     # Restaurar el signo original
     deg_inv_sqrt.masked_fill_(deg_inv_sqrt == float('inf'), 0)
@@ -233,7 +234,6 @@ class GCNConv(MessagePassing):
                         self._cached_adj_t = edge_index
                 else:
                     edge_index = cache
-
         x = self.lin(x)
         out = self.propagate(edge_index, x=x, edge_weight=edge_weight,
                              size=None)

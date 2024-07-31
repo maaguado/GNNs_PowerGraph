@@ -30,16 +30,13 @@ def train_test_val_split(dataset, data_split_ratio, random_seed=0, batch_size=64
     div = dataset.ndiv
     div2 = int(div/2)
     if (keep_same):
-    # Calcular el índice de la serie temporal más cercana al índice que corresponde al ratio de entrenamiento
         train_index = round(train_ratio * total_series)
 
-        # Ajustar el índice de entrenamiento si es necesario para asegurar que se mantienen separadas las simulaciones
         if train_index % div > div2:
             train_index += div - (train_index %div)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
         else:
             train_index -= train_index % div  # Si está más cerca del inicio de una simulación, retrocedemos al inicio de la simulación anterior
 
-        # Calcular los índices de validación y test - comprobamos si es múltiplo de 15 y ajustamos si es necesario
         val_index = train_index + val_size
         if val_index % div > div2:
             val_index += div - (val_index % div)  # Si está más cerca del final de una simulación, avanzamos a la siguiente simulación completa
@@ -239,7 +236,7 @@ class TrainerModel(object):
             self.resultados_final['R2_tst'] = np.mean(test_r2score)
             self.resultados_final['Loss_nodes'] = np.mean(loss_nodes, axis=0)
 
-        print("preds: ", preds[0].shape)
+        
         test_loss = torch.tensor(losses).mean().item()
         self.resultados_final['Loss_tst'] = test_loss
 
@@ -628,6 +625,7 @@ class TrainerMPNNLSTM(TrainerModel):
         if (dataloader_params['use_batch']):
             print("WARNING: The model is not batched but the dataloader is batched. Changing to not batched dataset.")
             dataloader_params['use_batch'] = False
+        self.batch = False
         super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
         
 
@@ -744,8 +742,8 @@ class TrainerEvolveGCN(TrainerMPNNLSTM):
     
 
 class TrainerSTConv(TrainerMPNNLSTM):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
 
     def _train_snap(self, snapshot):
         x = snapshot.x.permute(1, 0)[None,:,:].unsqueeze(-1).to(self.device) 
@@ -762,16 +760,22 @@ class TrainerSTConv(TrainerMPNNLSTM):
         edge_attr = snapshot.edge_attr.permute(1, 0, 2).to(self.device)  # [num_edges, num_time_steps, num_edge_features] -> [30, 100, 2]
         y = snapshot.y.to(self.device)
         y_hat = self.model(x, edge_index[:,:,0],edge_attr)
-        loss = F.mse_loss(y_hat, y).item()
-        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
-        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
-        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
-        if test:
-            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
+        if self.is_classification:
+            loss = self.__loss__(y_hat, y).item()
+            preds = y_hat.argmax(dim=0).cpu().detach()
+            real = y.squeeze(0).argmax(dim=0).cpu().detach()
+            return loss, preds, real
         else:
-            return loss, r2
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            if test:
+                preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
 
 
 class TrainerDCRNN(TrainerMPNNLSTM):
@@ -853,8 +857,9 @@ from torch_geometric.utils import to_scipy_sparse_matrix
 
 
 class TrainerMTGNN(TrainerMPNNLSTM):
-    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True):
-        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose)
+    def __init__(self, model, dataset,device, save_dir, dataloader_params, verbose=True, is_classification=False):
+        self.is_classification = is_classification
+        super().__init__(model, dataset,device, save_dir, dataloader_params, verbose=verbose, is_classification=is_classification)
 
     def _train_snap(self, snapshot):
         x = snapshot.x[None,None,:,:].to(self.device)
@@ -873,16 +878,22 @@ class TrainerMTGNN(TrainerMPNNLSTM):
         matrix = torch.tensor(to_scipy_sparse_matrix(ei, ea).toarray())
         y = snapshot.y.to(self.device)
         y_hat = self.model(x, matrix)
-        loss = F.mse_loss(y_hat, y).item()
-        loss_per_node = F.mse_loss(y_hat, y, reduction='none')
-        loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=1).cpu().detach().numpy()
-        r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
-        if test:
-            preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
-            return loss, r2, preds, real, loss_per_node
+        if self.is_classification:
+            loss = self.__loss__(y_hat, y).item()
+            preds = y_hat.argmax(dim=0).cpu().detach()
+            real = y.squeeze(0).argmax(dim=0).cpu().detach()
+            return loss, preds, real
         else:
-            return loss, r2
+            loss = F.mse_loss(y_hat, y).item()
+            r2 = r2_score(y.detach().cpu(), y_hat.detach().cpu())
+            loss_per_node = F.mse_loss(y_hat, y, reduction='none')
+            loss_per_node = loss_per_node.view(1, self.model.n_nodes, self.model.n_target).mean(dim=0).mean(dim=1).cpu().detach().numpy()
+            if test:
+                preds = y_hat.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                real = y.view(1, self.model.n_nodes, self.model.n_target).cpu().detach().numpy()
+                return loss, r2, preds, real, loss_per_node
+            else:
+                return loss, r2
         
 
 
