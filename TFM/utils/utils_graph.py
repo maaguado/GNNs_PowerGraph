@@ -339,9 +339,9 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
         ax = axs[row, col]
 
         
-        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="darkgrey", linewidth=1.5)
         for k in range(len(preds)):
             sns.lineplot(y=preds[k][nodes[i]], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False, color=colors[k], linewidth=1.5)
+        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="darkgrey", linewidth=1.5)
         
         ax.set_xlabel('Tiempo')
         ax.set_ylabel('Voltaje')
