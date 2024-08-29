@@ -338,10 +338,10 @@ def plot_multiple_models(predictions, real, n_target, n_situation, n_div, proble
         col = i % n_cols   # Calculate the column index
         ax = axs[row, col]
 
+        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="darkgrey", linewidth=1.5)
         
         for k in range(len(preds)):
             sns.lineplot(y=preds[k][nodes[i]], x=range(n_target * m), ax=ax, label=names_models[k] if names_models is not None else f"Modelo {k}", legend=False, color=colors[k], linewidth=1.5)
-        sns.lineplot(y=y_true[nodes[i]], x=range(n_target * m), ax=ax, label='Real', legend=False, color="darkgrey", linewidth=1.5)
         
         ax.set_xlabel('Tiempo')
         ax.set_ylabel('Voltaje')
@@ -395,3 +395,4 @@ def plot_clasificacion(preds, real, target_names, name_model = None):
     plt.suptitle("Resultados de la clasificación: {}".format(name_model), fontsize=20)
     plt.tight_layout(pad=2.0, w_pad=2.0, h_pad=2.0)
     plt.show()
+    return fig

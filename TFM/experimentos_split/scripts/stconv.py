@@ -10,7 +10,7 @@ import random
 import argparse
 
 
-sys.path.insert(1, "/usr/src/app/GNNs_PowerGraph/TFM")
+sys.path.insert(1, "/Users/maguado/Documents/UGR/Master/TFM/repo/GNNs_PowerGraph/TFM")
 try:
     from tqdm import tqdm
 except ImportError:
@@ -46,7 +46,7 @@ def entrenar_y_evaluar_modelos_stconv(param_grid, dataset, dataloader_params, nu
     
     device =torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
-    n_iter = 50  
+    n_iter = 15 
     for _ in tqdm(range(n_iter)):
         # Selecciona aleatoriamente los parámetros
         out_channels = random.choice(param_grid["out_channels"])
@@ -154,7 +154,7 @@ path = os.getcwd()
 sys.path.insert(1, "/".join(path.split("/")[0:-1]))
 
 
-folder_path = "/usr/src/app/GNNs_PowerGraph/TFM/datos"
+folder_path = "/Users/maguado/Documents/UGR/Master/TFM/repo/GNNs_PowerGraph/TFM/datos"
 results_save_path = "../results"
 name_model = "STConv"
 loader = powergrid.PowerGridDatasetLoader(folder_path, problem="regression")
