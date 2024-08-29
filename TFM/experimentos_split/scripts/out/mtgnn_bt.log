@@ -1,2460 +1,0 @@
-Processing dataset...
-Node:  0  not included, including...
-Node:  1  not included, including...
-Node:  2  not included, including...
-Node:  3  not included, including...
-Node:  4  not included, including...
-Node:  5  not included, including...
-Node:  6  not included, including...
-Node:  7  not included, including...
-Node:  8  not included, including...
-Node:  9  not included, including...
-Node:  10  not included, including...
-Node:  11  not included, including...
-Node:  12  not included, including...
-Node:  13  not included, including...
-Node:  14  not included, including...
-Node:  15  not included, including...
-Node:  16  not included, including...
-Node:  17  not included, including...
-Node:  18  not included, including...
-Node:  19  not included, including...
-Node:  20  not included, including...
-Node:  21  not included, including...
-Node:  22  not included, including...
-Skipping  row_328
-Ajustando modelo para bus_trip...
-Number of situations:  549
-Number of timestamps:  800
-Number of situations of the selected type:  86
-  0%|          | 0/50 [00:00<?, ?it/s]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: Currently logged in as: maragumar01. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_082100-hs2pgdk8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run fast-serenity-30
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/hs2pgdk8
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2500 | Eval Loss: 1.0602 | Eval R2: -42.1880 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.9761 | Eval Loss: 0.9822 | Eval R2: -38.5593 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.9070 | Eval Loss: 0.9262 | Eval R2: -36.1674 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.8580 | Eval Loss: 0.8814 | Eval R2: -34.1046 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.8159 | Eval Loss: 0.8388 | Eval R2: -32.1980 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.7742 | Eval Loss: 0.7933 | Eval R2: -30.2511 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.7294 | Eval Loss: 0.7442 | Eval R2: -28.1643 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.6807 | Eval Loss: 0.6897 | Eval R2: -25.8618 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.6260 | Eval Loss: 0.6274 | Eval R2: -23.2831 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.5627 | Eval Loss: 0.5552 | Eval R2: -20.3351 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.4894 | Eval Loss: 0.4730 | Eval R2: -17.0188 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.4081 | Eval Loss: 0.3844 | Eval R2: -13.5177 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.3242 | Eval Loss: 0.2973 | Eval R2: -10.1222 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.2456 | Eval Loss: 0.2197 | Eval R2: -7.1169 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.1781 | Eval Loss: 0.1558 | Eval R2: -4.6558 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1242 | Eval Loss: 0.1069 | Eval R2: -2.7714 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0842 | Eval Loss: 0.0720 | Eval R2: -1.4344 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0569 | Eval Loss: 0.0492 | Eval R2: -0.5632 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0397 | Eval Loss: 0.0354 | Eval R2: -0.0383 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0295 | Eval Loss: 0.0275 | Eval R2: 0.2567 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0237 | Eval Loss: 0.0231 | Eval R2: 0.4223 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0204 | Eval Loss: 0.0204 | Eval R2: 0.5137 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0183 | Eval Loss: 0.0187 | Eval R2: 0.5663 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0171 | Eval Loss: 0.0175 | Eval R2: 0.5993 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0161 | Eval Loss: 0.0167 | Eval R2: 0.6223 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0156 | Eval Loss: 0.0160 | Eval R2: 0.6371 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0150 | Eval Loss: 0.0154 | Eval R2: 0.6473 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.011985, test R2 score: 0.716474
-
-==================== GUARDANDO RESULTADOS ===================
-
-         Modelo  ... loss_eval_final
-0          LSTM  ...             NaN
-1  LSTM_NOBATCH  ...             NaN
-2     MPNN_LSTM  ...        0.006267
-3   DyGrEncoder  ...             NaN
-4         AGCRN  ...             NaN
-5         DCRNN  ...             NaN
-6     EvolveGCN  ...             NaN
-7         MTGNN  ...             NaN
-
-[8 rows x 12 columns]
-
-==================== RESULTADOS GUARDADOS ===================
-
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.014953166246414185, 'r2_eval_final': 0.647306501865387, 'loss_eval_final': 0.015414890833199024, 'r2_test': 0.7164743426179693, 'loss_test': 0.0119850505143404, 'loss_nodes': [[0.009849495254456997, 0.02039348892867565, 0.009172152727842331, 0.005119722336530685, 0.0107805747538805, 0.007076973561197519, 0.006401639431715012, 0.012542670592665672, 0.007342718541622162, 0.02312285453081131, 0.0044920723885297775, 0.02156706526875496, 0.013705607503652573, 0.01791890524327755, 0.012450295500457287, 0.0077271792106330395, 0.010761203244328499, 0.012758484110236168, 0.014524796046316624, 0.011993099935352802]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.007 MB of 0.011 MB uploadedwandb: \ 0.007 MB of 0.015 MB uploadedwandb: | 0.007 MB of 0.015 MB uploadedwandb: / 0.015 MB of 0.015 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01495
-wandb: loss_eval 0.01541
-wandb: loss_test 0.01199
-wandb:   r2_eval 0.64731
-wandb:   r2_test 0.71647
-wandb: 
-wandb: 🚀 View run fast-serenity-30 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/hs2pgdk8
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_082100-hs2pgdk8/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
-  2%|▏         | 1/50 [11:34:54<567:30:37, 41694.64s/it]Entrenando modelo con gcn_depth=2, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_195554-doivoj96
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run electric-dust-31
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/doivoj96
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.5532 | Eval Loss: 1.1954 | Eval R2: -51.0611 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.9167 | Eval Loss: 0.6678 | Eval R2: -28.7725 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.4606 | Eval Loss: 0.2826 | Eval R2: -10.5157 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.1804 | Eval Loss: 0.1086 | Eval R2: -2.4801 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.0776 | Eval Loss: 0.0615 | Eval R2: -0.5593 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.0550 | Eval Loss: 0.0529 | Eval R2: -0.3116 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0490 | Eval Loss: 0.0467 | Eval R2: -0.0478 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0440 | Eval Loss: 0.0420 | Eval R2: 0.0584 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0407 | Eval Loss: 0.0388 | Eval R2: 0.1254 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0378 | Eval Loss: 0.0358 | Eval R2: 0.1906 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0354 | Eval Loss: 0.0331 | Eval R2: 0.2384 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0331 | Eval Loss: 0.0308 | Eval R2: 0.2723 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0313 | Eval Loss: 0.0290 | Eval R2: 0.3148 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0297 | Eval Loss: 0.0275 | Eval R2: 0.3458 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0283 | Eval Loss: 0.0262 | Eval R2: 0.3638 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0271 | Eval Loss: 0.0251 | Eval R2: 0.3837 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0259 | Eval Loss: 0.0241 | Eval R2: 0.4077 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0248 | Eval Loss: 0.0231 | Eval R2: 0.4249 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0239 | Eval Loss: 0.0222 | Eval R2: 0.4352 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0229 | Eval Loss: 0.0213 | Eval R2: 0.4436 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0217 | Eval Loss: 0.0204 | Eval R2: 0.4565 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0210 | Eval Loss: 0.0196 | Eval R2: 0.4723 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0202 | Eval Loss: 0.0188 | Eval R2: 0.4889 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0193 | Eval Loss: 0.0180 | Eval R2: 0.5062 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0186 | Eval Loss: 0.0173 | Eval R2: 0.5154 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0180 | Eval Loss: 0.0166 | Eval R2: 0.5376 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0173 | Eval Loss: 0.0160 | Eval R2: 0.5606 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.012522, test R2 score: 0.644985
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.017333004623651505, 'r2_eval_final': 0.5606356859207153, 'loss_eval_final': 0.016003001481294632, 'r2_test': 0.6449852571214041, 'loss_test': 0.012521680444478989, 'loss_nodes': [[0.020459866151213646, 0.009883353486657143, 0.02077743224799633, 0.006387286353856325, 0.00928173866122961, 0.005429125390946865, 0.018517078831791878, 0.015329237096011639, 0.006526334211230278, 0.012694371864199638, 0.008062806911766529, 0.007494364399462938, 0.0094458581879735, 0.013346316292881966, 0.03706081211566925, 0.007688627578318119, 0.009374960325658321, 0.010261911898851395, 0.011766590178012848, 0.010645531117916107]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01733
-wandb: loss_eval 0.016
-wandb: loss_test 0.01252
-wandb:   r2_eval 0.56064
-wandb:   r2_test 0.64499
-wandb: 
-wandb: 🚀 View run electric-dust-31 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/doivoj96
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_195554-doivoj96/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
-  4%|▍         | 2/50 [12:01:14<241:18:11, 18097.74s/it]Entrenando modelo con gcn_depth=3, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_202214-pt0sjo0o
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run balmy-tree-32
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/pt0sjo0o
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.6868 | Eval Loss: 0.5792 | Eval R2: -21.2656 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.4627 | Eval Loss: 0.4162 | Eval R2: -14.1867 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.3230 | Eval Loss: 0.2930 | Eval R2: -8.9028 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.2216 | Eval Loss: 0.2069 | Eval R2: -5.2663 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.1545 | Eval Loss: 0.1536 | Eval R2: -3.0755 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1165 | Eval Loss: 0.1264 | Eval R2: -2.0151 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0995 | Eval Loss: 0.1157 | Eval R2: -1.6489 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0939 | Eval Loss: 0.1125 | Eval R2: -1.5717 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0925 | Eval Loss: 0.1117 | Eval R2: -1.5610 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0922 | Eval Loss: 0.1115 | Eval R2: -1.5550 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0920 | Eval Loss: 0.1115 | Eval R2: -1.5487 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5441 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5416 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5418 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5420 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5422 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5423 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.089752, test R2 score: -0.965212
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.0918937399983406, 'r2_eval_final': -1.5427359342575073, 'loss_eval_final': 0.11146864295005798, 'r2_test': -0.9652118571564839, 'loss_test': 0.08975249528884888, 'loss_nodes': [[0.08683902025222778, 0.09107129275798798, 0.08786306530237198, 0.09053578227758408, 0.08750474452972412, 0.08713139593601227, 0.09193023294210434, 0.08856242895126343, 0.09122326225042343, 0.0886516273021698, 0.08804982155561447, 0.09143424779176712, 0.08902722597122192, 0.0920981839299202, 0.08958689868450165, 0.0888398140668869, 0.09249822795391083, 0.08986704051494598, 0.09261605143547058, 0.0897197425365448]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09189
-wandb: loss_eval 0.11147
-wandb: loss_test 0.08975
-wandb:   r2_eval -1.54274
-wandb:   r2_test -0.96521
-wandb: 
-wandb: 🚀 View run balmy-tree-32 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/pt0sjo0o
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_202214-pt0sjo0o/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
-  6%|▌         | 3/50 [12:35:54<140:47:15, 10783.74s/it]Entrenando modelo con gcn_depth=3, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_205654-zbj656v8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run absurd-planet-33
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/zbj656v8
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.7322 | Eval Loss: 0.6632 | Eval R2: -25.8738 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.5985 | Eval Loss: 0.5780 | Eval R2: -22.3896 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.5264 | Eval Loss: 0.5056 | Eval R2: -19.2591 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.4630 | Eval Loss: 0.4427 | Eval R2: -16.6638 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4033 | Eval Loss: 0.3836 | Eval R2: -14.2169 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3483 | Eval Loss: 0.3286 | Eval R2: -11.9583 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2973 | Eval Loss: 0.2783 | Eval R2: -9.9123 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2504 | Eval Loss: 0.2323 | Eval R2: -8.0400 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.2077 | Eval Loss: 0.1904 | Eval R2: -6.3605 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1689 | Eval Loss: 0.1533 | Eval R2: -4.8950 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.1346 | Eval Loss: 0.1211 | Eval R2: -3.5952 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1050 | Eval Loss: 0.0940 | Eval R2: -2.5337 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0807 | Eval Loss: 0.0721 | Eval R2: -1.7006 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0615 | Eval Loss: 0.0547 | Eval R2: -1.0578 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0469 | Eval Loss: 0.0421 | Eval R2: -0.6226 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0361 | Eval Loss: 0.0328 | Eval R2: -0.2813 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0285 | Eval Loss: 0.0261 | Eval R2: -0.0289 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0232 | Eval Loss: 0.0218 | Eval R2: 0.1142 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0193 | Eval Loss: 0.0187 | Eval R2: 0.2280 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0169 | Eval Loss: 0.0166 | Eval R2: 0.3099 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0151 | Eval Loss: 0.0150 | Eval R2: 0.3931 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0138 | Eval Loss: 0.0142 | Eval R2: 0.4123 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0130 | Eval Loss: 0.0132 | Eval R2: 0.4774 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0124 | Eval Loss: 0.0127 | Eval R2: 0.4925 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0119 | Eval Loss: 0.0122 | Eval R2: 0.5267 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0116 | Eval Loss: 0.0120 | Eval R2: 0.5197 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0112 | Eval Loss: 0.0115 | Eval R2: 0.5805 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.009886, test R2 score: 0.584667
-
-==================== GUARDANDO RESULTADOS ===================
-
-         Modelo  ... loss_eval_final
-0          LSTM  ...             NaN
-1  LSTM_NOBATCH  ...             NaN
-2     MPNN_LSTM  ...        0.006267
-3   DyGrEncoder  ...             NaN
-4         AGCRN  ...             NaN
-5         DCRNN  ...             NaN
-6     EvolveGCN  ...             NaN
-7         MTGNN  ...             NaN
-8         MTGNN  ...             NaN
-
-[9 rows x 12 columns]
-
-==================== RESULTADOS GUARDADOS ===================
-
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.011238496750593185, 'r2_eval_final': 0.5805248618125916, 'loss_eval_final': 0.011484098620712757, 'r2_test': 0.5846670186139138, 'loss_test': 0.009886129759252071, 'loss_nodes': [[0.002425762126222253, 0.019120747223496437, 0.006783459335565567, 0.005633922293782234, 0.004841324873268604, 0.01727360300719738, 0.01074321661144495, 0.0051447986625134945, 0.0061904918402433395, 0.007274141069501638, 0.004521655850112438, 0.007207113318145275, 0.009422702714800835, 0.013095092959702015, 0.015948936343193054, 0.019533876329660416, 0.010522570461034775, 0.00826799776405096, 0.013564645312726498, 0.010206555016338825]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.010 MB of 0.010 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01124
-wandb: loss_eval 0.01148
-wandb: loss_test 0.00989
-wandb:   r2_eval 0.58052
-wandb:   r2_test 0.58467
-wandb: 
-wandb: 🚀 View run absurd-planet-33 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/zbj656v8
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_205654-zbj656v8/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
-  8%|▊         | 4/50 [13:15:48<95:28:12, 7471.57s/it]  Entrenando modelo con gcn_depth=3, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_213648-m5goxnkj
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run woven-vortex-34
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/m5goxnkj
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.7322 | Eval Loss: 0.6632 | Eval R2: -25.8738 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.5985 | Eval Loss: 0.5780 | Eval R2: -22.3896 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.5264 | Eval Loss: 0.5056 | Eval R2: -19.2591 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.4630 | Eval Loss: 0.4427 | Eval R2: -16.6638 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4033 | Eval Loss: 0.3836 | Eval R2: -14.2169 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3483 | Eval Loss: 0.3286 | Eval R2: -11.9583 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2973 | Eval Loss: 0.2783 | Eval R2: -9.9123 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2504 | Eval Loss: 0.2323 | Eval R2: -8.0400 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.2077 | Eval Loss: 0.1904 | Eval R2: -6.3605 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1689 | Eval Loss: 0.1533 | Eval R2: -4.8950 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.1346 | Eval Loss: 0.1211 | Eval R2: -3.5952 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1050 | Eval Loss: 0.0940 | Eval R2: -2.5337 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0807 | Eval Loss: 0.0721 | Eval R2: -1.7006 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0615 | Eval Loss: 0.0547 | Eval R2: -1.0578 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0469 | Eval Loss: 0.0421 | Eval R2: -0.6226 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0361 | Eval Loss: 0.0328 | Eval R2: -0.2813 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0285 | Eval Loss: 0.0261 | Eval R2: -0.0289 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0232 | Eval Loss: 0.0218 | Eval R2: 0.1142 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0193 | Eval Loss: 0.0187 | Eval R2: 0.2280 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0169 | Eval Loss: 0.0166 | Eval R2: 0.3099 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0151 | Eval Loss: 0.0150 | Eval R2: 0.3931 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0138 | Eval Loss: 0.0142 | Eval R2: 0.4123 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0130 | Eval Loss: 0.0132 | Eval R2: 0.4774 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0124 | Eval Loss: 0.0127 | Eval R2: 0.4925 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0119 | Eval Loss: 0.0122 | Eval R2: 0.5267 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0116 | Eval Loss: 0.0120 | Eval R2: 0.5197 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0112 | Eval Loss: 0.0115 | Eval R2: 0.5805 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.009886, test R2 score: 0.584667
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.011238496750593185, 'r2_eval_final': 0.5805248618125916, 'loss_eval_final': 0.011484098620712757, 'r2_test': 0.5846670186139138, 'loss_test': 0.009886129759252071, 'loss_nodes': [[0.002425762126222253, 0.019120747223496437, 0.006783459335565567, 0.005633922293782234, 0.004841324873268604, 0.01727360300719738, 0.01074321661144495, 0.0051447986625134945, 0.0061904918402433395, 0.007274141069501638, 0.004521655850112438, 0.007207113318145275, 0.009422702714800835, 0.013095092959702015, 0.015948936343193054, 0.019533876329660416, 0.010522570461034775, 0.00826799776405096, 0.013564645312726498, 0.010206555016338825]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.006 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01124
-wandb: loss_eval 0.01148
-wandb: loss_test 0.00989
-wandb:   r2_eval 0.58052
-wandb:   r2_test 0.58467
-wandb: 
-wandb: 🚀 View run woven-vortex-34 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/m5goxnkj
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_213648-m5goxnkj/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 10%|█         | 5/50 [13:40:19<66:20:43, 5307.63s/it]Entrenando modelo con gcn_depth=1, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_220119-48peh7v6
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run vital-frog-35
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/48peh7v6
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2237 | Eval Loss: 1.1426 | Eval R2: -48.1084 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 1.0437 | Eval Loss: 1.0524 | Eval R2: -44.1319 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.9674 | Eval Loss: 0.9891 | Eval R2: -41.3260 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.9141 | Eval Loss: 0.9432 | Eval R2: -39.2110 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.8731 | Eval Loss: 0.9053 | Eval R2: -37.3943 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.8379 | Eval Loss: 0.8711 | Eval R2: -35.7269 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.8048 | Eval Loss: 0.8372 | Eval R2: -34.0894 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.7705 | Eval Loss: 0.7999 | Eval R2: -32.3264 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.7318 | Eval Loss: 0.7562 | Eval R2: -30.2864 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.6857 | Eval Loss: 0.7037 | Eval R2: -27.8667 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.6310 | Eval Loss: 0.6422 | Eval R2: -25.0575 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.5684 | Eval Loss: 0.5737 | Eval R2: -21.9633 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.5010 | Eval Loss: 0.5025 | Eval R2: -18.7795 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.4333 | Eval Loss: 0.4335 | Eval R2: -15.7252 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.3698 | Eval Loss: 0.3707 | Eval R2: -12.9641 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.3134 | Eval Loss: 0.3161 | Eval R2: -10.5680 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.2652 | Eval Loss: 0.2702 | Eval R2: -8.5454 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.2252 | Eval Loss: 0.2327 | Eval R2: -6.8820 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1929 | Eval Loss: 0.2028 | Eval R2: -5.5517 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1674 | Eval Loss: 0.1795 | Eval R2: -4.5141 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.1477 | Eval Loss: 0.1616 | Eval R2: -3.7203 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.1327 | Eval Loss: 0.1480 | Eval R2: -3.1207 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.1214 | Eval Loss: 0.1378 | Eval R2: -2.6722 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.1130 | Eval Loss: 0.1302 | Eval R2: -2.3400 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.1068 | Eval Loss: 0.1247 | Eval R2: -2.0968 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.1022 | Eval Loss: 0.1206 | Eval R2: -1.9213 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0989 | Eval Loss: 0.1177 | Eval R2: -1.7968 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.096497, test R2 score: -1.295494
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.09890713542699814, 'r2_eval_final': -1.7967631816864014, 'loss_eval_final': 0.11769360303878784, 'r2_test': -1.295494492557355, 'loss_test': 0.09649692475795746, 'loss_nodes': [[0.12534338235855103, 0.09217238426208496, 0.08763635903596878, 0.09050058573484421, 0.09047205746173859, 0.08745148777961731, 0.09396948665380478, 0.08853374421596527, 0.09470804035663605, 0.08850587159395218, 0.08785988390445709, 0.09129128605127335, 0.11907414346933365, 0.09195466339588165, 0.08993756771087646, 0.1433311402797699, 0.09265255928039551, 0.09228289127349854, 0.09269025921821594, 0.08957056701183319]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09891
-wandb: loss_eval 0.11769
-wandb: loss_test 0.0965
-wandb:   r2_eval -1.79676
-wandb:   r2_test -1.29549
-wandb: 
-wandb: 🚀 View run vital-frog-35 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/48peh7v6
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_220119-48peh7v6/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 12%|█▏        | 6/50 [13:59:21<47:33:33, 3891.21s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240718_222020-kmupk5l1
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run youthful-bush-36
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/kmupk5l1
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.9413 | Eval Loss: 0.8349 | Eval R2: -35.2988 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7443 | Eval Loss: 0.7165 | Eval R2: -29.3537 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6508 | Eval Loss: 0.6289 | Eval R2: -25.7369 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5656 | Eval Loss: 0.5379 | Eval R2: -21.5180 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4793 | Eval Loss: 0.4475 | Eval R2: -17.5062 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3931 | Eval Loss: 0.3572 | Eval R2: -13.4874 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3093 | Eval Loss: 0.2721 | Eval R2: -9.8034 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2321 | Eval Loss: 0.1967 | Eval R2: -6.6183 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1657 | Eval Loss: 0.1347 | Eval R2: -4.0841 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1126 | Eval Loss: 0.0869 | Eval R2: -2.1898 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0731 | Eval Loss: 0.0526 | Eval R2: -0.8479 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0455 | Eval Loss: 0.0307 | Eval R2: 0.0153 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0291 | Eval Loss: 0.0193 | Eval R2: 0.4709 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0211 | Eval Loss: 0.0149 | Eval R2: 0.6495 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0181 | Eval Loss: 0.0134 | Eval R2: 0.7030 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0169 | Eval Loss: 0.0126 | Eval R2: 0.7216 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0161 | Eval Loss: 0.0119 | Eval R2: 0.7284 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0154 | Eval Loss: 0.0114 | Eval R2: 0.7469 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0147 | Eval Loss: 0.0107 | Eval R2: 0.7546 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0140 | Eval Loss: 0.0102 | Eval R2: 0.7648 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0135 | Eval Loss: 0.0097 | Eval R2: 0.7714 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0129 | Eval Loss: 0.0093 | Eval R2: 0.7836 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0124 | Eval Loss: 0.0089 | Eval R2: 0.7871 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0120 | Eval Loss: 0.0086 | Eval R2: 0.7924 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0116 | Eval Loss: 0.0083 | Eval R2: 0.8006 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0112 | Eval Loss: 0.0081 | Eval R2: 0.8007 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0107 | Eval Loss: 0.0080 | Eval R2: 0.8041 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.006898, test R2 score: 0.821170
-
-==================== GUARDANDO RESULTADOS ===================
-
-         Modelo  ... loss_eval_final
-0          LSTM  ...             NaN
-1  LSTM_NOBATCH  ...             NaN
-2     MPNN_LSTM  ...        0.006267
-3   DyGrEncoder  ...             NaN
-4         AGCRN  ...             NaN
-5         DCRNN  ...             NaN
-6     EvolveGCN  ...             NaN
-7         MTGNN  ...             NaN
-8         MTGNN  ...             NaN
-9         MTGNN  ...             NaN
-
-[10 rows x 12 columns]
-
-==================== RESULTADOS GUARDADOS ===================
-
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.010733425617218018, 'r2_eval_final': 0.8040745258331299, 'loss_eval_final': 0.007979816757142544, 'r2_test': 0.8211704311291277, 'loss_test': 0.006898109335452318, 'loss_nodes': [[0.0047280071303248405, 0.005325777921825647, 0.006264648400247097, 0.004500846844166517, 0.004960113670676947, 0.0063478946685791016, 0.005641033407300711, 0.007842842489480972, 0.00473154429346323, 0.00870372261852026, 0.004064629785716534, 0.00797506608068943, 0.006020098924636841, 0.008069507777690887, 0.006284383125603199, 0.004684870131313801, 0.013784797862172127, 0.008332135155797005, 0.011042183265089989, 0.008658086881041527]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.009 MB of 0.010 MB uploadedwandb: - 0.009 MB of 0.010 MB uploadedwandb: \ 0.010 MB of 0.010 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01073
-wandb: loss_eval 0.00798
-wandb: loss_test 0.0069
-wandb:   r2_eval 0.80407
-wandb:   r2_test 0.82117
-wandb: 
-wandb: 🚀 View run youthful-bush-36 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/kmupk5l1
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240718_222020-kmupk5l1/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 14%|█▍        | 7/50 [25:19:19<190:35:47, 15956.93s/it]Entrenando modelo con gcn_depth=2, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240719_094018-1l7cw4w0
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run genial-wave-37
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1l7cw4w0
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.0994 | Eval Loss: 0.9036 | Eval R2: -37.7427 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.8210 | Eval Loss: 0.8340 | Eval R2: -34.0662 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.7612 | Eval Loss: 0.7706 | Eval R2: -31.5058 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.7066 | Eval Loss: 0.7151 | Eval R2: -29.1472 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.6545 | Eval Loss: 0.6621 | Eval R2: -26.8951 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.6051 | Eval Loss: 0.6114 | Eval R2: -24.7534 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.5576 | Eval Loss: 0.5625 | Eval R2: -22.6514 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.5119 | Eval Loss: 0.5154 | Eval R2: -20.6046 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.4677 | Eval Loss: 0.4697 | Eval R2: -18.6079 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.4249 | Eval Loss: 0.4255 | Eval R2: -16.6585 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.3832 | Eval Loss: 0.3825 | Eval R2: -14.7473 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.3430 | Eval Loss: 0.3410 | Eval R2: -12.8861 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.3040 | Eval Loss: 0.3010 | Eval R2: -11.0827 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.2666 | Eval Loss: 0.2628 | Eval R2: -9.3630 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.2313 | Eval Loss: 0.2270 | Eval R2: -7.7597 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1985 | Eval Loss: 0.1942 | Eval R2: -6.3085 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.1688 | Eval Loss: 0.1650 | Eval R2: -5.0361 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.1427 | Eval Loss: 0.1396 | Eval R2: -3.9576 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1206 | Eval Loss: 0.1183 | Eval R2: -3.0708 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1022 | Eval Loss: 0.1006 | Eval R2: -2.3556 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0870 | Eval Loss: 0.0862 | Eval R2: -1.7845 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0745 | Eval Loss: 0.0744 | Eval R2: -1.3292 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0643 | Eval Loss: 0.0648 | Eval R2: -0.9650 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0560 | Eval Loss: 0.0568 | Eval R2: -0.6733 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0491 | Eval Loss: 0.0502 | Eval R2: -0.4364 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0436 | Eval Loss: 0.0447 | Eval R2: -0.2460 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0387 | Eval Loss: 0.0403 | Eval R2: -0.0865 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.034875, test R2 score: -0.054168
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.03874370455741882, 'r2_eval_final': -0.08646110445261002, 'loss_eval_final': 0.040296439081430435, 'r2_test': -0.05416797272089271, 'loss_test': 0.034875091165304184, 'loss_nodes': [[0.01353788934648037, 0.024748392403125763, 0.009222849272191525, 0.013640187680721283, 0.006754882168024778, 0.06951787322759628, 0.008170410990715027, 0.011216836050152779, 0.00903779361397028, 0.028839092701673508, 0.03955063968896866, 0.009361762553453445, 0.01267782412469387, 0.02597404457628727, 0.29173192381858826, 0.06037801876664162, 0.02663610875606537, 0.012133721262216568, 0.011710342951118946, 0.012661187909543514]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.003 MB uploadedwandb: | 0.002 MB of 0.003 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.03874
-wandb: loss_eval 0.0403
-wandb: loss_test 0.03488
-wandb:   r2_eval -0.08646
-wandb:   r2_test -0.05417
-wandb: 
-wandb: 🚀 View run genial-wave-37 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1l7cw4w0
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240719_094018-1l7cw4w0/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 16%|█▌        | 8/50 [25:43:15<132:14:05, 11334.41s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240719_100415-0vzlprm2
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run quiet-pond-38
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/0vzlprm2
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.8721 | Eval Loss: 0.8119 | Eval R2: -31.0579 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7276 | Eval Loss: 0.7274 | Eval R2: -27.5840 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6557 | Eval Loss: 0.6483 | Eval R2: -24.3663 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5846 | Eval Loss: 0.5806 | Eval R2: -21.6140 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.5202 | Eval Loss: 0.5165 | Eval R2: -18.9313 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.4611 | Eval Loss: 0.4559 | Eval R2: -16.4605 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.4056 | Eval Loss: 0.3999 | Eval R2: -14.1710 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.3539 | Eval Loss: 0.3476 | Eval R2: -12.0678 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.3055 | Eval Loss: 0.2984 | Eval R2: -10.1106 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.2603 | Eval Loss: 0.2520 | Eval R2: -8.3138 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.2181 | Eval Loss: 0.2087 | Eval R2: -6.6181 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1796 | Eval Loss: 0.1697 | Eval R2: -5.1294 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.1451 | Eval Loss: 0.1364 | Eval R2: -3.8521 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.1155 | Eval Loss: 0.1079 | Eval R2: -2.7535 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0905 | Eval Loss: 0.0844 | Eval R2: -1.8409 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0701 | Eval Loss: 0.0656 | Eval R2: -1.1227 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0542 | Eval Loss: 0.0510 | Eval R2: -0.5767 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0422 | Eval Loss: 0.0404 | Eval R2: -0.1798 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0337 | Eval Loss: 0.0329 | Eval R2: 0.0939 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0278 | Eval Loss: 0.0278 | Eval R2: 0.2774 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0237 | Eval Loss: 0.0242 | Eval R2: 0.3954 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0210 | Eval Loss: 0.0218 | Eval R2: 0.4706 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0192 | Eval Loss: 0.0202 | Eval R2: 0.5188 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0179 | Eval Loss: 0.0189 | Eval R2: 0.5507 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0171 | Eval Loss: 0.0180 | Eval R2: 0.5723 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0164 | Eval Loss: 0.0173 | Eval R2: 0.5877 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0158 | Eval Loss: 0.0167 | Eval R2: 0.5989 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.013224, test R2 score: 0.674479
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.015845492482185364, 'r2_eval_final': 0.5988707542419434, 'loss_eval_final': 0.016661420464515686, 'r2_test': 0.674478866703651, 'loss_test': 0.013224073685705662, 'loss_nodes': [[0.01785966008901596, 0.01593647710978985, 0.009843767620623112, 0.007280754391103983, 0.019090889021754265, 0.012421920895576477, 0.021204959601163864, 0.010575376451015472, 0.00613038707524538, 0.011358506977558136, 0.005815297830849886, 0.006666974164545536, 0.007472965866327286, 0.019105348736047745, 0.0073369890451431274, 0.010262602008879185, 0.028664464130997658, 0.011317179538309574, 0.021422715857625008, 0.014714250341057777]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01585
-wandb: loss_eval 0.01666
-wandb: loss_test 0.01322
-wandb:   r2_eval 0.59887
-wandb:   r2_test 0.67448
-wandb: 
-wandb: 🚀 View run quiet-pond-38 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/0vzlprm2
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240719_100415-0vzlprm2/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 18%|█▊        | 9/50 [37:26:39<238:59:30, 20984.65s/it]Entrenando modelo con gcn_depth=2, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240719_214739-kgc6awa9
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run blooming-rain-39
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/kgc6awa9
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.6703 | Eval Loss: 0.3819 | Eval R2: -13.8642 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.2782 | Eval Loss: 0.1813 | Eval R2: -5.1768 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.1393 | Eval Loss: 0.0915 | Eval R2: -1.5268 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.0775 | Eval Loss: 0.0543 | Eval R2: -0.2504 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.0552 | Eval Loss: 0.0437 | Eval R2: 0.0306 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.0465 | Eval Loss: 0.0366 | Eval R2: 0.1855 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0396 | Eval Loss: 0.0315 | Eval R2: 0.3355 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0346 | Eval Loss: 0.0280 | Eval R2: 0.4022 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0306 | Eval Loss: 0.0250 | Eval R2: 0.4695 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0276 | Eval Loss: 0.0224 | Eval R2: 0.5177 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0251 | Eval Loss: 0.0204 | Eval R2: 0.5578 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0229 | Eval Loss: 0.0189 | Eval R2: 0.5900 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0213 | Eval Loss: 0.0177 | Eval R2: 0.6145 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0200 | Eval Loss: 0.0166 | Eval R2: 0.6332 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0187 | Eval Loss: 0.0157 | Eval R2: 0.6534 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0176 | Eval Loss: 0.0146 | Eval R2: 0.6665 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0164 | Eval Loss: 0.0138 | Eval R2: 0.6854 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0155 | Eval Loss: 0.0128 | Eval R2: 0.6829 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0146 | Eval Loss: 0.0121 | Eval R2: 0.6849 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0137 | Eval Loss: 0.0118 | Eval R2: 0.6575 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0130 | Eval Loss: 0.0113 | Eval R2: 0.6690 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0123 | Eval Loss: 0.0109 | Eval R2: 0.6776 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0117 | Eval Loss: 0.0104 | Eval R2: 0.7065 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0111 | Eval Loss: 0.0100 | Eval R2: 0.7187 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0107 | Eval Loss: 0.0097 | Eval R2: 0.7370 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0103 | Eval Loss: 0.0093 | Eval R2: 0.7439 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0098 | Eval Loss: 0.0089 | Eval R2: 0.7598 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.008143, test R2 score: 0.768423
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.009834980592131615, 'r2_eval_final': 0.7598228454589844, 'loss_eval_final': 0.008853145875036716, 'r2_test': 0.7684229064503783, 'loss_test': 0.008142969571053982, 'loss_nodes': [[0.0044096531346440315, 0.005584778729826212, 0.006403981242328882, 0.00416210014373064, 0.009252283722162247, 0.0026719807647168636, 0.005691243335604668, 0.007205135188996792, 0.012545931152999401, 0.009861337952315807, 0.006088502239435911, 0.0065391031093895435, 0.007522468455135822, 0.006432308349758387, 0.010174868628382683, 0.010708537884056568, 0.00864265114068985, 0.018587565049529076, 0.00893726572394371, 0.011437701061367989]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.006 MB uploadedwandb: / 0.002 MB of 0.006 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.00983
-wandb: loss_eval 0.00885
-wandb: loss_test 0.00814
-wandb:   r2_eval 0.75982
-wandb:   r2_test 0.76842
-wandb: 
-wandb: 🚀 View run blooming-rain-39 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/kgc6awa9
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240719_214739-kgc6awa9/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 20%|██        | 10/50 [48:54:09<302:40:34, 27240.86s/it]Entrenando modelo con gcn_depth=2, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240720_091509-lnjz283v
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run jolly-sound-40
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/lnjz283v
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.0994 | Eval Loss: 0.9036 | Eval R2: -37.7427 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.8210 | Eval Loss: 0.8340 | Eval R2: -34.0662 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.7612 | Eval Loss: 0.7706 | Eval R2: -31.5058 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.7066 | Eval Loss: 0.7151 | Eval R2: -29.1472 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.6545 | Eval Loss: 0.6621 | Eval R2: -26.8951 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.6051 | Eval Loss: 0.6114 | Eval R2: -24.7534 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.5576 | Eval Loss: 0.5625 | Eval R2: -22.6514 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.5119 | Eval Loss: 0.5154 | Eval R2: -20.6046 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.4677 | Eval Loss: 0.4697 | Eval R2: -18.6079 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.4249 | Eval Loss: 0.4255 | Eval R2: -16.6585 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.3832 | Eval Loss: 0.3825 | Eval R2: -14.7473 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.3430 | Eval Loss: 0.3410 | Eval R2: -12.8861 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.3040 | Eval Loss: 0.3010 | Eval R2: -11.0827 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.2666 | Eval Loss: 0.2628 | Eval R2: -9.3630 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.2313 | Eval Loss: 0.2270 | Eval R2: -7.7597 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1985 | Eval Loss: 0.1942 | Eval R2: -6.3085 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.1688 | Eval Loss: 0.1650 | Eval R2: -5.0361 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.1427 | Eval Loss: 0.1396 | Eval R2: -3.9576 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1206 | Eval Loss: 0.1183 | Eval R2: -3.0708 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1022 | Eval Loss: 0.1006 | Eval R2: -2.3556 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0870 | Eval Loss: 0.0862 | Eval R2: -1.7845 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0745 | Eval Loss: 0.0744 | Eval R2: -1.3292 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0643 | Eval Loss: 0.0648 | Eval R2: -0.9650 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0560 | Eval Loss: 0.0568 | Eval R2: -0.6733 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0491 | Eval Loss: 0.0502 | Eval R2: -0.4364 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0436 | Eval Loss: 0.0447 | Eval R2: -0.2460 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0387 | Eval Loss: 0.0403 | Eval R2: -0.0865 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.034875, test R2 score: -0.054168
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.03874370455741882, 'r2_eval_final': -0.08646110445261002, 'loss_eval_final': 0.040296439081430435, 'r2_test': -0.05416797272089271, 'loss_test': 0.034875091165304184, 'loss_nodes': [[0.01353788934648037, 0.024748392403125763, 0.009222849272191525, 0.013640187680721283, 0.006754882168024778, 0.06951787322759628, 0.008170410990715027, 0.011216836050152779, 0.00903779361397028, 0.028839092701673508, 0.03955063968896866, 0.009361762553453445, 0.01267782412469387, 0.02597404457628727, 0.29173192381858826, 0.06037801876664162, 0.02663610875606537, 0.012133721262216568, 0.011710342951118946, 0.012661187909543514]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.003 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.03874
-wandb: loss_eval 0.0403
-wandb: loss_test 0.03488
-wandb:   r2_eval -0.08646
-wandb:   r2_test -0.05417
-wandb: 
-wandb: 🚀 View run jolly-sound-40 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/lnjz283v
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240720_091509-lnjz283v/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 22%|██▏       | 11/50 [49:37:43<213:27:24, 19703.71s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240720_095842-3e6tc326
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run likely-pine-41
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/3e6tc326
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.0786 | Eval Loss: 0.7529 | Eval R2: -28.5456 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6381 | Eval Loss: 0.5829 | Eval R2: -21.1706 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.4858 | Eval Loss: 0.4378 | Eval R2: -15.1898 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.3591 | Eval Loss: 0.3175 | Eval R2: -10.4846 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.2553 | Eval Loss: 0.2186 | Eval R2: -6.6037 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1684 | Eval Loss: 0.1380 | Eval R2: -3.4622 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.1018 | Eval Loss: 0.0808 | Eval R2: -1.3584 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0601 | Eval Loss: 0.0510 | Eval R2: -0.3423 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0416 | Eval Loss: 0.0397 | Eval R2: -0.0106 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0345 | Eval Loss: 0.0346 | Eval R2: 0.1434 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0308 | Eval Loss: 0.0315 | Eval R2: 0.2357 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0282 | Eval Loss: 0.0293 | Eval R2: 0.2943 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0263 | Eval Loss: 0.0274 | Eval R2: 0.3503 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0245 | Eval Loss: 0.0257 | Eval R2: 0.3957 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0229 | Eval Loss: 0.0241 | Eval R2: 0.4358 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0214 | Eval Loss: 0.0226 | Eval R2: 0.4701 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0198 | Eval Loss: 0.0197 | Eval R2: 0.5425 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0171 | Eval Loss: 0.0183 | Eval R2: 0.5707 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0162 | Eval Loss: 0.0173 | Eval R2: 0.5954 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0152 | Eval Loss: 0.0160 | Eval R2: 0.6272 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0141 | Eval Loss: 0.0151 | Eval R2: 0.6529 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0132 | Eval Loss: 0.0141 | Eval R2: 0.6732 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0124 | Eval Loss: 0.0132 | Eval R2: 0.6918 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0116 | Eval Loss: 0.0124 | Eval R2: 0.7101 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0110 | Eval Loss: 0.0117 | Eval R2: 0.7273 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0105 | Eval Loss: 0.0111 | Eval R2: 0.7439 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0099 | Eval Loss: 0.0105 | Eval R2: 0.7563 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.008276, test R2 score: 0.796414
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.009932545945048332, 'r2_eval_final': 0.7562663555145264, 'loss_eval_final': 0.010547186248004436, 'r2_test': 0.7964144617831623, 'loss_test': 0.008276122622191906, 'loss_nodes': [[0.0041807848028838634, 0.005964058917015791, 0.019354449585080147, 0.0109314676374197, 0.0042307330295443535, 0.0027340196538716555, 0.0056956736370921135, 0.006017480976879597, 0.005942417308688164, 0.0061509497463703156, 0.004216715227812529, 0.008005389012396336, 0.014788256026804447, 0.007207682356238365, 0.008055142126977444, 0.008167955093085766, 0.01261499896645546, 0.01049424335360527, 0.010990787297487259, 0.009779254905879498]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.00993
-wandb: loss_eval 0.01055
-wandb: loss_test 0.00828
-wandb:   r2_eval 0.75627
-wandb:   r2_test 0.79641
-wandb: 
-wandb: 🚀 View run likely-pine-41 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/3e6tc326
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240720_095842-3e6tc326/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 24%|██▍       | 12/50 [66:31:42<340:04:26, 32217.53s/it]Entrenando modelo con gcn_depth=3, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_025241-xhv0lg2t
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run flowing-shape-42
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/xhv0lg2t
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.6868 | Eval Loss: 0.5792 | Eval R2: -21.2656 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.4627 | Eval Loss: 0.4162 | Eval R2: -14.1867 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.3230 | Eval Loss: 0.2930 | Eval R2: -8.9028 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.2216 | Eval Loss: 0.2069 | Eval R2: -5.2663 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.1545 | Eval Loss: 0.1536 | Eval R2: -3.0755 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1165 | Eval Loss: 0.1264 | Eval R2: -2.0151 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0995 | Eval Loss: 0.1157 | Eval R2: -1.6489 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0939 | Eval Loss: 0.1125 | Eval R2: -1.5717 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0925 | Eval Loss: 0.1117 | Eval R2: -1.5610 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0922 | Eval Loss: 0.1115 | Eval R2: -1.5550 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0920 | Eval Loss: 0.1115 | Eval R2: -1.5487 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5441 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5416 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5418 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5420 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5422 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5423 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.089752, test R2 score: -0.965212
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.0918937399983406, 'r2_eval_final': -1.5427359342575073, 'loss_eval_final': 0.11146864295005798, 'r2_test': -0.9652118571564839, 'loss_test': 0.08975249528884888, 'loss_nodes': [[0.08683902025222778, 0.09107129275798798, 0.08786306530237198, 0.09053578227758408, 0.08750474452972412, 0.08713139593601227, 0.09193023294210434, 0.08856242895126343, 0.09122326225042343, 0.0886516273021698, 0.08804982155561447, 0.09143424779176712, 0.08902722597122192, 0.0920981839299202, 0.08958689868450165, 0.0888398140668869, 0.09249822795391083, 0.08986704051494598, 0.09261605143547058, 0.0897197425365448]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.006 MB uploadedwandb: / 0.002 MB of 0.006 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09189
-wandb: loss_eval 0.11147
-wandb: loss_test 0.08975
-wandb:   r2_eval -1.54274
-wandb:   r2_test -0.96521
-wandb: 
-wandb: 🚀 View run flowing-shape-42 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/xhv0lg2t
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_025241-xhv0lg2t/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 26%|██▌       | 13/50 [66:56:24<235:25:44, 22906.61s/it]Entrenando modelo con gcn_depth=3, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: | Waiting for wandb.init()...wandb: / Waiting for wandb.init()...wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: | Waiting for wandb.init()...wandb: / Waiting for wandb.init()...wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_031723-z85fd45v
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run treasured-feather-43
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/z85fd45v
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2890 | Eval Loss: 1.1969 | Eval R2: -48.4465 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 1.0718 | Eval Loss: 1.0481 | Eval R2: -41.7333 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.9294 | Eval Loss: 0.9028 | Eval R2: -35.1863 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.7870 | Eval Loss: 0.7559 | Eval R2: -28.6151 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.6441 | Eval Loss: 0.6113 | Eval R2: -22.2343 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.5018 | Eval Loss: 0.4351 | Eval R2: -14.7545 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3679 | Eval Loss: 0.3042 | Eval R2: -9.5811 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2534 | Eval Loss: 0.1941 | Eval R2: -5.7145 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1665 | Eval Loss: 0.1211 | Eval R2: -2.8092 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1072 | Eval Loss: 0.0790 | Eval R2: -1.1529 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0741 | Eval Loss: 0.0572 | Eval R2: -0.4411 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0569 | Eval Loss: 0.0471 | Eval R2: -0.1553 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0484 | Eval Loss: 0.0417 | Eval R2: -0.0392 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0431 | Eval Loss: 0.0378 | Eval R2: -0.0274 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0388 | Eval Loss: 0.0344 | Eval R2: 0.0311 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0351 | Eval Loss: 0.0315 | Eval R2: 0.0612 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0320 | Eval Loss: 0.0292 | Eval R2: 0.0996 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0299 | Eval Loss: 0.0273 | Eval R2: 0.1376 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0280 | Eval Loss: 0.0258 | Eval R2: 0.2151 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0267 | Eval Loss: 0.0245 | Eval R2: 0.3092 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0254 | Eval Loss: 0.0233 | Eval R2: 0.3794 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0242 | Eval Loss: 0.0222 | Eval R2: 0.4303 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0231 | Eval Loss: 0.0212 | Eval R2: 0.4677 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0222 | Eval Loss: 0.0203 | Eval R2: 0.4865 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0213 | Eval Loss: 0.0195 | Eval R2: 0.5041 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0205 | Eval Loss: 0.0188 | Eval R2: 0.5244 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0197 | Eval Loss: 0.0180 | Eval R2: 0.5444 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.015152, test R2 score: 0.601033
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.01974499225616455, 'r2_eval_final': 0.5443758964538574, 'loss_eval_final': 0.018046515062451363, 'r2_test': 0.6010332671793815, 'loss_test': 0.015152109786868095, 'loss_nodes': [[0.01456747017800808, 0.02606198750436306, 0.021731747314333916, 0.00902633648365736, 0.012972348369657993, 0.007825878448784351, 0.013814388774335384, 0.012747321277856827, 0.012907675467431545, 0.012304521165788174, 0.011227646842598915, 0.014387218281626701, 0.009266400709748268, 0.015998972579836845, 0.017220348119735718, 0.02390121854841709, 0.019229507073760033, 0.012663503177464008, 0.021911192685365677, 0.013276473619043827]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01974
-wandb: loss_eval 0.01805
-wandb: loss_test 0.01515
-wandb:   r2_eval 0.54438
-wandb:   r2_test 0.60103
-wandb: 
-wandb: 🚀 View run treasured-feather-43 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/z85fd45v
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_031723-z85fd45v/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 28%|██▊       | 14/50 [67:29:05<165:48:02, 16580.08s/it]Entrenando modelo con gcn_depth=2, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_035005-1f1yka0e
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run cool-snowball-44
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1f1yka0e
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.1416 | Eval Loss: 1.0068 | Eval R2: -41.7856 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.8733 | Eval Loss: 0.8016 | Eval R2: -32.4663 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6821 | Eval Loss: 0.6246 | Eval R2: -24.4265 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5253 | Eval Loss: 0.4753 | Eval R2: -17.6674 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.3919 | Eval Loss: 0.3462 | Eval R2: -11.9960 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.2779 | Eval Loss: 0.2399 | Eval R2: -7.4120 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.1888 | Eval Loss: 0.1619 | Eval R2: -4.2525 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.1266 | Eval Loss: 0.1098 | Eval R2: -2.2803 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0867 | Eval Loss: 0.0771 | Eval R2: -1.1450 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0625 | Eval Loss: 0.0577 | Eval R2: -0.4882 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0485 | Eval Loss: 0.0474 | Eval R2: -0.1640 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0410 | Eval Loss: 0.0416 | Eval R2: 0.0353 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0365 | Eval Loss: 0.0374 | Eval R2: 0.1694 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0334 | Eval Loss: 0.0347 | Eval R2: 0.2359 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0309 | Eval Loss: 0.0316 | Eval R2: 0.2980 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0276 | Eval Loss: 0.0281 | Eval R2: 0.3597 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0250 | Eval Loss: 0.0256 | Eval R2: 0.3931 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0229 | Eval Loss: 0.0235 | Eval R2: 0.4229 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0210 | Eval Loss: 0.0215 | Eval R2: 0.4408 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0193 | Eval Loss: 0.0198 | Eval R2: 0.4559 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0177 | Eval Loss: 0.0177 | Eval R2: 0.4598 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0164 | Eval Loss: 0.0162 | Eval R2: 0.4677 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0154 | Eval Loss: 0.0153 | Eval R2: 0.4743 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0145 | Eval Loss: 0.0146 | Eval R2: 0.4775 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0138 | Eval Loss: 0.0139 | Eval R2: 0.4637 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0133 | Eval Loss: 0.0133 | Eval R2: 0.4274 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0126 | Eval Loss: 0.0127 | Eval R2: 0.4210 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.010554, test R2 score: 0.402843
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.012565568089485168, 'r2_eval_final': 0.4210367202758789, 'loss_eval_final': 0.012737910263240337, 'r2_test': 0.4028426590010866, 'loss_test': 0.010553766041994095, 'loss_nodes': [[0.004148838110268116, 0.014803479425609112, 0.016589738428592682, 0.014164447784423828, 0.0057816281914711, 0.00819014199078083, 0.011032289825379848, 0.008294991217553616, 0.006554866209626198, 0.007366762030869722, 0.005573914386332035, 0.008788492530584335, 0.008162569254636765, 0.019858719781041145, 0.008731739595532417, 0.008514844812452793, 0.010014122352004051, 0.01293245330452919, 0.010334799066185951, 0.021236477419734]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01257
-wandb: loss_eval 0.01274
-wandb: loss_test 0.01055
-wandb:   r2_eval 0.42104
-wandb:   r2_test 0.40284
-wandb: 
-wandb: 🚀 View run cool-snowball-44 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1f1yka0e
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_035005-1f1yka0e/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 30%|███       | 15/50 [68:10:56<119:57:54, 12339.27s/it]Entrenando modelo con gcn_depth=1, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_043156-twnwu55s
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run vocal-blaze-45
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/twnwu55s
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.7971 | Eval Loss: 0.7812 | Eval R2: -30.8069 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6851 | Eval Loss: 0.6679 | Eval R2: -25.4490 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.5912 | Eval Loss: 0.5791 | Eval R2: -21.3225 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5139 | Eval Loss: 0.5063 | Eval R2: -18.1411 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4499 | Eval Loss: 0.4464 | Eval R2: -15.6202 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3976 | Eval Loss: 0.3959 | Eval R2: -13.5606 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3537 | Eval Loss: 0.3530 | Eval R2: -11.8526 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.3157 | Eval Loss: 0.3154 | Eval R2: -10.3737 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.2818 | Eval Loss: 0.2815 | Eval R2: -9.0457 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.2508 | Eval Loss: 0.2502 | Eval R2: -7.8241 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.2223 | Eval Loss: 0.2212 | Eval R2: -6.6897 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1954 | Eval Loss: 0.1940 | Eval R2: -5.6367 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.1705 | Eval Loss: 0.1688 | Eval R2: -4.6682 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.1475 | Eval Loss: 0.1456 | Eval R2: -3.7873 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.1264 | Eval Loss: 0.1244 | Eval R2: -2.9964 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1073 | Eval Loss: 0.1055 | Eval R2: -2.3003 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0905 | Eval Loss: 0.0889 | Eval R2: -1.7017 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0761 | Eval Loss: 0.0748 | Eval R2: -1.2028 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0639 | Eval Loss: 0.0631 | Eval R2: -0.7941 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0539 | Eval Loss: 0.0537 | Eval R2: -0.4720 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0460 | Eval Loss: 0.0462 | Eval R2: -0.2266 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0399 | Eval Loss: 0.0405 | Eval R2: -0.0430 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0353 | Eval Loss: 0.0362 | Eval R2: 0.0900 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0317 | Eval Loss: 0.0329 | Eval R2: 0.1875 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0292 | Eval Loss: 0.0305 | Eval R2: 0.2569 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0272 | Eval Loss: 0.0287 | Eval R2: 0.3052 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0257 | Eval Loss: 0.0273 | Eval R2: 0.3428 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.023103, test R2 score: 0.446030
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.025684362277388573, 'r2_eval_final': 0.3428407907485962, 'loss_eval_final': 0.027254626154899597, 'r2_test': 0.44602963593775663, 'loss_test': 0.02310319058597088, 'loss_nodes': [[0.0053300014697015285, 0.01883806847035885, 0.013921779580414295, 0.053527869284152985, 0.024054832756519318, 0.009127709083259106, 0.039318133145570755, 0.014221424236893654, 0.015889057889580727, 0.014845997095108032, 0.03820819407701492, 0.012880900874733925, 0.04305290803313255, 0.015277921222150326, 0.01176988985389471, 0.012614873237907887, 0.008969292044639587, 0.01734292320907116, 0.06568100303411484, 0.02719096653163433]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.02568
-wandb: loss_eval 0.02725
-wandb: loss_test 0.0231
-wandb:   r2_eval 0.34284
-wandb:   r2_test 0.44603
-wandb: 
-wandb: 🚀 View run vocal-blaze-45 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/twnwu55s
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_043156-twnwu55s/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 32%|███▏      | 16/50 [68:31:05<84:53:45, 8988.99s/it]  Entrenando modelo con gcn_depth=3, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_045204-yxwjj72a
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run sweet-snowflake-46
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/yxwjj72a
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.3783 | Eval Loss: 0.8597 | Eval R2: -34.8356 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7932 | Eval Loss: 0.8253 | Eval R2: -33.0540 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.7610 | Eval Loss: 0.7950 | Eval R2: -31.4821 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.7326 | Eval Loss: 0.7671 | Eval R2: -30.1061 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.7055 | Eval Loss: 0.7392 | Eval R2: -28.8138 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.6781 | Eval Loss: 0.7107 | Eval R2: -27.5254 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.6498 | Eval Loss: 0.6808 | Eval R2: -26.1861 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.6203 | Eval Loss: 0.6495 | Eval R2: -24.7754 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.5892 | Eval Loss: 0.6164 | Eval R2: -23.2987 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.5567 | Eval Loss: 0.5819 | Eval R2: -21.7677 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.5229 | Eval Loss: 0.5462 | Eval R2: -20.1958 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.4883 | Eval Loss: 0.5097 | Eval R2: -18.6003 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.4532 | Eval Loss: 0.4731 | Eval R2: -17.0032 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.4183 | Eval Loss: 0.4368 | Eval R2: -15.4287 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.3840 | Eval Loss: 0.4015 | Eval R2: -13.9001 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.3510 | Eval Loss: 0.3676 | Eval R2: -12.4376 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.3195 | Eval Loss: 0.3356 | Eval R2: -11.0580 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.2900 | Eval Loss: 0.3058 | Eval R2: -9.7746 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.2628 | Eval Loss: 0.2785 | Eval R2: -8.5973 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.2380 | Eval Loss: 0.2538 | Eval R2: -7.5317 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.2156 | Eval Loss: 0.2316 | Eval R2: -6.5798 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.1958 | Eval Loss: 0.2121 | Eval R2: -5.7400 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.1783 | Eval Loss: 0.1950 | Eval R2: -5.0081 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.1632 | Eval Loss: 0.1802 | Eval R2: -4.3777 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.1502 | Eval Loss: 0.1676 | Eval R2: -3.8409 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.1392 | Eval Loss: 0.1570 | Eval R2: -3.3890 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.1299 | Eval Loss: 0.1480 | Eval R2: -3.0126 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.128882, test R2 score: -2.746812
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.12994533777236938, 'r2_eval_final': -3.0126335620880127, 'loss_eval_final': 0.14802499115467072, 'r2_test': -2.74681243706616, 'loss_test': 0.12888158857822418, 'loss_nodes': [[0.1499990075826645, 0.09212271124124527, 0.13464964926242828, 0.09049004316329956, 0.22250163555145264, 0.09764648973941803, 0.1261291652917862, 0.10576354712247849, 0.09515517204999924, 0.10523116588592529, 0.08817198872566223, 0.09129361808300018, 0.21276797354221344, 0.09434358775615692, 0.09019440412521362, 0.10411673784255981, 0.092549167573452, 0.3438878655433655, 0.15109246969223022, 0.08952561020851135]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.12995
-wandb: loss_eval 0.14802
-wandb: loss_test 0.12888
-wandb:   r2_eval -3.01263
-wandb:   r2_test -2.74681
-wandb: 
-wandb: 🚀 View run sweet-snowflake-46 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/yxwjj72a
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_045204-yxwjj72a/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 34%|███▍      | 17/50 [80:45:24<179:04:02, 19534.61s/it]Entrenando modelo con gcn_depth=3, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240721_170624-yqjdpycy
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run fresh-aardvark-47
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/yqjdpycy
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.9889 | Eval Loss: 1.1290 | Eval R2: -45.9457 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.9569 | Eval Loss: 0.8841 | Eval R2: -35.4558 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.7728 | Eval Loss: 0.7369 | Eval R2: -28.8680 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.6229 | Eval Loss: 0.5707 | Eval R2: -21.6831 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4704 | Eval Loss: 0.4226 | Eval R2: -15.2780 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3430 | Eval Loss: 0.3054 | Eval R2: -10.4289 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2462 | Eval Loss: 0.2220 | Eval R2: -7.0029 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.1787 | Eval Loss: 0.1622 | Eval R2: -4.6679 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1307 | Eval Loss: 0.1203 | Eval R2: -3.0447 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0971 | Eval Loss: 0.0908 | Eval R2: -1.8862 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0732 | Eval Loss: 0.0694 | Eval R2: -1.0731 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0563 | Eval Loss: 0.0542 | Eval R2: -0.5050 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0443 | Eval Loss: 0.0438 | Eval R2: -0.1239 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0363 | Eval Loss: 0.0367 | Eval R2: 0.1240 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0308 | Eval Loss: 0.0320 | Eval R2: 0.2776 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0272 | Eval Loss: 0.0287 | Eval R2: 0.3722 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0247 | Eval Loss: 0.0264 | Eval R2: 0.4333 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0230 | Eval Loss: 0.0247 | Eval R2: 0.4746 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0218 | Eval Loss: 0.0233 | Eval R2: 0.5037 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0207 | Eval Loss: 0.0222 | Eval R2: 0.5247 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0199 | Eval Loss: 0.0213 | Eval R2: 0.5418 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0191 | Eval Loss: 0.0205 | Eval R2: 0.5566 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0184 | Eval Loss: 0.0198 | Eval R2: 0.5698 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0178 | Eval Loss: 0.0191 | Eval R2: 0.5816 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0174 | Eval Loss: 0.0185 | Eval R2: 0.5919 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0168 | Eval Loss: 0.0180 | Eval R2: 0.6011 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0165 | Eval Loss: 0.0175 | Eval R2: 0.6109 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.012636, test R2 score: 0.702636
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.016465933993458748, 'r2_eval_final': 0.6109439134597778, 'loss_eval_final': 0.017479488626122475, 'r2_test': 0.7026363821228258, 'loss_test': 0.012636447325348854, 'loss_nodes': [[0.013128018006682396, 0.01311783492565155, 0.011472621001303196, 0.015187793411314487, 0.00921677891165018, 0.005344550125300884, 0.008856013417243958, 0.00825418345630169, 0.008667923510074615, 0.011644469574093819, 0.006796191446483135, 0.015484881587326527, 0.011074908077716827, 0.008932474069297314, 0.013481582514941692, 0.010263664647936821, 0.0322083942592144, 0.01832563430070877, 0.01305463071912527, 0.01821642555296421]]}
-wandb: - 0.002 MB of 0.006 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01647
-wandb: loss_eval 0.01748
-wandb: loss_test 0.01264
-wandb:   r2_eval 0.61094
-wandb:   r2_test 0.70264
-wandb: 
-wandb: 🚀 View run fresh-aardvark-47 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/yqjdpycy
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240721_170624-yqjdpycy/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 36%|███▌      | 18/50 [92:52:42<238:01:17, 26777.42s/it]Entrenando modelo con gcn_depth=1, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240722_051342-a8byxh3g
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run revived-wildflower-48
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/a8byxh3g
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.9859 | Eval Loss: 0.7954 | Eval R2: -34.3074 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6212 | Eval Loss: 0.5336 | Eval R2: -21.4780 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.4307 | Eval Loss: 0.3791 | Eval R2: -15.1577 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.3047 | Eval Loss: 0.2634 | Eval R2: -9.6484 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.2119 | Eval Loss: 0.1853 | Eval R2: -6.0167 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1477 | Eval Loss: 0.1286 | Eval R2: -3.5536 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.1007 | Eval Loss: 0.0876 | Eval R2: -1.7641 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0685 | Eval Loss: 0.0623 | Eval R2: -0.6813 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0489 | Eval Loss: 0.0502 | Eval R2: -0.1818 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0398 | Eval Loss: 0.0456 | Eval R2: -0.0171 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0367 | Eval Loss: 0.0430 | Eval R2: 0.0232 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0349 | Eval Loss: 0.0405 | Eval R2: 0.0753 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0333 | Eval Loss: 0.0385 | Eval R2: 0.1201 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0320 | Eval Loss: 0.0366 | Eval R2: 0.1502 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0304 | Eval Loss: 0.0345 | Eval R2: 0.1784 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0288 | Eval Loss: 0.0321 | Eval R2: 0.2114 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0271 | Eval Loss: 0.0297 | Eval R2: 0.2410 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0252 | Eval Loss: 0.0274 | Eval R2: 0.2569 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0233 | Eval Loss: 0.0253 | Eval R2: 0.2403 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0216 | Eval Loss: 0.0241 | Eval R2: 0.1971 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0202 | Eval Loss: 0.0233 | Eval R2: 0.1688 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0192 | Eval Loss: 0.0229 | Eval R2: 0.1442 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0187 | Eval Loss: 0.0225 | Eval R2: 0.1544 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0182 | Eval Loss: 0.0220 | Eval R2: 0.1794 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0177 | Eval Loss: 0.0214 | Eval R2: 0.2191 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0174 | Eval Loss: 0.0206 | Eval R2: 0.2765 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0170 | Eval Loss: 0.0199 | Eval R2: 0.3294 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.017202, test R2 score: 0.364634
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.016961826011538506, 'r2_eval_final': 0.3294265568256378, 'loss_eval_final': 0.019867317751049995, 'r2_test': 0.36463388618014625, 'loss_test': 0.017202109098434448, 'loss_nodes': [[0.0057244738563895226, 0.06397385150194168, 0.011122739873826504, 0.010698755271732807, 0.020046591758728027, 0.016645684838294983, 0.012157537043094635, 0.02129446715116501, 0.01456968579441309, 0.015233155339956284, 0.016956495121121407, 0.012635641731321812, 0.011895561590790749, 0.009207459166646004, 0.01587272435426712, 0.01039148960262537, 0.021095309406518936, 0.01496858336031437, 0.02756459265947342, 0.011987356469035149]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01696
-wandb: loss_eval 0.01987
-wandb: loss_test 0.0172
-wandb:   r2_eval 0.32943
-wandb:   r2_test 0.36463
-wandb: 
-wandb: 🚀 View run revived-wildflower-48 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/a8byxh3g
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240722_051342-a8byxh3g/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 38%|███▊      | 19/50 [93:11:35<164:15:32, 19075.24s/it]Entrenando modelo con gcn_depth=2, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240722_053234-906nz4eb
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run morning-pyramid-49
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/906nz4eb
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.0959 | Eval Loss: 0.9153 | Eval R2: -38.8260 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7970 | Eval Loss: 0.7570 | Eval R2: -31.3463 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6572 | Eval Loss: 0.6247 | Eval R2: -25.6642 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5494 | Eval Loss: 0.5154 | Eval R2: -20.8985 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4446 | Eval Loss: 0.4053 | Eval R2: -16.0629 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3485 | Eval Loss: 0.3088 | Eval R2: -11.7522 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2629 | Eval Loss: 0.2276 | Eval R2: -8.1742 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.1912 | Eval Loss: 0.1618 | Eval R2: -5.2883 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1342 | Eval Loss: 0.1108 | Eval R2: -3.1135 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0915 | Eval Loss: 0.0738 | Eval R2: -1.5365 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0618 | Eval Loss: 0.0488 | Eval R2: -0.5321 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0423 | Eval Loss: 0.0333 | Eval R2: 0.0553 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0307 | Eval Loss: 0.0248 | Eval R2: 0.3824 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0245 | Eval Loss: 0.0202 | Eval R2: 0.5068 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0214 | Eval Loss: 0.0178 | Eval R2: 0.5704 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0194 | Eval Loss: 0.0162 | Eval R2: 0.5936 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0181 | Eval Loss: 0.0152 | Eval R2: 0.6220 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0171 | Eval Loss: 0.0142 | Eval R2: 0.6489 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0161 | Eval Loss: 0.0136 | Eval R2: 0.6832 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0155 | Eval Loss: 0.0129 | Eval R2: 0.6938 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0147 | Eval Loss: 0.0124 | Eval R2: 0.7110 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0141 | Eval Loss: 0.0120 | Eval R2: 0.7207 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0136 | Eval Loss: 0.0116 | Eval R2: 0.7302 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0131 | Eval Loss: 0.0114 | Eval R2: 0.7390 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0127 | Eval Loss: 0.0111 | Eval R2: 0.7416 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0123 | Eval Loss: 0.0109 | Eval R2: 0.7481 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0120 | Eval Loss: 0.0106 | Eval R2: 0.7540 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.008149, test R2 score: 0.795088
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.011968586593866348, 'r2_eval_final': 0.7540168166160583, 'loss_eval_final': 0.010608074255287647, 'r2_test': 0.7950880345259085, 'loss_test': 0.008148721419274807, 'loss_nodes': [[0.003911152482032776, 0.005562529433518648, 0.008282270282506943, 0.00494948448613286, 0.0053989943116903305, 0.003528173081576824, 0.006792526692152023, 0.0065683964639902115, 0.005756779108196497, 0.0068238177336752415, 0.005745359696447849, 0.006842420902103186, 0.009129279293119907, 0.008757534436881542, 0.00935062114149332, 0.007323267869651318, 0.013226198963820934, 0.00997781939804554, 0.01643495261669159, 0.018612850457429886]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01197
-wandb: loss_eval 0.01061
-wandb: loss_test 0.00815
-wandb:   r2_eval 0.75402
-wandb:   r2_test 0.79509
-wandb: 
-wandb: 🚀 View run morning-pyramid-49 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/906nz4eb
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240722_053234-906nz4eb/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 40%|████      | 20/50 [104:19:27<211:29:38, 25379.29s/it]Entrenando modelo con gcn_depth=1, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240722_164026-ebi3uzce
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run balmy-wildflower-50
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/ebi3uzce
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.9435 | Eval Loss: 0.9135 | Eval R2: -36.6034 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7996 | Eval Loss: 0.7721 | Eval R2: -29.9110 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6762 | Eval Loss: 0.6574 | Eval R2: -24.9381 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5604 | Eval Loss: 0.5372 | Eval R2: -19.5225 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4529 | Eval Loss: 0.4331 | Eval R2: -15.0252 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3572 | Eval Loss: 0.3402 | Eval R2: -11.0300 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2763 | Eval Loss: 0.2651 | Eval R2: -7.8927 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2120 | Eval Loss: 0.2065 | Eval R2: -5.5186 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1631 | Eval Loss: 0.1622 | Eval R2: -3.7989 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1247 | Eval Loss: 0.1248 | Eval R2: -2.4588 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0952 | Eval Loss: 0.0997 | Eval R2: -1.5932 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0748 | Eval Loss: 0.0795 | Eval R2: -0.9867 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0594 | Eval Loss: 0.0641 | Eval R2: -0.5700 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0483 | Eval Loss: 0.0533 | Eval R2: -0.3168 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0404 | Eval Loss: 0.0454 | Eval R2: -0.1841 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0345 | Eval Loss: 0.0393 | Eval R2: -0.0721 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0301 | Eval Loss: 0.0339 | Eval R2: 0.0643 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0265 | Eval Loss: 0.0302 | Eval R2: 0.1006 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0235 | Eval Loss: 0.0266 | Eval R2: 0.1975 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0211 | Eval Loss: 0.0241 | Eval R2: 0.2513 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0191 | Eval Loss: 0.0220 | Eval R2: 0.3441 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0175 | Eval Loss: 0.0202 | Eval R2: 0.4179 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0162 | Eval Loss: 0.0186 | Eval R2: 0.4783 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0151 | Eval Loss: 0.0177 | Eval R2: 0.5019 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0142 | Eval Loss: 0.0164 | Eval R2: 0.5644 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0133 | Eval Loss: 0.0157 | Eval R2: 0.5702 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0127 | Eval Loss: 0.0146 | Eval R2: 0.6244 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.011212, test R2 score: 0.699346
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.012717925943434238, 'r2_eval_final': 0.6244240403175354, 'loss_eval_final': 0.014637255109846592, 'r2_test': 0.6993458556094185, 'loss_test': 0.011211730539798737, 'loss_nodes': [[0.005624300800263882, 0.00940926093608141, 0.013332587666809559, 0.0065710172057151794, 0.02506282366812229, 0.007426622323691845, 0.006773496977984905, 0.009152318350970745, 0.013684299774467945, 0.013423123396933079, 0.006774991750717163, 0.007025765720754862, 0.01027710735797882, 0.009243064559996128, 0.012786613777279854, 0.01228549424558878, 0.01580500230193138, 0.011182637885212898, 0.009614217095077038, 0.01877986080944538]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01272
-wandb: loss_eval 0.01464
-wandb: loss_test 0.01121
-wandb:   r2_eval 0.62442
-wandb:   r2_test 0.69935
-wandb: 
-wandb: 🚀 View run balmy-wildflower-50 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/ebi3uzce
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240722_164026-ebi3uzce/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 42%|████▏     | 21/50 [104:31:06<144:46:06, 17971.25s/it]Entrenando modelo con gcn_depth=1, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240722_165206-wynnj15w
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run logical-shadow-51
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/wynnj15w
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.9435 | Eval Loss: 0.9135 | Eval R2: -36.6034 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7996 | Eval Loss: 0.7721 | Eval R2: -29.9110 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6762 | Eval Loss: 0.6574 | Eval R2: -24.9381 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5604 | Eval Loss: 0.5372 | Eval R2: -19.5225 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4529 | Eval Loss: 0.4331 | Eval R2: -15.0252 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3572 | Eval Loss: 0.3402 | Eval R2: -11.0300 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.2763 | Eval Loss: 0.2651 | Eval R2: -7.8927 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2120 | Eval Loss: 0.2065 | Eval R2: -5.5186 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1631 | Eval Loss: 0.1622 | Eval R2: -3.7989 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1247 | Eval Loss: 0.1248 | Eval R2: -2.4588 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0952 | Eval Loss: 0.0997 | Eval R2: -1.5932 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0748 | Eval Loss: 0.0795 | Eval R2: -0.9867 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0594 | Eval Loss: 0.0641 | Eval R2: -0.5700 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0483 | Eval Loss: 0.0533 | Eval R2: -0.3168 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0404 | Eval Loss: 0.0454 | Eval R2: -0.1841 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0345 | Eval Loss: 0.0393 | Eval R2: -0.0721 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0301 | Eval Loss: 0.0339 | Eval R2: 0.0643 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0265 | Eval Loss: 0.0302 | Eval R2: 0.1006 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0235 | Eval Loss: 0.0266 | Eval R2: 0.1975 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0211 | Eval Loss: 0.0241 | Eval R2: 0.2513 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0191 | Eval Loss: 0.0220 | Eval R2: 0.3441 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0175 | Eval Loss: 0.0202 | Eval R2: 0.4179 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0162 | Eval Loss: 0.0186 | Eval R2: 0.4783 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0151 | Eval Loss: 0.0177 | Eval R2: 0.5019 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0142 | Eval Loss: 0.0164 | Eval R2: 0.5644 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0133 | Eval Loss: 0.0157 | Eval R2: 0.5702 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0127 | Eval Loss: 0.0146 | Eval R2: 0.6244 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.011212, test R2 score: 0.699346
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.012717925943434238, 'r2_eval_final': 0.6244240403175354, 'loss_eval_final': 0.014637255109846592, 'r2_test': 0.6993458556094185, 'loss_test': 0.011211730539798737, 'loss_nodes': [[0.005624300800263882, 0.00940926093608141, 0.013332587666809559, 0.0065710172057151794, 0.02506282366812229, 0.007426622323691845, 0.006773496977984905, 0.009152318350970745, 0.013684299774467945, 0.013423123396933079, 0.006774991750717163, 0.007025765720754862, 0.01027710735797882, 0.009243064559996128, 0.012786613777279854, 0.01228549424558878, 0.01580500230193138, 0.011182637885212898, 0.009614217095077038, 0.01877986080944538]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01272
-wandb: loss_eval 0.01464
-wandb: loss_test 0.01121
-wandb:   r2_eval 0.62442
-wandb:   r2_test 0.69935
-wandb: 
-wandb: 🚀 View run logical-shadow-51 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/wynnj15w
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240722_165206-wynnj15w/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 44%|████▍     | 22/50 [104:42:41<99:26:51, 12786.14s/it] Entrenando modelo con gcn_depth=2, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240722_170340-i8cp55ja
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run celestial-galaxy-52
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/i8cp55ja
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.6703 | Eval Loss: 0.3819 | Eval R2: -13.8642 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.2782 | Eval Loss: 0.1813 | Eval R2: -5.1768 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.1393 | Eval Loss: 0.0915 | Eval R2: -1.5268 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.0775 | Eval Loss: 0.0543 | Eval R2: -0.2504 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.0552 | Eval Loss: 0.0437 | Eval R2: 0.0306 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.0465 | Eval Loss: 0.0366 | Eval R2: 0.1855 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0396 | Eval Loss: 0.0315 | Eval R2: 0.3355 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0346 | Eval Loss: 0.0280 | Eval R2: 0.4022 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0306 | Eval Loss: 0.0250 | Eval R2: 0.4695 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0276 | Eval Loss: 0.0224 | Eval R2: 0.5177 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0251 | Eval Loss: 0.0204 | Eval R2: 0.5578 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0229 | Eval Loss: 0.0189 | Eval R2: 0.5900 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0213 | Eval Loss: 0.0177 | Eval R2: 0.6145 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0200 | Eval Loss: 0.0166 | Eval R2: 0.6332 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0187 | Eval Loss: 0.0157 | Eval R2: 0.6534 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0176 | Eval Loss: 0.0146 | Eval R2: 0.6665 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0164 | Eval Loss: 0.0138 | Eval R2: 0.6854 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0155 | Eval Loss: 0.0128 | Eval R2: 0.6829 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0146 | Eval Loss: 0.0121 | Eval R2: 0.6849 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0137 | Eval Loss: 0.0118 | Eval R2: 0.6575 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0130 | Eval Loss: 0.0113 | Eval R2: 0.6690 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0123 | Eval Loss: 0.0109 | Eval R2: 0.6776 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0117 | Eval Loss: 0.0104 | Eval R2: 0.7065 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0111 | Eval Loss: 0.0100 | Eval R2: 0.7187 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0107 | Eval Loss: 0.0097 | Eval R2: 0.7370 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0103 | Eval Loss: 0.0093 | Eval R2: 0.7439 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0098 | Eval Loss: 0.0089 | Eval R2: 0.7598 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.008143, test R2 score: 0.768423
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.009834980592131615, 'r2_eval_final': 0.7598228454589844, 'loss_eval_final': 0.008853145875036716, 'r2_test': 0.7684229064503783, 'loss_test': 0.008142969571053982, 'loss_nodes': [[0.0044096531346440315, 0.005584778729826212, 0.006403981242328882, 0.00416210014373064, 0.009252283722162247, 0.0026719807647168636, 0.005691243335604668, 0.007205135188996792, 0.012545931152999401, 0.009861337952315807, 0.006088502239435911, 0.0065391031093895435, 0.007522468455135822, 0.006432308349758387, 0.010174868628382683, 0.010708537884056568, 0.00864265114068985, 0.018587565049529076, 0.00893726572394371, 0.011437701061367989]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.00983
-wandb: loss_eval 0.00885
-wandb: loss_test 0.00814
-wandb:   r2_eval 0.75982
-wandb:   r2_test 0.76842
-wandb: 
-wandb: 🚀 View run celestial-galaxy-52 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/i8cp55ja
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240722_170340-i8cp55ja/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 46%|████▌     | 23/50 [115:57:16<158:12:46, 21095.04s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240723_041815-v3rpedl8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run winter-totem-53
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/v3rpedl8
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.9413 | Eval Loss: 0.8349 | Eval R2: -35.2988 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7443 | Eval Loss: 0.7165 | Eval R2: -29.3537 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6508 | Eval Loss: 0.6289 | Eval R2: -25.7369 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5656 | Eval Loss: 0.5379 | Eval R2: -21.5180 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4793 | Eval Loss: 0.4475 | Eval R2: -17.5062 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3931 | Eval Loss: 0.3572 | Eval R2: -13.4874 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3093 | Eval Loss: 0.2721 | Eval R2: -9.8034 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.2321 | Eval Loss: 0.1967 | Eval R2: -6.6183 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1657 | Eval Loss: 0.1347 | Eval R2: -4.0841 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.1126 | Eval Loss: 0.0869 | Eval R2: -2.1898 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0731 | Eval Loss: 0.0526 | Eval R2: -0.8479 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0455 | Eval Loss: 0.0307 | Eval R2: 0.0153 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0291 | Eval Loss: 0.0193 | Eval R2: 0.4709 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0211 | Eval Loss: 0.0149 | Eval R2: 0.6495 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0181 | Eval Loss: 0.0134 | Eval R2: 0.7030 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0169 | Eval Loss: 0.0126 | Eval R2: 0.7216 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0161 | Eval Loss: 0.0119 | Eval R2: 0.7284 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0154 | Eval Loss: 0.0114 | Eval R2: 0.7469 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0147 | Eval Loss: 0.0107 | Eval R2: 0.7546 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0140 | Eval Loss: 0.0102 | Eval R2: 0.7648 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0135 | Eval Loss: 0.0097 | Eval R2: 0.7714 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0129 | Eval Loss: 0.0093 | Eval R2: 0.7836 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0124 | Eval Loss: 0.0089 | Eval R2: 0.7871 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0120 | Eval Loss: 0.0086 | Eval R2: 0.7924 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0116 | Eval Loss: 0.0083 | Eval R2: 0.8006 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0112 | Eval Loss: 0.0081 | Eval R2: 0.8007 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0107 | Eval Loss: 0.0080 | Eval R2: 0.8041 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.006898, test R2 score: 0.821170
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 8, 'loss_final': 0.010733425617218018, 'r2_eval_final': 0.8040745258331299, 'loss_eval_final': 0.007979816757142544, 'r2_test': 0.8211704311291277, 'loss_test': 0.006898109335452318, 'loss_nodes': [[0.0047280071303248405, 0.005325777921825647, 0.006264648400247097, 0.004500846844166517, 0.004960113670676947, 0.0063478946685791016, 0.005641033407300711, 0.007842842489480972, 0.00473154429346323, 0.00870372261852026, 0.004064629785716534, 0.00797506608068943, 0.006020098924636841, 0.008069507777690887, 0.006284383125603199, 0.004684870131313801, 0.013784797862172127, 0.008332135155797005, 0.011042183265089989, 0.008658086881041527]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01073
-wandb: loss_eval 0.00798
-wandb: loss_test 0.0069
-wandb:   r2_eval 0.80407
-wandb:   r2_test 0.82117
-wandb: 
-wandb: 🚀 View run winter-totem-53 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/v3rpedl8
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240723_041815-v3rpedl8/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 48%|████▊     | 24/50 [127:08:48<193:57:20, 26855.40s/it]Entrenando modelo con gcn_depth=1, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240723_152948-1elnn1c8
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run restful-sponge-54
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1elnn1c8
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.7971 | Eval Loss: 0.7812 | Eval R2: -30.8069 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6851 | Eval Loss: 0.6679 | Eval R2: -25.4490 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.5912 | Eval Loss: 0.5791 | Eval R2: -21.3225 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5139 | Eval Loss: 0.5063 | Eval R2: -18.1411 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4499 | Eval Loss: 0.4464 | Eval R2: -15.6202 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3976 | Eval Loss: 0.3959 | Eval R2: -13.5606 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3537 | Eval Loss: 0.3530 | Eval R2: -11.8526 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.3157 | Eval Loss: 0.3154 | Eval R2: -10.3737 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.2818 | Eval Loss: 0.2815 | Eval R2: -9.0457 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.2508 | Eval Loss: 0.2502 | Eval R2: -7.8241 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.2223 | Eval Loss: 0.2212 | Eval R2: -6.6897 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1954 | Eval Loss: 0.1940 | Eval R2: -5.6367 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.1705 | Eval Loss: 0.1688 | Eval R2: -4.6682 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.1475 | Eval Loss: 0.1456 | Eval R2: -3.7873 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.1264 | Eval Loss: 0.1244 | Eval R2: -2.9964 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1073 | Eval Loss: 0.1055 | Eval R2: -2.3003 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0905 | Eval Loss: 0.0889 | Eval R2: -1.7017 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0761 | Eval Loss: 0.0748 | Eval R2: -1.2028 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0639 | Eval Loss: 0.0631 | Eval R2: -0.7941 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0539 | Eval Loss: 0.0537 | Eval R2: -0.4720 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0460 | Eval Loss: 0.0462 | Eval R2: -0.2266 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0399 | Eval Loss: 0.0405 | Eval R2: -0.0430 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0353 | Eval Loss: 0.0362 | Eval R2: 0.0900 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0317 | Eval Loss: 0.0329 | Eval R2: 0.1875 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0292 | Eval Loss: 0.0305 | Eval R2: 0.2569 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0272 | Eval Loss: 0.0287 | Eval R2: 0.3052 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0257 | Eval Loss: 0.0273 | Eval R2: 0.3428 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.023103, test R2 score: 0.446030
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.025684362277388573, 'r2_eval_final': 0.3428407907485962, 'loss_eval_final': 0.027254626154899597, 'r2_test': 0.44602963593775663, 'loss_test': 0.02310319058597088, 'loss_nodes': [[0.0053300014697015285, 0.01883806847035885, 0.013921779580414295, 0.053527869284152985, 0.024054832756519318, 0.009127709083259106, 0.039318133145570755, 0.014221424236893654, 0.015889057889580727, 0.014845997095108032, 0.03820819407701492, 0.012880900874733925, 0.04305290803313255, 0.015277921222150326, 0.01176988985389471, 0.012614873237907887, 0.008969292044639587, 0.01734292320907116, 0.06568100303411484, 0.02719096653163433]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.02568
-wandb: loss_eval 0.02725
-wandb: loss_test 0.0231
-wandb:   r2_eval 0.34284
-wandb:   r2_test 0.44603
-wandb: 
-wandb: 🚀 View run restful-sponge-54 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/1elnn1c8
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240723_152948-1elnn1c8/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 50%|█████     | 25/50 [127:21:05<132:04:32, 19018.91s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240723_154205-febh6v1i
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run comfy-cherry-55
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/febh6v1i
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.8721 | Eval Loss: 0.8119 | Eval R2: -31.0579 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.7276 | Eval Loss: 0.7274 | Eval R2: -27.5840 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6557 | Eval Loss: 0.6483 | Eval R2: -24.3663 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5846 | Eval Loss: 0.5806 | Eval R2: -21.6140 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.5202 | Eval Loss: 0.5165 | Eval R2: -18.9313 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.4611 | Eval Loss: 0.4559 | Eval R2: -16.4605 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.4056 | Eval Loss: 0.3999 | Eval R2: -14.1710 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.3539 | Eval Loss: 0.3476 | Eval R2: -12.0678 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.3055 | Eval Loss: 0.2984 | Eval R2: -10.1106 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.2603 | Eval Loss: 0.2520 | Eval R2: -8.3138 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.2181 | Eval Loss: 0.2087 | Eval R2: -6.6181 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1796 | Eval Loss: 0.1697 | Eval R2: -5.1294 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.1451 | Eval Loss: 0.1364 | Eval R2: -3.8521 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.1155 | Eval Loss: 0.1079 | Eval R2: -2.7535 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0905 | Eval Loss: 0.0844 | Eval R2: -1.8409 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0701 | Eval Loss: 0.0656 | Eval R2: -1.1227 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0542 | Eval Loss: 0.0510 | Eval R2: -0.5767 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0422 | Eval Loss: 0.0404 | Eval R2: -0.1798 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0337 | Eval Loss: 0.0329 | Eval R2: 0.0939 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0278 | Eval Loss: 0.0278 | Eval R2: 0.2774 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0237 | Eval Loss: 0.0242 | Eval R2: 0.3954 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0210 | Eval Loss: 0.0218 | Eval R2: 0.4706 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0192 | Eval Loss: 0.0202 | Eval R2: 0.5188 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0179 | Eval Loss: 0.0189 | Eval R2: 0.5507 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0171 | Eval Loss: 0.0180 | Eval R2: 0.5723 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0164 | Eval Loss: 0.0173 | Eval R2: 0.5877 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0158 | Eval Loss: 0.0167 | Eval R2: 0.5989 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.013224, test R2 score: 0.674479
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.015845492482185364, 'r2_eval_final': 0.5988707542419434, 'loss_eval_final': 0.016661420464515686, 'r2_test': 0.674478866703651, 'loss_test': 0.013224073685705662, 'loss_nodes': [[0.01785966008901596, 0.01593647710978985, 0.009843767620623112, 0.007280754391103983, 0.019090889021754265, 0.012421920895576477, 0.021204959601163864, 0.010575376451015472, 0.00613038707524538, 0.011358506977558136, 0.005815297830849886, 0.006666974164545536, 0.007472965866327286, 0.019105348736047745, 0.0073369890451431274, 0.010262602008879185, 0.028664464130997658, 0.011317179538309574, 0.021422715857625008, 0.014714250341057777]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.01585
-wandb: loss_eval 0.01666
-wandb: loss_test 0.01322
-wandb:   r2_eval 0.59887
-wandb:   r2_test 0.67448
-wandb: 
-wandb: 🚀 View run comfy-cherry-55 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/febh6v1i
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240723_154205-febh6v1i/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 52%|█████▏    | 26/50 [142:53:34<200:39:32, 30098.85s/it]Entrenando modelo con gcn_depth=2, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240724_071434-v6y6gzzk
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run sleek-plasma-56
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/v6y6gzzk
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2839 | Eval Loss: 0.9607 | Eval R2: -38.5795 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.8754 | Eval Loss: 0.8858 | Eval R2: -35.2842 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.8201 | Eval Loss: 0.8390 | Eval R2: -33.2977 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.7788 | Eval Loss: 0.7975 | Eval R2: -31.3598 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.7373 | Eval Loss: 0.7550 | Eval R2: -29.5235 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.6939 | Eval Loss: 0.7066 | Eval R2: -27.3624 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.6468 | Eval Loss: 0.6557 | Eval R2: -25.1566 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.5967 | Eval Loss: 0.6021 | Eval R2: -22.8393 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.5455 | Eval Loss: 0.5483 | Eval R2: -20.5756 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.4945 | Eval Loss: 0.4955 | Eval R2: -18.3620 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.4452 | Eval Loss: 0.4450 | Eval R2: -16.2863 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.3983 | Eval Loss: 0.3969 | Eval R2: -14.3295 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.3541 | Eval Loss: 0.3520 | Eval R2: -12.5279 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.3129 | Eval Loss: 0.3101 | Eval R2: -10.8598 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.2747 | Eval Loss: 0.2712 | Eval R2: -9.3271 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.2393 | Eval Loss: 0.2353 | Eval R2: -7.9260 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.2067 | Eval Loss: 0.2023 | Eval R2: -6.6406 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.1770 | Eval Loss: 0.1722 | Eval R2: -5.4741 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1503 | Eval Loss: 0.1452 | Eval R2: -4.4196 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1265 | Eval Loss: 0.1214 | Eval R2: -3.4886 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.1054 | Eval Loss: 0.1006 | Eval R2: -2.6823 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0869 | Eval Loss: 0.0825 | Eval R2: -1.9506 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0712 | Eval Loss: 0.0674 | Eval R2: -1.3803 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0583 | Eval Loss: 0.0545 | Eval R2: -0.8585 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0474 | Eval Loss: 0.0443 | Eval R2: -0.4578 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0388 | Eval Loss: 0.0361 | Eval R2: -0.1312 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0323 | Eval Loss: 0.0299 | Eval R2: 0.0941 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.026631, test R2 score: 0.101061
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.03229837119579315, 'r2_eval_final': 0.09406872093677521, 'loss_eval_final': 0.029938051477074623, 'r2_test': 0.10106087449150888, 'loss_test': 0.02663118951022625, 'loss_nodes': [[0.0123975845053792, 0.009103110060095787, 0.008198392577469349, 0.012469653971493244, 0.015967611223459244, 0.0052714599296450615, 0.007302949205040932, 0.13688689470291138, 0.010901992209255695, 0.012955444864928722, 0.09166330844163895, 0.018785474821925163, 0.01048469077795744, 0.01779085025191307, 0.07898665964603424, 0.011612044647336006, 0.024936115369200706, 0.02183569222688675, 0.01262468658387661, 0.012449241243302822]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.0323
-wandb: loss_eval 0.02994
-wandb: loss_test 0.02663
-wandb:   r2_eval 0.09407
-wandb:   r2_test 0.10106
-wandb: 
-wandb: 🚀 View run sleek-plasma-56 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/v6y6gzzk
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240724_071434-v6y6gzzk/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 54%|█████▍    | 27/50 [155:52:54<224:14:02, 35097.50s/it]Entrenando modelo con gcn_depth=1, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240724_201354-04oyvbj0
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run stellar-cherry-57
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/04oyvbj0
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2237 | Eval Loss: 1.1426 | Eval R2: -48.1084 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 1.0437 | Eval Loss: 1.0524 | Eval R2: -44.1319 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.9674 | Eval Loss: 0.9891 | Eval R2: -41.3260 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.9141 | Eval Loss: 0.9432 | Eval R2: -39.2110 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.8731 | Eval Loss: 0.9053 | Eval R2: -37.3943 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.8379 | Eval Loss: 0.8711 | Eval R2: -35.7269 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.8048 | Eval Loss: 0.8372 | Eval R2: -34.0894 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.7705 | Eval Loss: 0.7999 | Eval R2: -32.3264 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.7318 | Eval Loss: 0.7562 | Eval R2: -30.2864 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.6857 | Eval Loss: 0.7037 | Eval R2: -27.8667 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.6310 | Eval Loss: 0.6422 | Eval R2: -25.0575 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.5684 | Eval Loss: 0.5737 | Eval R2: -21.9633 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.5010 | Eval Loss: 0.5025 | Eval R2: -18.7795 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.4333 | Eval Loss: 0.4335 | Eval R2: -15.7252 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.3698 | Eval Loss: 0.3707 | Eval R2: -12.9641 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.3134 | Eval Loss: 0.3161 | Eval R2: -10.5680 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.2652 | Eval Loss: 0.2702 | Eval R2: -8.5454 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.2252 | Eval Loss: 0.2327 | Eval R2: -6.8820 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1929 | Eval Loss: 0.2028 | Eval R2: -5.5517 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1674 | Eval Loss: 0.1795 | Eval R2: -4.5141 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.1477 | Eval Loss: 0.1616 | Eval R2: -3.7203 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.1327 | Eval Loss: 0.1480 | Eval R2: -3.1207 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.1214 | Eval Loss: 0.1378 | Eval R2: -2.6722 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.1130 | Eval Loss: 0.1302 | Eval R2: -2.3400 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.1068 | Eval Loss: 0.1247 | Eval R2: -2.0968 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.1022 | Eval Loss: 0.1206 | Eval R2: -1.9213 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0989 | Eval Loss: 0.1177 | Eval R2: -1.7968 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.096497, test R2 score: -1.295494
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.09890713542699814, 'r2_eval_final': -1.7967631816864014, 'loss_eval_final': 0.11769360303878784, 'r2_test': -1.295494492557355, 'loss_test': 0.09649692475795746, 'loss_nodes': [[0.12534338235855103, 0.09217238426208496, 0.08763635903596878, 0.09050058573484421, 0.09047205746173859, 0.08745148777961731, 0.09396948665380478, 0.08853374421596527, 0.09470804035663605, 0.08850587159395218, 0.08785988390445709, 0.09129128605127335, 0.11907414346933365, 0.09195466339588165, 0.08993756771087646, 0.1433311402797699, 0.09265255928039551, 0.09228289127349854, 0.09269025921821594, 0.08957056701183319]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09891
-wandb: loss_eval 0.11769
-wandb: loss_test 0.0965
-wandb:   r2_eval -1.79676
-wandb:   r2_test -1.29549
-wandb: 
-wandb: 🚀 View run stellar-cherry-57 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/04oyvbj0
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240724_201354-04oyvbj0/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 56%|█████▌    | 28/50 [156:12:47<152:19:23, 24925.63s/it]Entrenando modelo con gcn_depth=3, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240724_203346-r65wyigt
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run fanciful-star-58
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/r65wyigt
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.6868 | Eval Loss: 0.5792 | Eval R2: -21.2656 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.4627 | Eval Loss: 0.4162 | Eval R2: -14.1867 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.3230 | Eval Loss: 0.2930 | Eval R2: -8.9028 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.2216 | Eval Loss: 0.2069 | Eval R2: -5.2663 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.1545 | Eval Loss: 0.1536 | Eval R2: -3.0755 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1165 | Eval Loss: 0.1264 | Eval R2: -2.0151 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.0995 | Eval Loss: 0.1157 | Eval R2: -1.6489 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0939 | Eval Loss: 0.1125 | Eval R2: -1.5717 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0925 | Eval Loss: 0.1117 | Eval R2: -1.5610 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0922 | Eval Loss: 0.1115 | Eval R2: -1.5550 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0920 | Eval Loss: 0.1115 | Eval R2: -1.5487 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5441 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5416 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5418 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5420 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5422 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5423 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5424 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5426 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5427 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.089752, test R2 score: -0.965212
-Resultados intermedios:  {'gcn_depth': 3, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.0918937399983406, 'r2_eval_final': -1.5427359342575073, 'loss_eval_final': 0.11146864295005798, 'r2_test': -0.9652118571564839, 'loss_test': 0.08975249528884888, 'loss_nodes': [[0.08683902025222778, 0.09107129275798798, 0.08786306530237198, 0.09053578227758408, 0.08750474452972412, 0.08713139593601227, 0.09193023294210434, 0.08856242895126343, 0.09122326225042343, 0.0886516273021698, 0.08804982155561447, 0.09143424779176712, 0.08902722597122192, 0.0920981839299202, 0.08958689868450165, 0.0888398140668869, 0.09249822795391083, 0.08986704051494598, 0.09261605143547058, 0.0897197425365448]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.002 MB uploadedwandb: | 0.002 MB of 0.002 MB uploadedwandb: / 0.002 MB of 0.002 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09189
-wandb: loss_eval 0.11147
-wandb: loss_test 0.08975
-wandb:   r2_eval -1.54274
-wandb:   r2_test -0.96521
-wandb: 
-wandb: 🚀 View run fanciful-star-58 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/r65wyigt
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240724_203346-r65wyigt/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 58%|█████▊    | 29/50 [156:31:40<103:45:44, 17787.84s/it]Entrenando modelo con gcn_depth=1, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240724_205240-3okek4va
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run fearless-plasma-59
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/3okek4va
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.0786 | Eval Loss: 0.7529 | Eval R2: -28.5456 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6381 | Eval Loss: 0.5829 | Eval R2: -21.1706 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.4858 | Eval Loss: 0.4378 | Eval R2: -15.1898 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.3591 | Eval Loss: 0.3175 | Eval R2: -10.4846 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.2553 | Eval Loss: 0.2186 | Eval R2: -6.6037 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.1684 | Eval Loss: 0.1380 | Eval R2: -3.4622 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.1018 | Eval Loss: 0.0808 | Eval R2: -1.3584 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.0601 | Eval Loss: 0.0510 | Eval R2: -0.3423 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.0416 | Eval Loss: 0.0397 | Eval R2: -0.0106 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0345 | Eval Loss: 0.0346 | Eval R2: 0.1434 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0308 | Eval Loss: 0.0315 | Eval R2: 0.2357 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0282 | Eval Loss: 0.0293 | Eval R2: 0.2943 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0263 | Eval Loss: 0.0274 | Eval R2: 0.3503 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0245 | Eval Loss: 0.0257 | Eval R2: 0.3957 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0229 | Eval Loss: 0.0241 | Eval R2: 0.4358 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0214 | Eval Loss: 0.0226 | Eval R2: 0.4701 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0198 | Eval Loss: 0.0197 | Eval R2: 0.5425 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0171 | Eval Loss: 0.0183 | Eval R2: 0.5707 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0162 | Eval Loss: 0.0173 | Eval R2: 0.5954 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0152 | Eval Loss: 0.0160 | Eval R2: 0.6272 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0141 | Eval Loss: 0.0151 | Eval R2: 0.6529 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0132 | Eval Loss: 0.0141 | Eval R2: 0.6732 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0124 | Eval Loss: 0.0132 | Eval R2: 0.6918 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0116 | Eval Loss: 0.0124 | Eval R2: 0.7101 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0110 | Eval Loss: 0.0117 | Eval R2: 0.7273 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0105 | Eval Loss: 0.0111 | Eval R2: 0.7439 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0099 | Eval Loss: 0.0105 | Eval R2: 0.7563 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.008276, test R2 score: 0.796414
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 16, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.009932545945048332, 'r2_eval_final': 0.7562663555145264, 'loss_eval_final': 0.010547186248004436, 'r2_test': 0.7964144617831623, 'loss_test': 0.008276122622191906, 'loss_nodes': [[0.0041807848028838634, 0.005964058917015791, 0.019354449585080147, 0.0109314676374197, 0.0042307330295443535, 0.0027340196538716555, 0.0056956736370921135, 0.006017480976879597, 0.005942417308688164, 0.0061509497463703156, 0.004216715227812529, 0.008005389012396336, 0.014788256026804447, 0.007207682356238365, 0.008055142126977444, 0.008167955093085766, 0.01261499896645546, 0.01049424335360527, 0.010990787297487259, 0.009779254905879498]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.009 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.00993
-wandb: loss_eval 0.01055
-wandb: loss_test 0.00828
-wandb:   r2_eval 0.75627
-wandb:   r2_test 0.79641
-wandb: 
-wandb: 🚀 View run fearless-plasma-59 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/3okek4va
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240724_205240-3okek4va/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 60%|██████    | 30/50 [168:00:54<138:05:51, 24857.59s/it]Entrenando modelo con gcn_depth=2, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=16
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240725_082153-99026jc5
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run devoted-snowball-60
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/99026jc5
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2167 | Eval Loss: 1.0709 | Eval R2: -43.7361 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.9026 | Eval Loss: 0.8251 | Eval R2: -32.6927 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.6918 | Eval Loss: 0.6399 | Eval R2: -24.4328 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5291 | Eval Loss: 0.4900 | Eval R2: -17.7605 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.3954 | Eval Loss: 0.3642 | Eval R2: -12.1855 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.2849 | Eval Loss: 0.2625 | Eval R2: -7.7410 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.1999 | Eval Loss: 0.1891 | Eval R2: -4.6162 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.1432 | Eval Loss: 0.1450 | Eval R2: -2.8189 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.1125 | Eval Loss: 0.1238 | Eval R2: -1.9993 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.0991 | Eval Loss: 0.1154 | Eval R2: -1.6885 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.0941 | Eval Loss: 0.1125 | Eval R2: -1.5837 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.0925 | Eval Loss: 0.1117 | Eval R2: -1.5535 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.0920 | Eval Loss: 0.1115 | Eval R2: -1.5463 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5443 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5432 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5425 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5420 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5419 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5419 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5419 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5420 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5421 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5422 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5422 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5423 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0919 | Eval Loss: 0.1115 | Eval R2: -1.5423 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.089763, test R2 score: -0.965735
-Resultados intermedios:  {'gcn_depth': 2, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 16, 'loss_final': 0.091885045170784, 'r2_eval_final': -1.542314887046814, 'loss_eval_final': 0.11146973073482513, 'r2_test': -0.9657348333594943, 'loss_test': 0.08976346999406815, 'loss_nodes': [[0.08683071285486221, 0.09107576310634613, 0.08788332343101501, 0.09058156609535217, 0.087577685713768, 0.0871124416589737, 0.09192059189081192, 0.08861065655946732, 0.09123329073190689, 0.08866362273693085, 0.08809401839971542, 0.09141365438699722, 0.08908718824386597, 0.0920562818646431, 0.08957864344120026, 0.08883979171514511, 0.09247143566608429, 0.08989504724740982, 0.09261912107467651, 0.08972454816102982]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.006 MB uploadedwandb: | 0.002 MB of 0.006 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09189
-wandb: loss_eval 0.11147
-wandb: loss_test 0.08976
-wandb:   r2_eval -1.54231
-wandb:   r2_test -0.96573
-wandb: 
-wandb: 🚀 View run devoted-snowball-60 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/99026jc5
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240725_082153-99026jc5/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 62%|██████▏   | 31/50 [168:24:27<94:04:22, 17824.33s/it] Entrenando modelo con gcn_depth=1, conv_channels=8, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240725_084527-mi4l4mq0
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run generous-flower-61
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/mi4l4mq0
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 1.2237 | Eval Loss: 1.1426 | Eval R2: -48.1084 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 1.0437 | Eval Loss: 1.0524 | Eval R2: -44.1319 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.9674 | Eval Loss: 0.9891 | Eval R2: -41.3260 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.9141 | Eval Loss: 0.9432 | Eval R2: -39.2110 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.8731 | Eval Loss: 0.9053 | Eval R2: -37.3943 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.8379 | Eval Loss: 0.8711 | Eval R2: -35.7269 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.8048 | Eval Loss: 0.8372 | Eval R2: -34.0894 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.7705 | Eval Loss: 0.7999 | Eval R2: -32.3264 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.7318 | Eval Loss: 0.7562 | Eval R2: -30.2864 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.6857 | Eval Loss: 0.7037 | Eval R2: -27.8667 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.6310 | Eval Loss: 0.6422 | Eval R2: -25.0575 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.5684 | Eval Loss: 0.5737 | Eval R2: -21.9633 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.5010 | Eval Loss: 0.5025 | Eval R2: -18.7795 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.4333 | Eval Loss: 0.4335 | Eval R2: -15.7252 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.3698 | Eval Loss: 0.3707 | Eval R2: -12.9641 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.3134 | Eval Loss: 0.3161 | Eval R2: -10.5680 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.2652 | Eval Loss: 0.2702 | Eval R2: -8.5454 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.2252 | Eval Loss: 0.2327 | Eval R2: -6.8820 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.1929 | Eval Loss: 0.2028 | Eval R2: -5.5517 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.1674 | Eval Loss: 0.1795 | Eval R2: -4.5141 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.1477 | Eval Loss: 0.1616 | Eval R2: -3.7203 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.1327 | Eval Loss: 0.1480 | Eval R2: -3.1207 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.1214 | Eval Loss: 0.1378 | Eval R2: -2.6722 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.1130 | Eval Loss: 0.1302 | Eval R2: -2.3400 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.1068 | Eval Loss: 0.1247 | Eval R2: -2.0968 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.1022 | Eval Loss: 0.1206 | Eval R2: -1.9213 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0989 | Eval Loss: 0.1177 | Eval R2: -1.7968 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.096497, test R2 score: -1.295494
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 8, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.09890713542699814, 'r2_eval_final': -1.7967631816864014, 'loss_eval_final': 0.11769360303878784, 'r2_test': -1.295494492557355, 'loss_test': 0.09649692475795746, 'loss_nodes': [[0.12534338235855103, 0.09217238426208496, 0.08763635903596878, 0.09050058573484421, 0.09047205746173859, 0.08745148777961731, 0.09396948665380478, 0.08853374421596527, 0.09470804035663605, 0.08850587159395218, 0.08785988390445709, 0.09129128605127335, 0.11907414346933365, 0.09195466339588165, 0.08993756771087646, 0.1433311402797699, 0.09265255928039551, 0.09228289127349854, 0.09269025921821594, 0.08957056701183319]]}
-wandb: - 0.002 MB of 0.002 MB uploadedwandb: \ 0.002 MB of 0.003 MB uploadedwandb: | 0.002 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.09891
-wandb: loss_eval 0.11769
-wandb: loss_test 0.0965
-wandb:   r2_eval -1.79676
-wandb:   r2_test -1.29549
-wandb: 
-wandb: 🚀 View run generous-flower-61 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/mi4l4mq0
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240725_084527-mi4l4mq0/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 64%|██████▍   | 32/50 [168:44:44<64:12:36, 12842.05s/it]Entrenando modelo con gcn_depth=1, conv_channels=4, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=4
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240725_090544-ufpyhmzb
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run copper-fog-62
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/ufpyhmzb
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
-Epoch 1/50 | Train Loss: 0.7971 | Eval Loss: 0.7812 | Eval R2: -30.8069 | LR: 0.0010 | 
-Epoch 2/50 | Train Loss: 0.6851 | Eval Loss: 0.6679 | Eval R2: -25.4490 | LR: 0.0010 | 
-Epoch 3/50 | Train Loss: 0.5912 | Eval Loss: 0.5791 | Eval R2: -21.3225 | LR: 0.0010 | 
-Epoch 4/50 | Train Loss: 0.5139 | Eval Loss: 0.5063 | Eval R2: -18.1411 | LR: 0.0010 | 
-Epoch 5/50 | Train Loss: 0.4499 | Eval Loss: 0.4464 | Eval R2: -15.6202 | LR: 0.0010 | 
-Epoch 6/50 | Train Loss: 0.3976 | Eval Loss: 0.3959 | Eval R2: -13.5606 | LR: 0.0010 | 
-Epoch 7/50 | Train Loss: 0.3537 | Eval Loss: 0.3530 | Eval R2: -11.8526 | LR: 0.0010 | 
-Epoch 8/50 | Train Loss: 0.3157 | Eval Loss: 0.3154 | Eval R2: -10.3737 | LR: 0.0010 | 
-Epoch 9/50 | Train Loss: 0.2818 | Eval Loss: 0.2815 | Eval R2: -9.0457 | LR: 0.0010 | 
-Epoch 10/50 | Train Loss: 0.2508 | Eval Loss: 0.2502 | Eval R2: -7.8241 | LR: 0.0010 | 
-Epoch 11/50 | Train Loss: 0.2223 | Eval Loss: 0.2212 | Eval R2: -6.6897 | LR: 0.0010 | 
-Epoch 12/50 | Train Loss: 0.1954 | Eval Loss: 0.1940 | Eval R2: -5.6367 | LR: 0.0010 | 
-Epoch 13/50 | Train Loss: 0.1705 | Eval Loss: 0.1688 | Eval R2: -4.6682 | LR: 0.0010 | 
-Epoch 14/50 | Train Loss: 0.1475 | Eval Loss: 0.1456 | Eval R2: -3.7873 | LR: 0.0010 | 
-Epoch 15/50 | Train Loss: 0.1264 | Eval Loss: 0.1244 | Eval R2: -2.9964 | LR: 0.0010 | 
-Epoch 16/50 | Train Loss: 0.1073 | Eval Loss: 0.1055 | Eval R2: -2.3003 | LR: 0.0010 | 
-Epoch 17/50 | Train Loss: 0.0905 | Eval Loss: 0.0889 | Eval R2: -1.7017 | LR: 0.0010 | 
-Epoch 18/50 | Train Loss: 0.0761 | Eval Loss: 0.0748 | Eval R2: -1.2028 | LR: 0.0010 | 
-Epoch 19/50 | Train Loss: 0.0639 | Eval Loss: 0.0631 | Eval R2: -0.7941 | LR: 0.0010 | 
-Epoch 20/50 | Train Loss: 0.0539 | Eval Loss: 0.0537 | Eval R2: -0.4720 | LR: 0.0010 | 
-Epoch 21/50 | Train Loss: 0.0460 | Eval Loss: 0.0462 | Eval R2: -0.2266 | LR: 0.0010 | 
-Epoch 22/50 | Train Loss: 0.0399 | Eval Loss: 0.0405 | Eval R2: -0.0430 | LR: 0.0010 | 
-Epoch 23/50 | Train Loss: 0.0353 | Eval Loss: 0.0362 | Eval R2: 0.0900 | LR: 0.0010 | 
-Epoch 24/50 | Train Loss: 0.0317 | Eval Loss: 0.0329 | Eval R2: 0.1875 | LR: 0.0010 | 
-Epoch 25/50 | Train Loss: 0.0292 | Eval Loss: 0.0305 | Eval R2: 0.2569 | LR: 0.0010 | 
-Epoch 26/50 | Train Loss: 0.0272 | Eval Loss: 0.0287 | Eval R2: 0.3052 | LR: 0.0010 | 
-Epoch 27/50 | Train Loss: 0.0257 | Eval Loss: 0.0273 | Eval R2: 0.3428 | LR: 0.0010 | 
-
-==================== TEST INFO ===================
-
-preds:  (1, 23, 20)
-test loss: 0.023103, test R2 score: 0.446030
-Resultados intermedios:  {'gcn_depth': 1, 'conv_channels': 4, 'kernel_size': 3, 'dropout': 0.25, 'gcn_true': True, 'build_adj': True, 'propalpha': 0.15, 'out_channels': 4, 'loss_final': 0.025684362277388573, 'r2_eval_final': 0.3428407907485962, 'loss_eval_final': 0.027254626154899597, 'r2_test': 0.44602963593775663, 'loss_test': 0.02310319058597088, 'loss_nodes': [[0.0053300014697015285, 0.01883806847035885, 0.013921779580414295, 0.053527869284152985, 0.024054832756519318, 0.009127709083259106, 0.039318133145570755, 0.014221424236893654, 0.015889057889580727, 0.014845997095108032, 0.03820819407701492, 0.012880900874733925, 0.04305290803313255, 0.015277921222150326, 0.01176988985389471, 0.012614873237907887, 0.008969292044639587, 0.01734292320907116, 0.06568100303411484, 0.02719096653163433]]}
-wandb: - 0.002 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      loss ▁
-wandb: loss_eval ▁
-wandb: loss_test ▁
-wandb:   r2_eval ▁
-wandb:   r2_test ▁
-wandb: 
-wandb: Run summary:
-wandb:      loss 0.02568
-wandb: loss_eval 0.02725
-wandb: loss_test 0.0231
-wandb:   r2_eval 0.34284
-wandb:   r2_test 0.44603
-wandb: 
-wandb: 🚀 View run copper-fog-62 at: https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/ufpyhmzb
-wandb: ⭐️ View project at: https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240725_090544-ufpyhmzb/logs
-wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
- 66%|██████▌   | 33/50 [168:56:29<43:26:54, 9200.84s/it] Entrenando modelo con gcn_depth=3, conv_channels=16, kernel_size=3, dropout=0.25, gcn_true=True, build_adj=True, propalpha=0.15, out_channels=8
-wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.17.5 is available!  To upgrade, please run:
-wandb:  $ pip install wandb --upgrade
-wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /usr/src/app/GNNs_PowerGraph/TFM/experimentos_split/scripts/wandb/run-20240725_091729-ssmovzj6
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run stoic-monkey-63
-wandb: ⭐️ View project at https://wandb.ai/maragumar01/mtgnn_bus_trip
-wandb: 🚀 View run at https://wandb.ai/maragumar01/mtgnn_bus_trip/runs/ssmovzj6
-
-==================== DATASET INFO ===================
-
-Train dataset: 2025
-Validation dataset: 435
-Test dataset: 430
-
-==================== TRAIN INFO ===================
-
