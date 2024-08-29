@@ -38,8 +38,8 @@ This project is composed by the following stages:
 
 | File Name | Description | Stage and Type|
 | --- | --- | --- |
-| [Data Preprocessing and EDA Notebook](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/preprocesamiento/preprocess.ipynb) | initial experiment with dataloader class and EDA |![NOTEBOOK](https://img.shields.io/badge/Notebook-FAA31B) ![DONE](https://img.shields.io/badge/-DONE-green)|
-| [DataLoader Class](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/utils/powergrid.py) | includes preliminary experiments for different types of time series and missing data distribution | ![CLASS](https://img.shields.io/badge/Class-02AFB8) ![DONE](https://img.shields.io/badge/-DONE-green)|
+| [Data Preprocessing and EDA Notebook](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/preprocesamiento/preprocess.ipynb) | Initial experiment with dataloader class and EDA |![NOTEBOOK](https://img.shields.io/badge/Notebook-FAA31B) ![DONE](https://img.shields.io/badge/-DONE-green)|
+| [DataLoader Class](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/utils/powergrid.py) | Includes preliminary experiments for different types of time series and missing data distribution | ![CLASS](https://img.shields.io/badge/Class-02AFB8) ![DONE](https://img.shields.io/badge/-DONE-green)|
 
 
 #### PowerGridDatasetLoader Class
@@ -63,7 +63,7 @@ The PowerGridDatasetLoader class is designed to handle the loading and preproces
 
 | File Name | Description | Stage and Type|
 | --- | --- | --- |
-| [Models Implementations](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/utils/models.py) | includes the implementation in PyTorch for each one of the models included in the study| ![CLASS](https://img.shields.io/badge/Class-02AFB8) ![DONE](https://img.shields.io/badge/-DONE-green)|
+| [Models Implementations](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/utils/models.py) | Includes the implementation in PyTorch for each one of the models included in the study| ![CLASS](https://img.shields.io/badge/Class-02AFB8) ![DONE](https://img.shields.io/badge/-DONE-green)|
 
 In particular, the models included are:
 
@@ -110,7 +110,7 @@ Also, due to computational limitations, for some of the models, we have only bee
 
 #### Regression
 
-| File Name | Type of Parameter Tuning | Stage and Type| 
+| File Name | Type of Parameter Tuning | Type | 
 | --- | --- | --- |
 | [DCRNN Notebook](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/regresion/dcrnn.ipynb) | ![Complete](https://img.shields.io/badge/-Complete-green)|![NOTEBOOK](https://img.shields.io/badge/Notebook-FAA31B) |
 | [A3TGCN Notebook](https://github.com/maaguado/GNNs_PowerGraph/blob/main/TFM/regresion/a3tgcn.ipynb) | ![Complete](https://img.shields.io/badge/-Complete-green)|![NOTEBOOK](https://img.shields.io/badge/Notebook-FAA31B) |
